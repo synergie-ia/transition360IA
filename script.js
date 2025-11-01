@@ -1,138 +1,211 @@
-// SCRIPT PRINCIPAL ORIENTATION 360 IA
-// ===============================
+// ===================================================
+// ORIENTATION 360 IA — SCRIPT PRINCIPAL
+// ===================================================
 
+// Initialisation
 let currentPage = 0;
-const selections = { interets: [], personnalite: [], valeurs: [] };
-const maxChoices = 6;
+let selections = {
+  interets: [],
+  personnalite: [],
+  valeurs: []
+};
 
-// ---------- Navigation ----------
-function goToPage(page) {
-  document.querySelectorAll('.page, #welcome, #summary').forEach(p => p.style.display = 'none');
-  const target = document.getElementById(page === 0 ? 'welcome' : `page${page}`);
-  if (target) target.style.display = 'block';
-  currentPage = page;
+// ===================================================
+// NAVIGATION ENTRE LES PAGES
+// ===================================================
+
+function goToPage(pageIndex) {
+  const pages = document.querySelectorAll(".page");
+  pages.forEach(p => p.style.display = "none");
+  if (pageIndex === 0) document.getElementById("welcome").style.display = "block";
+  else pages[pageIndex - 1].style.display = "block";
+  currentPage = pageIndex;
+  window.scrollTo(0, 0);
 }
 
-// ---------- Affichage ----------
-function renderSection(id, data) {
-  const container = document.getElementById(id);
-  container.innerHTML = '';
-  data.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'item';
-    div.innerHTML = `
-      <label>
-        <input type="checkbox" onchange="toggleChoice('${id}', ${i}, this)">
-        <div>
-          <div class="verbs">${item.verbes.join(', ')}</div>
-          <div class="phrase">${item.phrase}</div>
-        </div>
-      </label>`;
-    container.appendChild(div);
-  });
-}
+// ===================================================
+// GESTION DES SÉLECTIONS
+// ===================================================
 
-// ---------- Gestion des choix ----------
-function toggleChoice(category, index, checkbox) {
-  if (checkbox.checked) {
-    if (selections[category].length >= maxChoices) {
-      alert(`Tu ne peux choisir que ${maxChoices} éléments maximum.`);
-      checkbox.checked = false;
+function toggleSelection(cat, index) {
+  const arr = selections[cat];
+  const pos = arr.indexOf(index);
+  const max = 6;
+
+  if (pos > -1) {
+    arr.splice(pos, 1);
+  } else {
+    if (arr.length >= max) {
+      alert("Tu ne peux pas sélectionner plus de 6 éléments dans cette catégorie.");
       return;
     }
-    selections[category].push(index);
-  } else {
-    selections[category] = selections[category].filter(i => i !== index);
+    arr.push(index);
   }
+
+  renderCategory(cat);
 }
 
-// ---------- Récapitulatif ----------
-function showSummary() {
-  document.querySelectorAll('.page, #welcome').forEach(p => p.style.display = 'none');
-  const recapSection = document.getElementById('summary');
-  recapSection.style.display = 'block';
+function renderCategory(cat) {
+  const container = document.getElementById(`${cat}-container`);
+  const data = window[cat];
+  container.innerHTML = "";
 
-  const recap = document.getElementById('recap');
-  recap.innerHTML = '';
+  data.forEach((d, i) => {
+    const isSelected = selections[cat].includes(i);
+    const item = document.createElement("div");
+    item.className = "item-card" + (isSelected ? " selected" : "");
+    item.onclick = () => toggleSelection(cat, i);
+    item.innerHTML = `
+      <div class="verbes">${d.verbes.join(", ")}</div>
+      <div class="phrase">${d.phrase}</div>
+    `;
+    container.appendChild(item);
+  });
+
+  const count = selections[cat].length;
+  const countEl = document.getElementById(`${cat}-count`);
+  if (countEl) countEl.textContent = `${count} sélection(s)`;
+}
+
+// ===================================================
+// PASSAGE À LA PAGE SUIVANTE
+// ===================================================
+
+function nextPage(cat) {
+  const min = 3;
+  if (selections[cat].length < min) {
+    alert("Merci de sélectionner au moins 3 éléments avant de continuer.");
+    return;
+  }
+  goToPage(currentPage + 1);
+}
+
+// ===================================================
+// AFFICHAGE DU PROFIL GLOBAL
+// ===================================================
+
+function showSummary() {
+  // Vérifie la dernière page avant affichage
+  if (selections["valeurs"].length < 3) {
+    alert("Merci de sélectionner au moins 3 éléments avant de voir ton profil.");
+    return;
+  }
+
+  document.querySelectorAll(".page, #welcome").forEach(p => p.style.display = "none");
+  const summary = document.getElementById("summary");
+  summary.style.display = "block";
+
+  const recap = document.getElementById("recap");
+  recap.innerHTML = "";
+
+  const title = document.createElement("h2");
+  title.textContent = "🎯 Ton profil global";
+  recap.appendChild(title);
 
   Object.keys(selections).forEach(cat => {
-    const section = document.createElement('div');
-    section.className = 'recap-section';
-    section.innerHTML = `<h3>${cat.toUpperCase()}</h3>`;
-    const list = document.createElement('ul');
+    const section = document.createElement("div");
+    section.className = "recap-section";
+    section.innerHTML = `<h3>${cat.charAt(0).toUpperCase() + cat.slice(1)}</h3>`;
 
     if (selections[cat].length === 0) {
-      section.innerHTML += `<p><em>Aucune sélection.</em></p>`;
+      section.innerHTML += `<p><em>Aucun élément sélectionné.</em></p>`;
     } else {
+      const list = document.createElement("ul");
+      list.className = "recap-list";
       selections[cat].forEach(i => {
-        const data = window[cat][i];
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${data.verbes.join(', ')}</strong> — ${data.phrase}`;
+        const d = window[cat][i];
+        const li = document.createElement("li");
+        li.className = "recap-item";
+        li.innerHTML = `
+          <div class="recap-verbes">${d.verbes.join(", ")}</div>
+          <div class="recap-phrase">${d.phrase}</div>
+        `;
         list.appendChild(li);
       });
       section.appendChild(list);
     }
     recap.appendChild(section);
   });
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+  actions.innerHTML = `
+    <button class="btn-strong" onclick="copyProfile()">📋 Copier pour l’IA</button>
+    <button class="btn-strong" onclick="exportPDF()">📄 Télécharger le PDF</button>
+    <button class="btn" onclick="goToPage(0)">🏠 Retour à l'accueil</button>
+  `;
+  recap.appendChild(actions);
 }
 
-// ---------- Copier ----------
+// ===================================================
+// COPIE DU PROFIL POUR L’IA
+// ===================================================
+
 function copyProfile() {
-  let text = '🎯 PROFIL GLOBAL ORIENTATION 360 IA\n\n';
-  Object.keys(selections).forEach(cat => {
-    text += `--- ${cat.toUpperCase()} ---\n`;
-    if (selections[cat].length === 0) text += 'Aucune sélection.\n';
-    else selections[cat].forEach(i => {
-      const d = window[cat][i];
-      text += `• ${d.verbes.join(', ')} — ${d.phrase}\n`;
-    });
-    text += '\n';
-  });
-  navigator.clipboard.writeText(text)
-    .then(() => alert('✅ Profil copié dans le presse-papiers !'));
-}
+  let text = `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 PROFIL GLOBAL ORIENTATION 360 IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-// ---------- Export PDF ----------
-function exportPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let y = 20;
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("Profil Orientation 360 IA", 20, y);
-  y += 10;
+Ce profil regroupe les éléments que tu as sélectionnés :
+- Intérêts
+- Personnalité
+- Valeurs
+
+────────────────────────────────────────
+📌 Rappel : entre 3 et 6 choix par catégorie
+────────────────────────────────────────
+Date : ${new Date().toLocaleDateString("fr-FR")}\n\n`;
 
   Object.keys(selections).forEach(cat => {
-    doc.setFontSize(14);
-    doc.setTextColor(102, 126, 234);
-    doc.text(cat.toUpperCase(), 20, y);
-    y += 8;
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(11);
+    const title = cat.charAt(0).toUpperCase() + cat.slice(1);
+    text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📂 ${title}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
     if (selections[cat].length === 0) {
-      doc.text("Aucune sélection.", 25, y);
-      y += 8;
+      text += "Aucun élément sélectionné.\n\n";
     } else {
-      selections[cat].forEach(i => {
+      selections[cat].forEach((i, index) => {
         const d = window[cat][i];
-        const text = `• ${d.verbes.join(', ')} — ${d.phrase}`;
-        const split = doc.splitTextToSize(text, 170);
-        doc.text(split, 25, y);
-        y += split.length * 6;
+        text += `${index + 1}. ${d.verbes.join(", ")}\n   → ${d.phrase}\n\n`;
       });
     }
-    y += 5;
-    if (y > 270) { doc.addPage(); y = 20; }
   });
 
-  doc.save("profil_orientation360IA.pdf");
+  text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧭 UTILISATION DANS L’IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Colle ce texte dans ChatGPT pour obtenir :
+- ton analyse qualitative,
+- la mise en lien avec les univers métiers,
+- et des pistes personnalisées.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-strong[onclick="copyProfile()"]');
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = "✅ Copié avec succès !";
+      setTimeout(() => (btn.textContent = original), 2500);
+    }
+    alert("✅ Ton profil complet a été copié !\nTu peux maintenant le coller dans ChatGPT.");
+  });
 }
 
-// ---------- Initialisation ----------
-document.addEventListener('DOMContentLoaded', () => {
+// ===================================================
+// EXPORT PDF (placeholder)
+// ===================================================
+
+function exportPDF() {
+  alert("📄 Le téléchargement PDF sera disponible prochainement.");
+}
+
+// ===================================================
+// INITIALISATION AUTOMATIQUE
+// ===================================================
+
+document.addEventListener("DOMContentLoaded", function () {
   goToPage(0);
-  renderSection('interets', interets);
-  renderSection('personnalite', personnalite);
-  renderSection('valeurs', valeurs);
+  ["interets", "personnalite", "valeurs"].forEach(cat => renderCategory(cat));
 });
