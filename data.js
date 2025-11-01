@@ -1,113 +1,67 @@
-// ============================================
-// DATA IA360 — Portail d’Orientation 360°
-// Version sans sous-univers
-// ============================================
+// =======================
+// DONNÉES ORIENTATION 360 IA
+// =======================
 
-// 1️⃣ QUESTIONS (14 intérêts professionnels)
-const questions = [
-  { title: "Bouger, être actif physiquement",
-    description: "Te déplacer sur le terrain, être souvent en mouvement, mobiliser ton corps, ne pas rester derrière un bureau.",
-    examples: "Exemples : faire du sport, marcher, porter, être debout, te déplacer." },
-
-  { title: "Travailler avec tes mains",
-    description: "Fabriquer, assembler, manipuler des objets ou des outils, réparer, créer avec des matériaux.",
-    examples: "Exemples : bricoler, construire, cuisiner, réparer, travailler le bois ou le métal." },
-
-  { title: "Enquêter, observer, comprendre",
-    description: "Observer, comparer, chercher des explications, comprendre des faits, faire des recherches, analyser.",
-    examples: "Exemples : faire des recherches, analyser des situations, résoudre des énigmes." },
-
-  { title: "Explorer les sciences ou les technologies",
-    description: "Faire des expériences, utiliser des outils techniques, comprendre des phénomènes scientifiques ou informatiques.",
-    examples: "Exemples : coder, expérimenter, utiliser des logiciels, manipuler des machines." },
-
-  { title: "Utiliser des chiffres, calculer, raisonner logiquement",
-    description: "Faire des calculs, analyser des données, établir des liens logiques, résoudre des problèmes mathématiques.",
-    examples: "Exemples : statistiques, budget, logique, planification." },
-
-  { title: "Créer artistiquement, imaginer",
-    description: "Dessiner, écrire, inventer, produire du contenu artistique ou visuel.",
-    examples: "Exemples : peindre, écrire, faire de la musique, créer des designs ou vidéos." },
-
-  { title: "Concevoir, résoudre des problèmes, innover",
-    description: "Trouver des idées nouvelles, améliorer ce qui existe, créer des solutions inédites.",
-    examples: "Exemples : lancer un projet, inventer, imaginer un nouveau produit." },
-
-  { title: "Aider, accompagner, prendre soin",
-    description: "Soutenir quelqu’un, résoudre un problème humain, écouter, rassurer, soigner.",
-    examples: "Exemples : écouter, conseiller, soigner, assister des personnes fragiles." },
-
-  { title: "Enseigner, transmettre, expliquer",
-    description: "Partager des connaissances, faire comprendre, former ou accompagner.",
-    examples: "Exemples : donner des cours, former quelqu’un, transmettre ton savoir-faire." },
-
-  { title: "Communiquer, écrire, t’exprimer",
-    description: "Parler, écrire, créer du contenu pour informer ou divertir.",
-    examples: "Exemples : écrire, parler devant un groupe, animer une discussion." },
-
-  { title: "Convaincre, vendre, négocier",
-    description: "Persuader, défendre une idée, influencer ou conclure un accord.",
-    examples: "Exemples : vendre un produit, défendre un projet, convaincre un public." },
-
-  { title: "Organiser, décider, diriger",
-    description: "Planifier, gérer une équipe, prendre des décisions, coordonner un projet.",
-    examples: "Exemples : manager, décider, organiser un événement." },
-
-  { title: "Travailler en autonomie",
-    description: "Être indépendant, gérer ton emploi du temps, avancer seul, prendre des initiatives.",
-    examples: "Exemples : travailler en freelance, gérer ton propre rythme, être ton propre patron." },
-
-  { title: "Suivre un cadre structuré",
-    description: "Appliquer une méthode, suivre des consignes, évoluer dans un environnement organisé et stable.",
-    examples: "Exemples : procédures, hiérarchie, emploi du temps fixe." }
+// INTÉRÊTS
+const interets = [
+  { verbes: ["bouger", "agir", "explorer"], phrase: "J’aime être actif, dehors, bouger, agir concrètement." },
+  { verbes: ["fabriquer", "réparer", "assembler"], phrase: "J’aime manipuler, créer ou construire des objets concrets." },
+  { verbes: ["observer", "analyser", "comprendre"], phrase: "J’aime comprendre le pourquoi des choses, observer et enquêter." },
+  { verbes: ["expérimenter", "tester", "utiliser"], phrase: "J’aime découvrir les sciences et les technologies, comprendre comment ça marche." },
+  { verbes: ["dessiner", "imaginer", "créer"], phrase: "J’aime m’exprimer par la création, l’art ou le design." },
+  { verbes: ["concevoir", "résoudre", "innover"], phrase: "J’aime chercher des idées et trouver des solutions nouvelles." },
+  { verbes: ["aider", "écouter", "accompagner"], phrase: "J’aime soutenir, conseiller ou soigner les autres." },
+  { verbes: ["expliquer", "transmettre", "former"], phrase: "J’aime partager mes connaissances ou aider à apprendre." },
+  { verbes: ["communiquer", "écrire", "parler"], phrase: "J’aime échanger, exprimer mes idées, convaincre." },
+  { verbes: ["convaincre", "vendre", "négocier"], phrase: "J’aime argumenter, défendre une idée ou un projet." },
+  { verbes: ["organiser", "planifier", "décider"], phrase: "J’aime coordonner des activités, prendre des décisions." },
+  { verbes: ["respecter", "suivre", "appliquer"], phrase: "J’aime évoluer dans un cadre structuré et clair." }
 ];
 
-// 2️⃣ UNIVERS (21 domaines professionnels)
-const universNoms = {
-  AGRI: "🌾 Agriculture, Nature & Animaux",
-  ARTS: "🎨 Arts, Design & Création",
-  COMM: "🎙️ Communication, Médias & Culture",
-  BTP:  "🏗️ Construction, BTP & Habitat",
-  DROIT:"⚖️ Droit, Administration & Politique",
-  EDUC:"🎓 Éducation, Formation & Apprentissage",
-  ENV:  "🌍 Environnement, Climat & Énergies",
-  FIN:  "💶 Gestion, Finance & Comptabilité",
-  HOT:  "🍽️ Hôtellerie, Restauration & Tourisme",
-  IND:  "⚙️ Industrie, Fabrication & Production",
-  LOG:  "🚚 Logistique, Transport & Mobilité",
-  MAN:  "💼 Management, Entrepreneuriat & Stratégie",
-  NUM:  "💻 Numérique, Informatique & Data",
-  SANT:"⚕️ Santé, Bien-être & Médical",
-  SCI: "🔬 Sciences, Recherche & Innovation",
-  SEC: "🛡️ Sécurité, Défense & Urgence",
-  SOC: "❤️ Social, Aide & Solidarité",
-  SPORT:"🏋️ Sport, Loisirs & Vie Active",
-  TECH:"🚀 Technologies Émergentes & Futur du Travail",
-  IMMO:"🏠 Immobilier & Patrimoine",
-  COM: "🛒 Commerce, Marketing & Vente"
-};
+// COMPÉTENCES
+const competences = [
+  { verbes: ["analyser", "comparer", "déduire"], phrase: "Je sais observer et comprendre des situations complexes." },
+  { verbes: ["coopérer", "écouter", "soutenir"], phrase: "Je sais travailler avec les autres et les faire progresser." },
+  { verbes: ["créer", "dessiner", "imaginer"], phrase: "Je sais inventer, concevoir, donner forme à des idées." },
+  { verbes: ["organiser", "planifier", "structurer"], phrase: "Je sais gérer un projet ou coordonner une équipe." },
+  { verbes: ["communiquer", "présenter", "rédiger"], phrase: "Je sais m’exprimer clairement à l’oral ou à l’écrit." },
+  { verbes: ["réparer", "assembler", "manipuler"], phrase: "Je sais utiliser mes mains, des outils, ou du matériel." },
+  { verbes: ["convaincre", "négocier", "influencer"], phrase: "Je sais défendre un projet ou une idée avec arguments." },
+  { verbes: ["animer", "motiver", "former"], phrase: "Je sais impliquer des personnes et leur transmettre des savoirs." },
+  { verbes: ["observer", "contrôler", "vérifier"], phrase: "Je sais repérer les erreurs ou les détails importants." },
+  { verbes: ["calculer", "raisonner", "modéliser"], phrase: "Je sais utiliser les chiffres pour résoudre un problème." },
+  { verbes: ["utiliser", "programmer", "tester"], phrase: "Je sais me servir des technologies ou logiciels techniques." },
+  { verbes: ["protéger", "prévoir", "sécuriser"], phrase: "Je sais anticiper les risques et agir avec prudence." }
+];
 
-// 3️⃣ MATRICE PRINCIPALE (0 à 10 — compatibilité par intérêt)
-const matricePrincipale = {
-  AGRI: [8, 9, 3, 2, 3, 2, 4, 5, 2, 1, 1, 3, 7, 6],
-  ARTS: [2, 4, 2, 4, 2, 9, 7, 3, 3, 6, 2, 3, 7, 2],
-  COMM: [3, 2, 5, 4, 5, 6, 6, 3, 5, 9, 7, 6, 6, 4],
-  BTP:  [7, 9, 3, 4, 3, 2, 4, 2, 2, 1, 2, 6, 7, 5],
-  DROIT:[2, 2, 8, 3, 8, 1, 5, 5, 8, 3, 6, 7, 5, 8],
-  EDUC:[3, 2, 6, 3, 5, 2, 5, 9, 9, 6, 3, 5, 5, 6],
-  ENV:  [6, 5, 7, 8, 5, 4, 6, 5, 5, 3, 3, 4, 7, 5],
-  FIN:  [2, 1, 6, 6, 9, 2, 5, 2, 5, 4, 8, 8, 6, 9],
-  HOT:  [5, 6, 3, 3, 3, 4, 4, 7, 5, 5, 8, 6, 7, 6],
-  IND:  [7, 8, 3, 8, 8, 3, 6, 3, 2, 2, 4, 7, 7, 5],
-  LOG:  [6, 7, 3, 4, 5, 2, 4, 3, 2, 3, 5, 8, 8, 5],
-  MAN:  [4, 3, 5, 6, 5, 4, 8, 6, 5, 5, 8, 9, 8, 5],
-  NUM:  [2, 2, 7,10, 8, 4, 9, 2, 4, 4, 4, 6, 8, 3],
-  SANT:[4, 4, 6, 5, 4, 2, 4,10, 9, 3, 2, 4, 5, 7],
-  SCI: [3, 3, 9, 9, 8, 4, 7, 4, 5, 3, 2, 5, 6, 5],
-  SEC: [8, 7, 4, 6, 5, 2, 5, 5, 3, 4, 4, 8, 7, 8],
-  SOC: [3, 2, 5, 3, 3, 2, 4, 9, 9, 4, 4, 5, 5, 6],
-  SPORT:[10,9, 3, 3, 2, 3, 5, 6, 3, 4, 5, 5, 8, 4],
-  TECH:[3, 3, 7,10, 9, 4, 9, 3, 4, 4, 5, 6, 8, 4],
-  IMMO:[3, 4, 4, 3, 8, 2, 5, 3, 3, 5, 7, 8, 7, 8],
-  COM: [3, 3, 4, 4, 4, 4, 6, 4, 5, 9,10, 8, 6, 4]
-};
+// PERSONNALITÉ
+const personnalite = [
+  { verbes: ["curieux", "ouvert", "observateur"], phrase: "Je suis curieux et j’aime apprendre des choses nouvelles." },
+  { verbes: ["sociable", "bienveillant", "empathique"], phrase: "Je suis à l’aise avec les gens et j’aime aider." },
+  { verbes: ["indépendant", "autonome", "déterminé"], phrase: "Je préfère avancer seul, avec mes propres idées." },
+  { verbes: ["créatif", "original", "spontané"], phrase: "J’aime sortir des sentiers battus et proposer des idées neuves." },
+  { verbes: ["réfléchi", "rationnel", "organisé"], phrase: "Je suis logique, méthodique et structuré." },
+  { verbes: ["énergique", "actif", "dynamique"], phrase: "Je suis en mouvement, je n’aime pas rester inactif." },
+  { verbes: ["ambitieux", "leader", "inspirant"], phrase: "Je prends des initiatives et j’aime diriger." },
+  { verbes: ["fiable", "responsable", "consciencieux"], phrase: "On peut compter sur moi, je fais ce que je dis." },
+  { verbes: ["calme", "posé", "patient"], phrase: "Je garde mon sang-froid, même sous pression." },
+  { verbes: ["optimiste", "positif", "enthousiaste"], phrase: "Je vois le bon côté des choses et je motive les autres." },
+  { verbes: ["prudent", "réservé", "mesuré"], phrase: "Je préfère observer avant d’agir." },
+  { verbes: ["persévérant", "rigoureux", "fiable"], phrase: "Je vais au bout de ce que j’entreprends." }
+];
+
+// VALEURS
+const valeurs = [
+  { verbes: ["aider", "servir", "partager"], phrase: "Je veux être utile et contribuer au bien commun." },
+  { verbes: ["protéger", "préserver", "respecter"], phrase: "Je veux agir pour la nature ou l’environnement." },
+  { verbes: ["créer", "innover", "imaginer"], phrase: "Je veux transformer le monde par la créativité." },
+  { verbes: ["réussir", "progresser", "gagner"], phrase: "Je veux atteindre mes objectifs et réussir ce que j’entreprends." },
+  { verbes: ["collaborer", "partager", "écouter"], phrase: "Je veux travailler dans une équipe soudée." },
+  { verbes: ["sécurité", "stabilité", "cadre"], phrase: "Je veux un emploi sûr, des repères clairs." },
+  { verbes: ["liberté", "autonomie", "initiative"], phrase: "Je veux pouvoir choisir mon rythme et mes décisions." },
+  { verbes: ["justice", "égalité", "respect"], phrase: "Je veux défendre des valeurs humaines fortes." },
+  { verbes: ["connaissance", "savoir", "apprentissage"], phrase: "Je veux continuer à apprendre toute ma vie." },
+  { verbes: ["performance", "efficacité", "excellence"], phrase: "Je veux faire les choses à fond, avec exigence." },
+  { verbes: ["audace", "innovation", "prise de risque"], phrase: "Je veux tenter de nouvelles voies, bousculer les habitudes." },
+  { verbes: ["harmonie", "bien-être", "équilibre"], phrase: "Je veux un cadre de vie équilibré et serein." }
+];
