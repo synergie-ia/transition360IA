@@ -1,184 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portail d'Orientation 360 IA</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-      margin: 0;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-    .header {
-      background: white;
-      padding: 40px;
-      text-align: center;
-      border-bottom: 3px solid #667eea;
-    }
-    .header h1 {
-      color: #667eea;
-      font-weight: 700;
-    }
-    .progress-bar {
-      background: #e0e0e0;
-      height: 8px;
-      margin: 20px;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      height: 100%;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-    .content {
-      padding: 40px;
-    }
-    .intro {
-      background: #f8f9fa;
-      border-left: 4px solid #667eea;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-    }
-    .scale-legend {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .question {
-      background: white;
-      border: 2px solid #e0e0e0;
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 30px;
-    }
-    .question:hover {
-      border-color: #667eea;
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-    }
-    input[type="range"] {
-      width: 100%;
-      height: 12px;
-      border-radius: 6px;
-      background: linear-gradient(
-        to right,
-        #e0e0e0 0%,
-        #ff6b6b 10%,
-        #ffa500 30%,
-        #ffd700 50%,
-        #90ee90 70%,
-        #4caf50 100%
-      );
-      outline: none;
-      -webkit-appearance: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: white;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      border: 3px solid #667eea;
-    }
-    .value-display {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
-    .btn {
-      padding: 15px 25px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      margin: 5px;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-    }
-    .btn-secondary {
-      background: #e0e0e0;
-      color: #333;
-    }
-    .btn-success {
-      background: #4caf50;
-      color: white;
-    }
-    .results,
-    .univers {
-      display: none;
-    }
-    .active {
-      display: block;
-    }
-    .univers-card {
-      background: white;
-      border: 2px solid #e0e0e0;
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orientation 360 IA</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🎯 Portail d’Orientation 360° IA</h1>
-      <p>Découvre les univers professionnels qui te correspondent</p>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    </div>
+  <div class="container" id="app">
 
-    <div class="content" id="questionnaire">
-      <div class="intro">
-        <h2>📋 Évalue tes intérêts professionnels</h2>
-        <p>Pour chaque activité, glisse la réglette de 0 à 10 selon ton niveau d’intérêt.</p>
+    <!-- PAGE D’ACCUEIL -->
+    <section id="welcome">
+      <h1>Bienvenue sur <span class="highlight">Orientation 360 IA</span></h1>
+      <p class="intro">
+        Voilà comment ça va se passer : tu vas passer quatre étapes — tes <strong>intérêts</strong>, tes <strong>compétences</strong>,
+        ta <strong>personnalité</strong> et tes <strong>valeurs</strong>.  
+        À la fin, tu pourras <strong>copier ou imprimer ton profil</strong> pour le transmettre à l’intelligence artificielle.
+      </p>
+      <button class="btn" onclick="goToPage(1)">Commencer le questionnaire</button>
+    </section>
+
+    <!-- PAGE INTÉRÊTS -->
+    <section id="page1" class="page">
+      <h2>1. Tes intérêts</h2>
+      <p>Choisis les verbes ou phrases qui te ressemblent le plus (maximum 6).</p>
+      <div id="interets" class="bloc"></div>
+      <div class="nav">
+        <button class="btn next" onclick="goToPage(2)">Suivant</button>
       </div>
+    </section>
 
-      <div class="scale-legend">
-        <div>⚪<br />0-1<br />Pas du tout</div>
-        <div>🔴<br />2-3<br />Très peu</div>
-        <div>🟠<br />4-5<br />Un peu</div>
-        <div>🟡<br />6-7<br />Plutôt oui</div>
-        <div>🟢<br />8-9<br />Beaucoup</div>
-        <div>💚<br />10<br />Totalement</div>
+    <!-- PAGE COMPÉTENCES -->
+    <section id="page2" class="page">
+      <h2>2. Tes compétences</h2>
+      <p>Ce que tu sais faire naturellement ou as déjà appris (maximum 6).</p>
+      <div id="competences" class="bloc"></div>
+      <div class="nav">
+        <button class="btn prev" onclick="goToPage(1)">Précédent</button>
+        <button class="btn next" onclick="goToPage(3)">Suivant</button>
       </div>
+    </section>
 
-      <div id="questions-container"></div>
-      <button class="btn btn-primary" onclick="showResults()">✅ Voir mon profil</button>
-    </div>
+    <!-- PAGE PERSONNALITÉ -->
+    <section id="page3" class="page">
+      <h2>3. Ta personnalité</h2>
+      <p>Comment tu es dans la vie de tous les jours (maximum 6).</p>
+      <div id="personnalite" class="bloc"></div>
+      <div class="nav">
+        <button class="btn prev" onclick="goToPage(2)">Précédent</button>
+        <button class="btn next" onclick="goToPage(4)">Suivant</button>
+      </div>
+    </section>
 
-    <div class="content results" id="results">
-      <h2>🎯 Ton profil d’intérêts</h2>
-      <div id="profile-list"></div>
-      <button class="btn btn-success" onclick="showUnivers()">🌟 Découvrir mes univers</button>
-    </div>
+    <!-- PAGE VALEURS -->
+    <section id="page4" class="page">
+      <h2>4. Tes valeurs</h2>
+      <p>Ce qui est important pour toi dans le travail et dans la vie (maximum 6).</p>
+      <div id="valeurs" class="bloc"></div>
+      <div class="nav">
+        <button class="btn prev" onclick="goToPage(3)">Précédent</button>
+        <button class="btn next" onclick="showSummary()">Voir mon profil</button>
+      </div>
+    </section>
 
-    <div class="content univers" id="univers">
-      <h2>🌍 Tes univers professionnels</h2>
-      <div id="univers-container"></div>
-      <button class="btn btn-secondary" onclick="backToProfile()">← Retour</button>
-    </div>
+    <!-- PAGE RÉCAPITULATIF -->
+    <section id="summary" class="page">
+      <h2>📋 Ton profil global</h2>
+      <div id="recap"></div>
+      <div class="nav">
+        <button class="btn prev" onclick="goToPage(4)">Précédent</button>
+        <button class="btn" onclick="copyProfile()">📋 Copier</button>
+        <button class="btn" onclick="window.print()">🖨️ Imprimer</button>
+      </div>
+    </section>
+
   </div>
 
   <script src="data.js"></script>
