@@ -1,67 +1,48 @@
-// =======================
-// DONNÉES ORIENTATION 360 IA
-// =======================
+// ===============================
+// DONNÉES : 3 BLOCS PRINCIPAUX
+// ===============================
 
-// INTÉRÊTS
 const interets = [
-  { verbes: ["bouger", "agir", "explorer"], phrase: "J’aime être actif, dehors, bouger, agir concrètement." },
-  { verbes: ["fabriquer", "réparer", "assembler"], phrase: "J’aime manipuler, créer ou construire des objets concrets." },
-  { verbes: ["observer", "analyser", "comprendre"], phrase: "J’aime comprendre le pourquoi des choses, observer et enquêter." },
-  { verbes: ["expérimenter", "tester", "utiliser"], phrase: "J’aime découvrir les sciences et les technologies, comprendre comment ça marche." },
-  { verbes: ["dessiner", "imaginer", "créer"], phrase: "J’aime m’exprimer par la création, l’art ou le design." },
-  { verbes: ["concevoir", "résoudre", "innover"], phrase: "J’aime chercher des idées et trouver des solutions nouvelles." },
-  { verbes: ["aider", "écouter", "accompagner"], phrase: "J’aime soutenir, conseiller ou soigner les autres." },
-  { verbes: ["expliquer", "transmettre", "former"], phrase: "J’aime partager mes connaissances ou aider à apprendre." },
-  { verbes: ["communiquer", "écrire", "parler"], phrase: "J’aime échanger, exprimer mes idées, convaincre." },
-  { verbes: ["convaincre", "vendre", "négocier"], phrase: "J’aime argumenter, défendre une idée ou un projet." },
-  { verbes: ["organiser", "planifier", "décider"], phrase: "J’aime coordonner des activités, prendre des décisions." },
-  { verbes: ["respecter", "suivre", "appliquer"], phrase: "J’aime évoluer dans un cadre structuré et clair." }
+  { verbes: ["Bouger", "Agir", "Participer"], phrase: "Tu aimes les environnements actifs où il faut bouger, participer et agir concrètement." },
+  { verbes: ["Créer", "Imaginer", "Exprimer"], phrase: "Tu prends plaisir à concevoir, inventer et exprimer des idées ou des émotions." },
+  { verbes: ["Observer", "Comprendre", "Analyser"], phrase: "Tu aimes explorer les faits, comprendre comment les choses fonctionnent." },
+  { verbes: ["Découvrir", "Expérimenter", "Apprendre"], phrase: "Tu es curieux·se et apprécies les environnements où l’on découvre et apprend sans cesse." },
+  { verbes: ["Aider", "Écouter", "Accompagner"], phrase: "Tu te sens bien quand tu peux soutenir, guider ou améliorer la vie des autres." },
+  { verbes: ["Organiser", "Structurer", "Ranger"], phrase: "Tu préfères les cadres clairs et apprécies la rigueur et l’ordre." },
+  { verbes: ["Convaincre", "Vendre", "Négocier"], phrase: "Tu te sens à l’aise pour influencer, présenter ou défendre une idée." },
+  { verbes: ["Décider", "Diriger", "Initier"], phrase: "Tu aimes prendre des décisions, coordonner ou être à l’origine d’un projet." },
+  { verbes: ["Réparer", "Assembler", "Fabriquer"], phrase: "Tu aimes manipuler, construire, réparer ou travailler de tes mains." },
+  { verbes: ["Écrire", "Communiquer", "Transmettre"], phrase: "Tu aimes partager des idées, informer ou t’exprimer par le langage." },
+  { verbes: ["Protéger", "Préserver", "Entretenir"], phrase: "Tu te sens concerné·e par la nature, les autres ou le vivant." },
+  { verbes: ["Explorer", "Voyager", "Rencontrer"], phrase: "Tu es attiré·e par les découvertes, les cultures et les nouvelles expériences." }
 ];
 
-// COMPÉTENCES
-const competences = [
-  { verbes: ["analyser", "comparer", "déduire"], phrase: "Je sais observer et comprendre des situations complexes." },
-  { verbes: ["coopérer", "écouter", "soutenir"], phrase: "Je sais travailler avec les autres et les faire progresser." },
-  { verbes: ["créer", "dessiner", "imaginer"], phrase: "Je sais inventer, concevoir, donner forme à des idées." },
-  { verbes: ["organiser", "planifier", "structurer"], phrase: "Je sais gérer un projet ou coordonner une équipe." },
-  { verbes: ["communiquer", "présenter", "rédiger"], phrase: "Je sais m’exprimer clairement à l’oral ou à l’écrit." },
-  { verbes: ["réparer", "assembler", "manipuler"], phrase: "Je sais utiliser mes mains, des outils, ou du matériel." },
-  { verbes: ["convaincre", "négocier", "influencer"], phrase: "Je sais défendre un projet ou une idée avec arguments." },
-  { verbes: ["animer", "motiver", "former"], phrase: "Je sais impliquer des personnes et leur transmettre des savoirs." },
-  { verbes: ["observer", "contrôler", "vérifier"], phrase: "Je sais repérer les erreurs ou les détails importants." },
-  { verbes: ["calculer", "raisonner", "modéliser"], phrase: "Je sais utiliser les chiffres pour résoudre un problème." },
-  { verbes: ["utiliser", "programmer", "tester"], phrase: "Je sais me servir des technologies ou logiciels techniques." },
-  { verbes: ["protéger", "prévoir", "sécuriser"], phrase: "Je sais anticiper les risques et agir avec prudence." }
-];
-
-// PERSONNALITÉ
 const personnalite = [
-  { verbes: ["curieux", "ouvert", "observateur"], phrase: "Je suis curieux et j’aime apprendre des choses nouvelles." },
-  { verbes: ["sociable", "bienveillant", "empathique"], phrase: "Je suis à l’aise avec les gens et j’aime aider." },
-  { verbes: ["indépendant", "autonome", "déterminé"], phrase: "Je préfère avancer seul, avec mes propres idées." },
-  { verbes: ["créatif", "original", "spontané"], phrase: "J’aime sortir des sentiers battus et proposer des idées neuves." },
-  { verbes: ["réfléchi", "rationnel", "organisé"], phrase: "Je suis logique, méthodique et structuré." },
-  { verbes: ["énergique", "actif", "dynamique"], phrase: "Je suis en mouvement, je n’aime pas rester inactif." },
-  { verbes: ["ambitieux", "leader", "inspirant"], phrase: "Je prends des initiatives et j’aime diriger." },
-  { verbes: ["fiable", "responsable", "consciencieux"], phrase: "On peut compter sur moi, je fais ce que je dis." },
-  { verbes: ["calme", "posé", "patient"], phrase: "Je garde mon sang-froid, même sous pression." },
-  { verbes: ["optimiste", "positif", "enthousiaste"], phrase: "Je vois le bon côté des choses et je motive les autres." },
-  { verbes: ["prudent", "réservé", "mesuré"], phrase: "Je préfère observer avant d’agir." },
-  { verbes: ["persévérant", "rigoureux", "fiable"], phrase: "Je vais au bout de ce que j’entreprends." }
+  { verbes: ["Curieux", "Ouvert", "Réfléchi"], phrase: "Tu cherches à comprendre avant d’agir, et aimes explorer les idées nouvelles." },
+  { verbes: ["Sociable", "Empathique", "Communicatif"], phrase: "Tu t’intéresses sincèrement aux autres et tu sais créer du lien." },
+  { verbes: ["Rigoureux", "Méthodique", "Fiable"], phrase: "Tu apprécies les choses bien faites et respectes les règles établies." },
+  { verbes: ["Créatif", "Spontané", "Imaginatif"], phrase: "Tu aimes trouver des idées originales et expérimenter de nouvelles voies." },
+  { verbes: ["Calme", "Patient", "Posé"], phrase: "Tu sais garder ton sang-froid, même quand les autres s’agitent." },
+  { verbes: ["Autonome", "Déterminé", "Persévérant"], phrase: "Tu aimes avancer à ton rythme et mener tes projets jusqu’au bout." },
+  { verbes: ["Ambitieux", "Confiant", "Décideur"], phrase: "Tu assumes tes choix et cherches à te dépasser." },
+  { verbes: ["Prudent", "Réservé", "Discret"], phrase: "Tu préfères observer avant d’agir et avancer sans te précipiter." },
+  { verbes: ["Chaleureux", "Bienveillant", "Attentif"], phrase: "Tu es attentif·ve aux émotions et à l’ambiance autour de toi." },
+  { verbes: ["Logique", "Rationnel", "Précis"], phrase: "Tu aimes raisonner avec méthode et trouver des solutions cohérentes." },
+  { verbes: ["Flexible", "Adaptable", "Optimiste"], phrase: "Tu t’adaptes facilement aux changements et gardes le sourire." },
+  { verbes: ["Visionnaire", "Idéaliste", "Passionné"], phrase: "Tu crois en des projets porteurs de sens et d’avenir." }
 ];
 
-// VALEURS
 const valeurs = [
-  { verbes: ["aider", "servir", "partager"], phrase: "Je veux être utile et contribuer au bien commun." },
-  { verbes: ["protéger", "préserver", "respecter"], phrase: "Je veux agir pour la nature ou l’environnement." },
-  { verbes: ["créer", "innover", "imaginer"], phrase: "Je veux transformer le monde par la créativité." },
-  { verbes: ["réussir", "progresser", "gagner"], phrase: "Je veux atteindre mes objectifs et réussir ce que j’entreprends." },
-  { verbes: ["collaborer", "partager", "écouter"], phrase: "Je veux travailler dans une équipe soudée." },
-  { verbes: ["sécurité", "stabilité", "cadre"], phrase: "Je veux un emploi sûr, des repères clairs." },
-  { verbes: ["liberté", "autonomie", "initiative"], phrase: "Je veux pouvoir choisir mon rythme et mes décisions." },
-  { verbes: ["justice", "égalité", "respect"], phrase: "Je veux défendre des valeurs humaines fortes." },
-  { verbes: ["connaissance", "savoir", "apprentissage"], phrase: "Je veux continuer à apprendre toute ma vie." },
-  { verbes: ["performance", "efficacité", "excellence"], phrase: "Je veux faire les choses à fond, avec exigence." },
-  { verbes: ["audace", "innovation", "prise de risque"], phrase: "Je veux tenter de nouvelles voies, bousculer les habitudes." },
-  { verbes: ["harmonie", "bien-être", "équilibre"], phrase: "Je veux un cadre de vie équilibré et serein." }
+  { verbes: ["Justice", "Équité", "Respect"], phrase: "Tu attaches de l’importance à la justice, au respect et à la dignité humaine." },
+  { verbes: ["Liberté", "Autonomie", "Indépendance"], phrase: "Tu veux pouvoir choisir et agir sans contrainte inutile." },
+  { verbes: ["Créativité", "Innovation", "Expression"], phrase: "Tu valorises les idées nouvelles et la liberté d’expression." },
+  { verbes: ["Sécurité", "Stabilité", "Confiance"], phrase: "Tu préfères les environnements prévisibles et rassurants." },
+  { verbes: ["Solidarité", "Partage", "Altruisme"], phrase: "Tu veux contribuer positivement à la vie collective." },
+  { verbes: ["Réussite", "Performance", "Reconnaissance"], phrase: "Tu es motivé·e par le succès et la progression." },
+  { verbes: ["Respect de la nature", "Écologie", "Durabilité"], phrase: "Tu veux préserver le vivant et réduire ton impact." },
+  { verbes: ["Connaissance", "Savoir", "Transmission"], phrase: "Tu attaches de la valeur à l’apprentissage et à la culture." },
+  { verbes: ["Beauté", "Esthétique", "Harmonie"], phrase: "Tu recherches la cohérence, le beau et le sens des formes." },
+  { verbes: ["Responsabilité", "Engagement", "Fiabilité"], phrase: "Tu assumes ce que tu fais et respectes tes engagements." },
+  { verbes: ["Courage", "Audace", "Initiative"], phrase: "Tu n’as pas peur de prendre des risques et d’agir avec conviction." },
+  { verbes: ["Humilité", "Simplicité", "Authenticité"], phrase: "Tu restes toi-même et valorises la sincérité dans les relations." }
 ];
