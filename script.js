@@ -1,94 +1,100 @@
-// ============================================
-// SCRIPT IA360 - Calcul avec exposants
-// ============================================
+// =======================
+// SCRIPT PRINCIPAL IA360
+// =======================
 
-let responses = new Array(14).fill(5);
-let universResults = [];
+let currentPage = 0;
+const selections = { interets: [], competences: [], personnalite: [], valeurs: [] };
+const maxChoices = 6;
 
-// Exposant progressif selon intensité
-function powerFor(value) {
-  if (value <= 3) return 1;
-  if (value <= 7) return 1.05;
-  return 1.1;
+// Changement de page
+function goToPage(page) {
+  document.querySelectorAll('.page, #welcome').forEach(p => p.style.display = 'none');
+  const next = document.getElementById(page === 0 ? 'welcome' : `page${page}`);
+  if (next) next.style.display = 'block';
+  currentPage = page;
 }
 
-// === Calcul principal ===
-function calculerMatching(profilUtilisateur, matriceUnivers) {
-  const results = [];
-  for (const [univers, valeurs] of Object.entries(matriceUnivers)) {
-    let score = 0;
-    let somme = 0;
-    for (let i = 0; i < 14; i++) {
-      const expo = powerFor(valeurs[i]);
-      score += Math.pow(profilUtilisateur[i], expo);
-      somme += Math.pow(10, expo);
+// Génération des blocs de verbes
+function renderSection(id, data) {
+  const container = document.getElementById(id);
+  container.innerHTML = '';
+
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <label>
+        <input type="checkbox" onchange="toggleChoice('${id}', ${i}, this)">
+        <div class="content">
+          <div class="verbs">${item.verbes.join(', ')}</div>
+          <div class="phrase">${item.phrase}</div>
+        </div>
+      </label>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleChoice(category, index, checkbox) {
+  if (checkbox.checked) {
+    if (selections[category].length >= maxChoices) {
+      alert(`Tu ne peux choisir que ${maxChoices} éléments maximum.`);
+      checkbox.checked = false;
+      return;
     }
-    const pourcentage = (score / somme) * 100;
-    results.push({
-      nom: univers,
-      nomComplet: universNoms[univers],
-      pourcentage: Math.round(pourcentage),
-      sousUnivers: sousUnivers[univers]
-    });
+    selections[category].push(index);
+  } else {
+    selections[category] = selections[category].filter(i => i !== index);
   }
-  return results.sort((a, b) => b.pourcentage - a.pourcentage);
 }
 
-// === Interface ===
-function renderQuestions() {
-  const c = document.getElementById('questions-container');
-  c.innerHTML = '';
-  questions.forEach((q, i) => {
-    c.innerHTML += `
-      <div class="question">
-        <h3>${i + 1}. ${q.title}</h3>
-        <p>${q.description}</p>
-        <p><i>${q.examples}</i></p>
-        <input type="range" min="0" max="10" value="${responses[i]}" oninput="updateValue(${i},this.value)">
-        <div class="value-display" id="val${i}">${responses[i]}/10</div>
-      </div>`;
+// Affichage du récapitulatif
+function showSummary() {
+  goToPage('summary');
+  const recap = document.getElementById('recap');
+  recap.innerHTML = '';
+
+  Object.keys(selections).forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'recap-section';
+    section.innerHTML = `<h3>${cat.toUpperCase()}</h3>`;
+
+    if (selections[cat].length === 0) {
+      section.innerHTML += `<p><em>Aucune sélection</em></p>`;
+    } else {
+      const list = document.createElement('ul');
+      selections[cat].forEach(i => {
+        const data = window[cat][i];
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${data.verbes.join(', ')}</strong> — ${data.phrase}`;
+        list.appendChild(li);
+      });
+      section.appendChild(list);
+    }
+    recap.appendChild(section);
   });
 }
 
-function updateValue(i, val) {
-  responses[i] = Number(val);
-  document.getElementById(`val${i}`).textContent = `${val}/10`;
-}
-
-function showResults() {
-  document.getElementById('questionnaire').style.display = 'none';
-  document.getElementById('results').classList.add('active');
-  universResults = calculerMatching(responses, matricePrincipale);
-  renderProfile();
-}
-
-function renderProfile() {
-  const p = document.getElementById('profile-list');
-  p.innerHTML = '';
-  questions.forEach((q, i) => {
-    p.innerHTML += `<div>${i + 1}. ${q.title} : ${responses[i]}/10</div>`;
+// Copier le profil final
+function copyProfile() {
+  let text = '🎯 PROFIL GLOBAL ORIENTATION 360 IA\n\n';
+  Object.keys(selections).forEach(cat => {
+    text += `--- ${cat.toUpperCase()} ---\n`;
+    selections[cat].forEach(i => {
+      const d = window[cat][i];
+      text += `• ${d.verbes.join(', ')} — ${d.phrase}\n`;
+    });
+    text += '\n';
   });
+  navigator.clipboard.writeText(text);
+  alert('Profil copié dans le presse-papiers !');
 }
 
-function showUnivers() {
-  document.getElementById('results').classList.remove('active');
-  const u = document.getElementById('univers');
-  u.classList.add('active');
-  const c = document.getElementById('univers-container');
-  c.innerHTML = '';
-  universResults.forEach((uRes, i) => {
-    c.innerHTML += `
-      <div class="univers-card">
-        <h3>#${i + 1} ${uRes.nomComplet}</h3>
-        <p><b>${uRes.pourcentage}%</b> de compatibilité</p>
-        <ul>${uRes.sousUnivers.map(su => `<li>${su}</li>`).join('')}</ul>
-      </div>`;
-  });
-}
-
-function backToProfile() {
-  document.getElementById('univers').classList.remove('active');
-  document.getElementById('results').classList.add('active');
-}
-
-document.addEventListener('DOMContentLoaded', renderQuestions);
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+  goToPage(0);
+  renderSection('interets', interets);
+  renderSection('competences', competences);
+  renderSection('personnalite', personnalite);
+  renderSection('valeurs', valeurs);
+});
