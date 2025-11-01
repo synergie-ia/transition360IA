@@ -1,4 +1,4 @@
-// Liste des 14 intérêts
+// 14 intérêts (fixes)
 const INTERETS = [
   "Bouger, être actif physiquement",
   "Travailler avec tes mains",
@@ -16,7 +16,7 @@ const INTERETS = [
   "Suivre un cadre structuré"
 ];
 
-// Liste des univers
+// 21 univers (émojis + libellés)
 const UNIVERS = [
   "🌾 Agriculture, Nature & Animaux",
   "🎨 Arts, Design & Création",
@@ -41,27 +41,28 @@ const UNIVERS = [
   "🚀 Technologies Émergentes & Futur du Travail"
 ];
 
-// Matrice univers × intérêts (10 = structurant, 6 = important, 4 = secondaire, 1 = faible)
+// MATRICE univers × intérêts
+// Valeurs autorisées : 2 (faible), 4 (secondaire), 6 (important), 8 (très important), 10 (structurant)
 const MATRICE_UNIVERS = {
-  "🌾 Agriculture, Nature & Animaux":      [10,10,6,4,2,4,6,6,3,2,1,2,8,2],
-  "🎨 Arts, Design & Création":            [2,8,4,3,2,10,8,3,4,6,3,3,6,2],
-  "🛒 Commerce, Marketing & Vente":        [2,3,3,2,4,4,5,2,5,7,10,8,6,3],
-  "🎙️ Communication, Médias & Culture":   [2,2,4,3,3,6,5,3,6,10,8,5,5,3],
-  "🏗️ Construction, BTP & Habitat":       [8,9,6,6,5,3,6,3,3,3,2,5,6,4],
-  "⚖️ Droit, Administration & Politique": [2,2,6,6,8,3,6,4,5,6,6,10,6,8],
-  "🎓 Éducation, Formation & Apprentissage":[2,3,4,5,5,3,5,7,10,6,4,5,6,4],
-  "🌍 Environnement, Climat & Énergies":   [5,6,8,8,7,4,7,6,5,5,4,6,7,3],
-  "💶 Gestion, Finance & Comptabilité":    [2,2,4,7,10,2,6,3,3,4,5,8,8,7],
-  "🍽️ Hôtellerie, Restauration & Tourisme":[8,7,4,4,3,5,5,6,5,7,8,5,5,3],
-  "🏠 Immobilier & Patrimoine":            [5,6,4,4,6,3,5,3,3,5,8,8,6,5],
-  "⚙️ Industrie, Fabrication & Production":[6,8,6,8,8,4,8,3,3,4,3,6,6,4],
-  "🚚 Logistique, Transport & Mobilité":   [9,8,5,6,5,3,5,3,3,3,3,6,7,4],
-  "💼 Management, Entrepreneuriat & Stratégie":[3,4,4,6,7,5,8,4,6,6,8,10,9,4],
-  "💻 Numérique, Informatique & Data":     [1,2,6,10,8,6,10,2,2,5,4,5,8,4],
-  "⚕️ Santé, Bien-être & Médical":         [3,4,6,6,5,3,5,10,7,5,3,5,6,4],
-  "🔬 Sciences, Recherche & Innovation":   [2,3,10,10,8,4,9,4,6,4,3,4,7,3],
-  "🛡️ Sécurité, Défense & Urgence":       [8,7,6,6,6,2,5,6,3,4,4,8,8,6],
-  "❤️ Social, Aide & Solidarité":         [3,3,5,4,3,3,4,10,8,5,3,5,6,3],
-  "🏋️ Sport, Loisirs & Vie Active":       [10,8,4,4,3,3,4,5,4,6,5,4,8,3],
-  "🚀 Technologies Émergentes & Futur du Travail":[2,3,8,10,8,5,9,3,4,5,5,7,7,4]
+  "🌾 Agriculture, Nature & Animaux":             [10,10, 6, 4, 2, 4, 6, 6, 4, 2, 2, 2,10, 2],
+  "🎨 Arts, Design & Création":                   [ 2, 8, 4, 4, 2,10, 8, 4, 4, 6, 4, 4, 6, 2],
+  "🛒 Commerce, Marketing & Vente":               [ 2, 4, 4, 4, 4, 4, 4, 4, 4, 8,10, 8, 8, 4],
+  "🎙️ Communication, Médias & Culture":          [ 2, 4, 4, 4, 4, 8, 6, 4, 4,10, 8, 6, 6, 4],
+  "🏗️ Construction, BTP & Habitat":              [ 8,10, 4, 4, 4, 4, 6, 2, 4, 2, 2, 6, 6, 8],
+  "⚖️ Droit, Administration & Politique":        [ 2, 2, 8, 4, 8, 4, 6, 4, 6, 6, 4,10, 6, 8],
+  "🎓 Éducation, Formation & Apprentissage":      [ 2, 4, 4, 4, 4, 4, 4, 8,10, 6, 4, 4, 6, 4],
+  "🌍 Environnement, Climat & Énergies":         [ 6, 8, 8, 8, 8, 4, 8, 4, 4, 4, 4, 4, 8, 4],
+  "💶 Gestion, Finance & Comptabilité":           [ 2, 2, 6, 8,10, 4, 8, 2, 4, 4, 4, 8, 6, 8],
+  "🍽️ Hôtellerie, Restauration & Tourisme":      [ 8, 8, 4, 4, 2, 4, 4, 8, 4, 6, 8, 6, 8, 4],
+  "🏠 Immobilier & Patrimoine":                   [ 4, 4, 4, 4, 8, 4, 4, 4, 4, 4, 8, 8, 8, 4],
+  "⚙️ Industrie, Fabrication & Production":       [ 8,10, 6, 8, 8, 4, 8, 2, 4, 4, 4, 6, 8, 6],
+  "🚚 Logistique, Transport & Mobilité":          [ 8, 8, 4, 4, 4, 2, 4, 2, 2, 4, 6, 6, 8, 8],
+  "💼 Management, Entrepreneuriat & Stratégie":   [ 4, 4, 4, 6, 8, 4, 8, 4, 6, 6, 8,10,10, 4],
+  "💻 Numérique, Informatique & Data":            [ 2, 2, 6,10, 8, 6,10, 2, 2, 4, 4, 4,10, 4],
+  "⚕️ Santé, Bien-être & Médical":                [ 4, 4, 4, 4, 4, 4, 6,10, 6, 4, 4, 4, 6, 4],
+  "🔬 Sciences, Recherche & Innovation":          [ 2, 2,10,10, 8, 4,10, 4, 4, 4, 4, 4, 8, 4],
+  "🛡️ Sécurité, Défense & Urgence":              [ 8, 8, 6, 4, 4, 4, 6, 6, 4, 4, 4, 6, 8, 6],
+  "❤️ Social, Aide & Solidarité":                [ 4, 4, 4, 4, 4, 4, 4,10, 8, 6, 4, 4, 6, 4],
+  "🏋️ Sport, Loisirs & Vie Active":              [10, 8, 4, 4, 2, 4, 4, 8, 4, 6, 6, 6, 8, 4],
+  "🚀 Technologies Émergentes & Futur du Travail":[ 4, 4, 8,10, 8, 8,10, 4, 4, 4, 4, 4, 8, 4]
 };
