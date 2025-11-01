@@ -2,41 +2,146 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IA360 — Intérêts & Univers</title>
-  <script src="data.js"></script>
-  <script src="script.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portail d'Orientation 360 IA</title>
+
   <style>
-    body{font-family:Arial, sans-serif; margin:32px; line-height:1.4}
-    h1{margin:0 0 8px}
-    .sub{color:#555; margin:0 0 24px}
-    .question{margin:12px 0 18px}
-    label{display:block; font-weight:bold; margin-bottom:6px}
-    input[type="range"]{width:100%}
-    .row{display:flex; gap:8px; align-items:center}
-    .tag{min-width:40px; text-align:right; font-variant-numeric:tabular-nums}
-    button{background:#000;color:#fff;border:0;border-radius:6px;padding:10px 16px;cursor:pointer}
-    button:hover{background:#333}
-    .result{margin-top:28px; border-top:2px solid #000; padding-top:18px}
-    .univers{margin:6px 0}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
-    .legend{font-size:14px; color:#444; margin-top:8px}
+    /* --- STYLE ORIGINAL CONSERVÉ --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+           background: #f5f5f5; min-height: 100vh; padding: 20px; }
+
+    .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px;
+                 box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+
+    .header { background: white; color: #333; padding: 40px; text-align: center; border-bottom: 3px solid #667eea; }
+    .header h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 700; color: #667eea; }
+    .header p { font-size: 1.1rem; color: #666; }
+
+    .progress-bar { background: #e0e0e0; height: 8px; margin: 20px 40px 0; border-radius: 4px; overflow: hidden; }
+    .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.3s ease; }
+
+    .content { padding: 40px; }
+    .intro { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+    .intro h2 { color: #667eea; margin-bottom: 10px; }
+
+    .scale-legend { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 30px;
+                    padding: 20px; background: #f8f9fa; border-radius: 10px; }
+    .scale-item { text-align: center; }
+    .scale-item .emoji { font-size: 2rem; margin-bottom: 5px; }
+    .scale-item .label { font-weight: 600; font-size: 0.85rem; margin-bottom: 3px; }
+    .scale-item .range { font-size: 0.8rem; color: #666; }
+
+    .question { margin-bottom: 40px; padding: 30px; background: #ffffff;
+                border: 2px solid #e0e0e0; border-radius: 15px; transition: all 0.3s ease; }
+    .question:hover { border-color: #667eea; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1); }
+
+    .question-number { display: inline-block; background: #667eea; color: white; padding: 5px 12px;
+                       border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
+    .question-title { font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 10px; }
+    .question-description { color: #666; line-height: 1.6; margin-bottom: 8px; }
+    .question-examples { color: #888; font-size: 0.9rem; font-style: italic; }
+
+    .slider-container { margin: 25px 0; }
+    .slider-labels { display: flex; justify-content: space-between; margin-bottom: 10px;
+                     font-size: 0.9rem; color: #666; }
+
+    input[type="range"] {
+      width: 100%; height: 12px; border-radius: 6px;
+      background: linear-gradient(to right, #e0e0e0 0%, #ff6b6b 10%, #ffa500 30%, #ffd700 50%, #90EE90 70%, #4CAF50 100%);
+      outline: none; -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%;
+      background: white; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      border: 3px solid #667eea;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 28px; height: 28px; border-radius: 50%; background: white;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3); border: 3px solid #667eea;
+    }
+
+    .value-display { text-align: center; margin-top: 15px; font-size: 1.3rem; font-weight: 600; }
+    .buttons { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+    .btn { flex: 1; min-width: 200px; padding: 15px 30px; border: none; border-radius: 10px;
+           font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+    .btn-secondary { background: #e0e0e0; color: #666; }
+    .btn-success { background: #4CAF50; color: white; }
+
+    .results, #univers-section { display: none; }
+    .results.active, #univers-section.active { display: block; }
   </style>
 </head>
+
 <body>
-  <h1>🎯 Mes intérêts & mes univers</h1>
-  <p class="sub">Glisse chaque réglette (0 → 10), puis clique sur <b>Calculer mes univers</b>.</p>
+  <div class="container">
+    <div class="header">
+      <h1>🎯 Bienvenue sur le Portail d'Orientation 360 IA</h1>
+      <p>Découvre les univers professionnels qui te correspondent</p>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
 
-  <div id="questions"></div>
+    <div class="content">
+      <!-- QUESTIONNAIRE -->
+      <div id="questionnaire">
+        <div class="intro">
+          <h2>📋 Évalue tes intérêts professionnels</h2>
+          <p><strong>Instructions :</strong> Pour chaque activité, évalue ton niveau d'intérêt sur une échelle de 0 à 10.</p>
+          <p style="margin-top: 10px;">Sois honnête avec toi-même, il n'y a pas de bonnes ou mauvaises réponses !</p>
+        </div>
 
-  <div class="legend">
-    Barème univers (interne)&nbsp;: 2 = faible · 4 = secondaire · 6 = important · 8 = très important · 10 = structurant
+        <div class="scale-legend">
+          <div class="scale-item"><div class="emoji">⚪</div><div class="label">Pas du tout</div><div class="range">0-1</div></div>
+          <div class="scale-item"><div class="emoji">🔴</div><div class="label">Très peu</div><div class="range">2-3</div></div>
+          <div class="scale-item"><div class="emoji">🟠</div><div class="label">Un peu</div><div class="range">4-5</div></div>
+          <div class="scale-item"><div class="emoji">🟡</div><div class="label">Plutôt oui</div><div class="range">6-7</div></div>
+          <div class="scale-item"><div class="emoji">🟢</div><div class="label">Beaucoup</div><div class="range">8-9</div></div>
+          <div class="scale-item"><div class="emoji">💚</div><div class="label">Totalement</div><div class="range">10</div></div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="buttons">
+          <button class="btn btn-secondary" onclick="resetForm()">🔄 Recommencer</button>
+          <button class="btn btn-primary" onclick="showResults()">✅ Voir mon profil</button>
+        </div>
+      </div>
+
+      <!-- RÉSULTATS -->
+      <div id="results" class="results">
+        <div class="profile-summary">
+          <h2>🎯 Ton Profil d'Intérêts</h2>
+          <div id="profile-list"></div>
+        </div>
+
+        <div class="export-section">
+          <h3>📋 Ton profil détaillé</h3>
+          <div class="export-text" id="exportText"></div>
+          <button class="btn btn-success" onclick="copyProfile()">📋 Copier mon profil</button>
+        </div>
+
+        <div class="buttons">
+          <button class="btn btn-secondary" onclick="backToQuestions()">← Modifier mes réponses</button>
+          <button class="btn btn-primary" onclick="showUnivers()">🌟 Découvrir mes univers</button>
+        </div>
+      </div>
+
+      <!-- UNIVERS -->
+      <div id="univers-section">
+        <div id="univers-container"></div>
+        <div class="buttons" style="margin-top: 30px;">
+          <button class="btn btn-secondary" onclick="backToProfile()">← Retour au profil</button>
+          <button class="btn btn-success" onclick="copyUniversList()">📋 Copier la liste</button>
+          <button class="btn btn-primary" onclick="goToIA()">🤖 Accéder à l'IA</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <p style="margin-top:16px">
-    <button onclick="calculer()">Calculer mes univers</button>
-  </p>
-
-  <div id="resultats" class="result"></div>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
