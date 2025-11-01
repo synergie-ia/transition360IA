@@ -1,0 +1,36 @@
+:root{
+  --bg:#f7f7fb; --card:#fff; --txt:#222; --muted:#666; --pri:#0a66ff; --pri-d:#084fcb; --line:#e8e8ef;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--txt)}
+.container{max-width:980px;margin:32px auto;padding:24px;background:var(--card);border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+h1{margin:0 0 8px}
+p{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+.interet{padding:12px 12px 8px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.interet label{display:block;font-weight:600;margin-bottom:8px}
+.rangeRow{display:flex;align-items:center;gap:12px}
+.rangeRow input[type=range]{flex:1}
+.badge{min-width:36px;text-align:center;font-variant-numeric:tabular-nums;background:#f1f5ff;color:#0a2b78;border-radius:6px;padding:3px 6px}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+button{cursor:pointer;border:none;border-radius:10px;padding:12px 16px;font-weight:600;background:var(--pri);color:#fff}
+button:hover{background:var(--pri-d)}
+button.ghost{background:#eef2ff;color:#1c2a5e}
+button.ghost:disabled{opacity:.5;cursor:not-allowed}
+
+.rapport{margin-top:14px;border-top:1px dashed var(--line);padding-top:16px}
+.list{display:grid;gap:10px}
+.row{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+.row .label{flex:1 1 55%}
+.row .val{width:52px;text-align:right;font-variant-numeric:tabular-nums;color:#111}
+.bar{position:relative;flex:1;height:10px;background:#f2f2f7;border-radius:999px;overflow:hidden}
+.bar > span{position:absolute;left:0;top:0;bottom:0;width:0%}
+
+.bar.score > span{background:linear-gradient(90deg,#ffb703,#2a9d8f)}
+.bar.pourcent > span{background:linear-gradient(90deg,#f97316,#16a34a)}
+.kpi{font-weight:700;min-width:72px;text-align:right}
+
+.payload{white-space:pre-wrap;background:#0b1020;color:#d7e6ff;padding:14px;border-radius:10px;border:1px solid #0d1530;line-height:1.45}
+.hint{color:var(--muted);font-size:.95em;margin-top:6px}
