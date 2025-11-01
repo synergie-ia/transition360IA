@@ -1,98 +1,52 @@
-// 1) Génération des 14 curseurs
-const form = document.getElementById("profilForm");
-INTERETS.forEach((label, i) => {
+// Génère les 14 curseurs
+const zoneQuestions = document.getElementById("questions");
+INTERETS.forEach((lib, i) => {
   const wrap = document.createElement("div");
-  wrap.className = "interet";
+  wrap.className = "question";
   wrap.innerHTML = `
-    <label for="i${i}">${i+1}. ${label}</label>
-    <div class="rangeRow">
-      <input type="range" id="i${i}" min="0" max="10" step="1" value="5" />
-      <span class="badge" id="b${i}">5</span>
+    <label>${i+1}. ${lib}</label>
+    <div class="row">
+      <input type="range" id="q${i}" min="0" max="10" step="1" value="5" oninput="updateLabel(${i})"/>
+      <span class="tag"><span id="val${i}">5</span>/10</span>
     </div>
   `;
-  form.appendChild(wrap);
-});
-INTERETS.forEach((_, i) => {
-  const r = document.getElementById(`i${i}`);
-  const b = document.getElementById(`b${i}`);
-  r.addEventListener("input", () => b.textContent = r.value);
+  zoneQuestions.appendChild(wrap);
 });
 
-// 2) Actions
-const btnCalc = document.getElementById("calculer");
-const btnCopy = document.getElementById("btnCopy");
-const btnPdf  = document.getElementById("btnPdf");
+function updateLabel(i){
+  document.getElementById(`val${i}`).textContent = document.getElementById(`q${i}`).value;
+}
 
-btnCalc.addEventListener("click", () => {
-  const profil = INTERETS.map((_, i) => parseInt(document.getElementById("i"+i).value,10));
-  const scoresOrd = calculerCompatibilite(profil);
-  rendreRapport(profil, scoresOrd);
-  btnCopy.disabled = false;
-  btnPdf.disabled  = false;
-});
+// Algorithme simple (sans exposant) :
+// Score = (Σ(profil_i × importance_i)) / (10 × Σ(importance_i)) × 100
+function calculer(){
+  const profil = [];
+  for(let i=0;i<INTERETS.length;i++){
+    profil.push(parseInt(document.getElementById(`q${i}`).value,10));
+  }
 
-// 3) Rendu du rapport (profil + univers + payload)
-function rendreRapport(profil, scoresOrd){
-  const rapport = document.getElementById("rapport");
-  const profilList = document.getElementById("profilList");
-  const universList = document.getElementById("universList");
-  const payloadEl = document.getElementById("payload");
+  const resultats = [];
 
-  rapport.hidden = false;
-  profilList.innerHTML = "";
-  universList.innerHTML = "";
+  for(const univers of UNIVERS){
+    const imp = MATRICE_UNIVERS[univers];
+    let num = 0;           // numérateur
+    let denomPoids = 0;    // somme des poids
 
-  // Profil : lignes avec barre 0-10
-  INTERETS.forEach((lib,i)=>{
-    const val = profil[i];
-    const row = document.createElement("div");
-    row.className = "row";
-    row.innerHTML = `
-      <div class="label">${i+1}. ${lib}</div>
-      <div class="bar score" aria-hidden="true"><span style="width:${val*10}%"></span></div>
-      <div class="val">${val}/10</div>
-    `;
-    profilList.appendChild(row);
-  });
-
-  // Univers : rang, barre %, score
-  scoresOrd.forEach(([univers, pct], idx)=>{
-    const row = document.createElement("div");
-    row.className = "row";
-    row.innerHTML = `
-      <div class="label">${idx+1}. ${univers}</div>
-      <div class="bar pourcent" aria-hidden="true"><span style="width:${pct}%"></span></div>
-      <div class="kpi">${pct}%</div>
-    `;
-    universList.appendChild(row);
-  });
-
-  // Payload unique optimisé ChatGPT (profil + scores)
-  const date = new Date().toISOString().slice(0,10);
-  const payload = [
-    "IA360_PAYLOAD_START",
-    `Date: ${date}`,
-    "",
-    "Profil_Interets_0_10:",
-    JSON.stringify(profil),
-    "",
-    "Univers_Compatibilite_% (classement):",
-    ...scoresOrd.map(([u,p],i)=> `${i+1}. ${u} — ${p}%`),
-    "IA360_PAYLOAD_END"
-  ].join("\n");
-  payloadEl.textContent = payload;
-
-  // Copier
-  btnCopy.onclick = async ()=>{
-    try{
-      await navigator.clipboard.writeText(payload);
-      btnCopy.textContent = "✅ Copié !";
-      setTimeout(()=>btnCopy.textContent="📋 Copier pour ChatGPT",1200);
-    }catch(e){
-      alert("Impossible de copier automatiquement. Sélectionne le bloc et copie manuellement.");
+    for(let i=0;i<INTERETS.length;i++){
+      num += profil[i] * imp[i];
+      denomPoids += imp[i];
     }
-  };
+    const score = (num / (10 * denomPoids)) * 100;
+    resultats.push({ univers, score });
+  }
 
-  // PDF natif (impression)
-  btnPdf.onclick = ()=> window.print();
+  resultats.sort((a,b)=> b.score - a.score);
+
+  const zone = document.getElementById("resultats");
+  zone.innerHTML = "<h2>Résultats — compatibilité par univers</h2>";
+  resultats.forEach(r=>{
+    zone.innerHTML += `<div class="univers">${r.univers} — <b>${r.score.toFixed(1)}%</b></div>`;
+  });
+
+  zone.innerHTML += `<hr><div class="mono"><b>Profil (à copier dans l’IA) :</b> [${profil.join(", ")}]</div>`;
 }
