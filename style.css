@@ -1,0 +1,233 @@
+/* =============================
+   STYLE GLOBAL ORIENTATION 360 IA
+   ============================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  color: #222;
+  line-height: 1.6;
+  padding: 40px 10px;
+}
+
+.container {
+  max-width: 950px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  padding: 40px 50px;
+}
+
+/* =============================
+   TITRES ET TEXTES
+   ============================= */
+
+h1, h2, h3 {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.3rem;
+  background: linear-gradient(90deg, #1b2d69, #3f7fc0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #1b2d69;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h3 {
+  color: #3f7fc0;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.intro {
+  font-size: 1.05rem;
+  color: #444;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* =============================
+   BOUTONS
+   ============================= */
+
+.btn {
+  background: linear-gradient(135deg, #3f7fc0, #1b2d69);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1b2d69, #3f7fc0);
+  box-shadow: 0 4px 10px rgba(27, 45, 105, 0.3);
+}
+
+.btn.next {
+  background: linear-gradient(135deg, #f68b1e, #fbb03b);
+}
+
+.btn.next:hover {
+  background: linear-gradient(135deg, #fbb03b, #f68b1e);
+  box-shadow: 0 4px 10px rgba(246, 139, 30, 0.3);
+}
+
+.btn.prev {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.btn.prev:hover {
+  background: #d6d6d6;
+}
+
+.nav {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* =============================
+   BLOCS DE CONTENU
+   ============================= */
+
+.page {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+#welcome {
+  text-align: center;
+  display: block;
+}
+
+.bloc {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.item {
+  background: #f8f9fb;
+  border: 2px solid #e0e6ef;
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.3s ease;
+}
+
+.item:hover {
+  border-color: #3f7fc0;
+  box-shadow: 0 5px 20px rgba(63, 127, 192, 0.1);
+}
+
+.item label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #f68b1e;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.item .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.item .verbs {
+  font-weight: 600;
+  color: #1b2d69;
+  margin-bottom: 5px;
+}
+
+.item .phrase {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* =============================
+   RÉCAPITULATIF FINAL
+   ============================= */
+
+#summary {
+  display: none;
+}
+
+.recap-section {
+  background: #f8f9fb;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #e0e6ef;
+}
+
+.recap-section ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.recap-section li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* =============================
+   ANIMATION
+   ============================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================
+   RESPONSIVE
+   ============================= */
+
+@media (max-width: 600px) {
+  .bloc {
+    grid-template-columns: 1fr;
+  }
+  body {
+    padding: 20px 10px;
+  }
+  .container {
+    padding: 25px 20px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+}
