@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Orientation 360IA</title>
-  <link rel="stylesheet" href="style.css" />
-  <meta name="color-scheme" content="light only">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientation IA360 – Profil d'intérêts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <h1>Bienvenue sur Orientation 360IA</h1>
-    <p class="subtitle">Voilà comment ça va se passer : tu vas parcourir 3 pages (Intérêts, Personnalité, Valeurs). À chaque page, sélectionne entre <strong>3 et 6</strong> propositions qui te ressemblent le plus. À la fin, tu obtiendras un récap propre que tu pourras <strong>copier</strong> pour l’IA ou <strong>imprimer en PDF</strong>.</p>
-    <div class="progress">
-      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    <div class="container">
+        <header>
+            <h1>🎯 Orientation IA360</h1>
+            <p class="intro">
+                Découvrez vos univers professionnels les plus compatibles en répondant à ce questionnaire sur vos centres d'intérêt. 
+                Basé sur une approche scientifique étendue du modèle RIASEC, ce test analyse 12 dimensions d'intérêts 
+                pour vous orienter parmi 21 univers métiers.
+            </p>
+        </header>
+
+        <div id="questionnaire"></div>
+
+        <button class="btn-primary" onclick="calculateResults()">Voir mes résultats</button>
+
+        <div id="results">
+            <div class="results-header">
+                <h2>🎯 Votre Profil de Compatibilité</h2>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color score3"></div>
+                    <span>🟩 Déterminant (+3)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color score1"></div>
+                    <span>🟨 Favorable (+1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color score0"></div>
+                    <span>⚪ Neutre (0)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color score-1"></div>
+                    <span>🟧 Éloigné (-1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color score-2"></div>
+                    <span>🟥 Incompatible (-2)</span>
+                </div>
+            </div>
+
+            <div class="ranking" id="ranking"></div>
+
+            <div class="matrix-container">
+                <table class="matrix-table" id="matrixTable"></table>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-secondary" onclick="copyProfile()">📋 Copier le profil IA360</button>
+                <button class="btn-secondary" onclick="window.print()">📄 Imprimer / Télécharger PDF</button>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="container">
-    <!-- ÉTAPE COURANTE -->
-    <section id="stepTitle" class="step-title"></section>
-    <section id="cardsContainer" class="cards"></section>
-
-    <!-- Alerte min/max -->
-    <div id="limitMsg" class="limit hidden"></div>
-
-    <!-- Boutons navigation -->
-    <nav class="nav">
-      <button id="btnBack" class="btn btn-secondary" disabled>Retour</button>
-      <button id="btnNext" class="btn btn-primary">Suivant</button>
-    </nav>
-
-    <!-- Résultats -->
-    <section id="results" class="results hidden">
-      <h2 class="results-title">Ton profil (Intérêts • Personnalité • Valeurs)</h2>
-
-      <div id="resultsBlocks" class="results-blocks"></div>
-
-      <div class="actions">
-        <button id="btnCopy" class="btn btn-primary">Copier pour l’IA</button>
-        <button id="btnPrint" class="btn btn-outline">Imprimer / PDF</button>
-      </div>
-
-      <div class="export">
-        <h3>Texte exportable</h3>
-        <textarea id="exportText" readonly></textarea>
-      </div>
-
-      <div class="actions">
-        <button id="btnRestart" class="btn btn-secondary">Recommencer</button>
-        <button id="btnHome" class="btn btn-outline" onclick="location.reload()">Retour à l’accueil</button>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modale imprimable (utilisée par window.print) -->
-  <div id="printArea" class="print-area"></div>
-
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
