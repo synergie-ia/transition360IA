@@ -13,13 +13,14 @@
     
     <div class="container">
         <div class="header">
+            <a href="index.html" class="back-home-btn">← Accueil</a>
             <h1>🎯 IA360</h1>
             <p>Test d'orientation professionnelle basé sur vos intérêts</p>
         </div>
         
         <div class="content">
             <div class="legend">
-                <h3>📊 Comment répondre ?</h3>
+                <h3>💡 Comment répondre ?</h3>
                 <div class="legend-item">
                     <div class="legend-box" style="background: #e74c3c;"></div>
                     <span><strong>❌ Pas du tout moi</strong> - Je n'aime pas ça</span>
@@ -34,20 +35,30 @@
                 </div>
                 <div class="legend-item">
                     <div class="legend-box" style="background: #27ae60;"></div>
-                    <span><strong>🟢 Totalement moi</strong> - C'est exactement moi</span>
+                    <span><strong>✅ Totalement moi</strong> - C'est exactement moi</span>
                 </div>
             </div>
             
             <div id="interestsList"></div>
             
             <button class="calculate-btn" onclick="calculateResults()">
-                ✨ Calculer mes résultats
+                🚀 Calculer mes résultats
             </button>
             
             <div class="results" id="results">
                 <h2 style="text-align: center; margin-bottom: 30px; color: #333;">
                     🎉 Vos univers professionnels compatibles
                 </h2>
+                
+                <div class="results-actions">
+                    <button class="action-btn download-btn" onclick="downloadResults()">
+                        📥 Télécharger les résultats
+                    </button>
+                    <button class="action-btn copy-btn" onclick="copyResults()">
+                        📋 Copier les résultats
+                    </button>
+                </div>
+                
                 <div id="resultsList"></div>
             </div>
         </div>
