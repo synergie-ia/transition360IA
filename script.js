@@ -1,277 +1,223 @@
-// =====================================================
-// SCRIPT — logique multi-pages (3–6 sélections/page)
-// =====================================================
+// ======================================================
+// === SCRIPT PRINCIPAL IA360 - ORIENTATION ===
+// ======================================================
 
-const state = {
-  stepIndex: 0,
-  selections: {
-    interets: new Set(),
-    personnalite: new Set(),
-    valeurs: new Set()
-  }
-};
-
-const ids = {
-  stepTitle: document.getElementById('stepTitle'),
-  container: document.getElementById('cardsContainer'),
-  limitMsg: document.getElementById('limitMsg'),
-  btnBack: document.getElementById('btnBack'),
-  btnNext: document.getElementById('btnNext'),
-  progressBar: document.getElementById('progressBar'),
-  results: document.getElementById('results'),
-  resultsBlocks: document.getElementById('resultsBlocks'),
-  exportText: document.getElementById('exportText'),
-  printArea: document.getElementById('printArea'),
-  btnCopy: null, // set later
-  btnPrint: null,
-  btnRestart: null
-};
-
-// ---------- Helpers
-function currentKey(){ return STEPS[state.stepIndex].key; }
-function currentList(){ return CATALOG[currentKey()]; }
-function clamp(min,v,max){ return Math.max(min, Math.min(max, v)); }
-function countFor(key){ return state.selections[key].size; }
-function inRange(count){ return count >= MIN_PER_STEP && count <= MAX_PER_STEP; }
-function pctProgress(){
-  const total = STEPS.length;
-  // progress inside current step: proportion de sélection (0→1) plafonnée
-  const ratio = clamp(0, countFor(currentKey())/MAX_PER_STEP, 1);
-  return ((state.stepIndex) * 100/total) + (ratio * (100/total));
+// === GÉNÉRATION DYNAMIQUE DU QUESTIONNAIRE ===
+function generateQuestionnaire() {
+    const container = document.getElementById('questionnaire');
+    
+    interests.forEach((interest, idx) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        
+        questionDiv.innerHTML = `
+            <div class="question-header">
+                <span class="question-icon">${interest.icon}</span>
+                <span class="question-title">${interest.name}</span>
+            </div>
+            <div class="question-verbs">${interest.verbs}</div>
+            <div class="question-phrase">${interest.phrase}</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q${idx}" value="-2" id="q${idx}_-2">
+                    <label for="q${idx}_-2">Pas du tout moi</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q${idx}" value="-1" id="q${idx}_-1">
+                    <label for="q${idx}_-1">Peu moi</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q${idx}" value="1" id="q${idx}_1">
+                    <label for="q${idx}_1">Plutôt moi</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q${idx}" value="2" id="q${idx}_2">
+                    <label for="q${idx}_2">Tout à fait moi</label>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(questionDiv);
+    });
 }
 
-// ---------- Render step
-function renderStep(){
-  const step = STEPS[state.stepIndex];
-  ids.results.classList.add('hidden');
-  ids.stepTitle.innerHTML = `
-    <div>${step.title}</div>
-    <span class="hint">${step.hint}</span>
-  `;
-
-  ids.container.innerHTML = '';
-  ids.limitMsg.classList.add('hidden');
-
-  const list = currentList();
-  list.forEach((item, idx) => {
-    const checked = state.selections[step.key].has(idx);
-    const card = document.createElement('label');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-header">
-        <div>
-          <div class="card-title">${item.label}</div>
-          <div class="card-phrase">${item.phrase}</div>
-        </div>
-        <input type="checkbox" ${checked ? 'checked':''} data-idx="${idx}"/>
-      </div>
-      <div class="card-phrase small">Verbes : ${item.verbs.join(' · ')}</div>
-    `;
-    ids.container.appendChild(card);
-  });
-
-  // interactions
-  ids.container.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
-    cb.addEventListener('change', onToggle);
-  });
-
-  // nav buttons
-  ids.btnBack.disabled = state.stepIndex === 0;
-  ids.btnNext.textContent = (state.stepIndex === STEPS.length-1) ? 'Voir mon profil' : 'Suivant';
-
-  // progress
-  ids.progressBar.style.width = `${pctProgress().toFixed(1)}%`;
-}
-
-// ---------- Toggle selection
-function onToggle(e){
-  const stepKey = currentKey();
-  const idx = Number(e.target.dataset.idx);
-  const set = state.selections[stepKey];
-
-  if(e.target.checked){
-    if(set.size >= MAX_PER_STEP){
-      // refuse + message
-      e.target.checked = false;
-      showLimit(`Tu as déjà ${MAX_PER_STEP} choix. Décoche-en un pour en ajouter un autre.`);
-      return;
+// === RÉCUPÉRATION DES RÉPONSES ===
+function getUserAnswers() {
+    const answers = [];
+    
+    for (let i = 0; i < interests.length; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        
+        if (!selected) {
+            alert('⚠️ Veuillez répondre à toutes les questions avant de continuer.');
+            return null;
+        }
+        
+        answers.push(parseInt(selected.value));
     }
-    set.add(idx);
-  }else{
-    set.delete(idx);
-  }
-  hideLimit();
-  ids.progressBar.style.width = `${pctProgress().toFixed(1)}%`;
+    
+    return answers;
 }
 
-// ---------- Messages
-function showLimit(msg){
-  ids.limitMsg.textContent = msg;
-  ids.limitMsg.classList.remove('hidden');
-}
-function hideLimit(){ ids.limitMsg.classList.add('hidden'); }
-
-// ---------- Navigation
-function goNext(){
-  const stepKey = currentKey();
-  const nb = countFor(stepKey);
-  if(nb < MIN_PER_STEP){
-    showLimit(`Sélectionne au moins ${MIN_PER_STEP} éléments avant de continuer.`);
-    return;
-  }
-  if(nb > MAX_PER_STEP){
-    showLimit(`Tu ne peux pas dépasser ${MAX_PER_STEP} éléments sur cette page.`);
-    return;
-  }
-  hideLimit();
-
-  if(state.stepIndex < STEPS.length-1){
-    state.stepIndex++;
-    renderStep();
-  }else{
-    // show results
-    buildResults();
-  }
-}
-
-function goBack(){
-  if(state.stepIndex === 0) return;
-  state.stepIndex--;
-  renderStep();
-}
-
-ids.btnNext.addEventListener('click', goNext);
-ids.btnBack.addEventListener('click', goBack);
-
-// ---------- Results
-function buildResults(){
-  // verrouille la progression à 100%
-  ids.progressBar.style.width = '100%';
-
-  // cache les cartes et montre résultats
-  ids.results.classList.remove('hidden');
-  ids.stepTitle.innerHTML = '';
-  ids.container.innerHTML = '';
-  ids.limitMsg.classList.add('hidden');
-
-  // blocs par catégorie
-  ids.resultsBlocks.innerHTML = '';
-  STEPS.forEach(step=>{
-    const set = state.selections[step.key];
-    const source = CATALOG[step.key];
-
-    const block = document.createElement('section');
-    block.className = 'block';
-
-    const title = document.createElement('h3');
-    title.textContent = step.title;
-    block.appendChild(title);
-
-    const wrap = document.createElement('div');
-    wrap.className = 'selected-badges';
-
-    // garde l’ordre d’origine
-    [...set].sort((a,b)=>a-b).forEach(i=>{
-      const it = source[i];
-      const badge = document.createElement('div');
-      badge.className = 'badge';
-      badge.innerHTML = `<strong>${it.label}</strong><small>${it.phrase}</small>`;
-      wrap.appendChild(badge);
+// === CALCUL DES SCORES PAR UNIVERS ===
+function calculateScores(answers) {
+    const scores = [];
+    
+    univers.forEach((universName, universIdx) => {
+        let totalScore = 0;
+        
+        // Calcul : réponse utilisateur × coefficient de compatibilité
+        for (let interestIdx = 0; interestIdx < interests.length; interestIdx++) {
+            const userScore = answers[interestIdx];
+            const compatibilityCoef = matrix[universIdx][interestIdx];
+            totalScore += userScore * compatibilityCoef;
+        }
+        
+        scores.push({
+            name: universName,
+            score: totalScore,
+            coefficients: matrix[universIdx]
+        });
     });
-
-    block.appendChild(wrap);
-    ids.resultsBlocks.appendChild(block);
-  });
-
-  // export texte
-  const exportTxt = buildExportText();
-  ids.exportText.value = exportTxt;
-
-  // boutons results
-  const btnCopy = document.getElementById('btnCopy') || document.getElementById('btnCopy');
-  const btnPrint = document.getElementById('btnPrint') || document.getElementById('btnPrint');
-  const btnRestart = document.getElementById('btnRestart') || document.getElementById('btnRestart');
-
-  btnCopy.addEventListener('click', ()=>copyText(exportTxt));
-  btnPrint.addEventListener('click', ()=>printProfile());
-  btnRestart.addEventListener('click', resetAll);
+    
+    // Tri par score décroissant
+    scores.sort((a, b) => b.score - a.score);
+    
+    return scores;
 }
 
-// ---------- Export builders
-function buildExportText(){
-  const dateStr = new Date().toLocaleDateString('fr-FR');
-
-  const lines = [];
-  lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  lines.push('PROFIL ORIENTATION 360IA');
-  lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  lines.push(`Date : ${dateStr}\n`);
-
-  STEPS.forEach(step=>{
-    lines.push(step.title);
-    const arr = [...state.selections[step.key]].sort((a,b)=>a-b).map(i=>{
-      const it = CATALOG[step.key][i];
-      return `- ${it.label} — ${it.phrase}`;
+// === AFFICHAGE DU CLASSEMENT ===
+function displayRanking(scores) {
+    const container = document.getElementById('ranking');
+    container.innerHTML = '<h3>🏆 Vos univers les plus compatibles</h3>';
+    
+    // Afficher le top 10
+    scores.slice(0, 10).forEach((item, index) => {
+        const rankingItem = document.createElement('div');
+        rankingItem.className = 'ranking-item';
+        
+        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+        
+        rankingItem.innerHTML = `
+            <span class="ranking-name">${medal} ${index + 1}. ${item.name}</span>
+            <span class="ranking-score">Score: ${item.score > 0 ? '+' : ''}${item.score}</span>
+        `;
+        
+        container.appendChild(rankingItem);
     });
-    if(arr.length===0){ lines.push('(aucune sélection)'); }
-    else{ lines.push(...arr); }
-    lines.push('');
-  });
-
-  return lines.join('\n');
 }
 
-function copyText(text){
-  navigator.clipboard.writeText(text).then(()=>{
-    notify('Texte copié ✅');
-  }).catch(()=>{
-    notify('Impossible de copier. Sélectionne manuellement le texte ci-dessous.');
-  });
+// === AFFICHAGE DE LA MATRICE COLORÉE ===
+function displayMatrix(answers) {
+    const table = document.getElementById('matrixTable');
+    
+    // En-tête du tableau
+    let html = '<thead><tr><th>Univers / Intérêts</th>';
+    interests.forEach(interest => {
+        html += `<th title="${interest.name}">${interest.icon}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+    
+    // Lignes de la matrice
+    univers.forEach((universName, universIdx) => {
+        html += `<tr><td>${universName}</td>`;
+        
+        matrix[universIdx].forEach((compatValue, interestIdx) => {
+            const userAnswer = answers[interestIdx];
+            const cellClass = `score${compatValue}`;
+            
+            html += `<td>
+                <div class="cell-score ${cellClass}" 
+                     title="Compatibilité: ${compatValue} | Votre réponse: ${userAnswer}">
+                    ${compatValue > 0 ? '+' : ''}${compatValue}
+                </div>
+            </td>`;
+        });
+        
+        html += '</tr>';
+    });
+    
+    html += '</tbody>';
+    table.innerHTML = html;
 }
 
-function printProfile(){
-  // génère un HTML simple dans #printArea puis lance window.print
-  const dateStr = new Date().toLocaleDateString('fr-FR');
-  const html = [
-    `<h1 style="color:#2e55cf;margin:0 0 6px">Orientation 360IA — Profil</h1>`,
-    `<div style="color:#64748b;margin:0 0 12px">Date : ${dateStr}</div>`,
-    ...STEPS.map(step=>{
-      const list = [...state.selections[step.key]].sort((a,b)=>a-b).map(i=>{
-        const it = CATALOG[step.key][i];
-        return `<li><strong>${escapeHTML(it.label)}</strong> — ${escapeHTML(it.phrase)}</li>`;
-      }).join('');
-      return `
-      <section style="border:2px solid #cfe0ff;border-radius:12px;padding:12px 14px;margin:10px 0">
-        <h2 style="margin:0 0 8px;color:#2e55cf;font-size:18px">${escapeHTML(step.title)}</h2>
-        <ul style="margin:0 0 0 18px;padding:0">${list || '<li>(aucune sélection)</li>'}</ul>
-      </section>`;
-    })
-  ].join('');
-
-  ids.printArea.innerHTML = html;
-  window.print();
+// === CALCUL ET AFFICHAGE DES RÉSULTATS ===
+function calculateResults() {
+    // Récupérer les réponses
+    const answers = getUserAnswers();
+    if (!answers) return;
+    
+    // Calculer les scores
+    const scores = calculateScores(answers);
+    
+    // Afficher le classement
+    displayRanking(scores);
+    
+    // Afficher la matrice
+    displayMatrix(answers);
+    
+    // Afficher la section résultats
+    document.getElementById('results').style.display = 'block';
+    
+    // Scroll vers les résultats
+    document.getElementById('results').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
 }
 
-function escapeHTML(s){ return s.replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
-
-function notify(msg){
-  ids.limitMsg.textContent = msg;
-  ids.limitMsg.classList.remove('hidden');
-  setTimeout(()=>ids.limitMsg.classList.add('hidden'), 1800);
+// === COPIE DU PROFIL POUR IA360 ===
+function copyProfile() {
+    const answers = getUserAnswers();
+    if (!answers) return;
+    
+    const scores = calculateScores(answers);
+    
+    // Formatage du profil
+    let profileText = '=== PROFIL IA360 - ORIENTATION PROFESSIONNELLE ===\n\n';
+    
+    profileText += '📊 RÉPONSES AUX INTÉRÊTS:\n';
+    profileText += '─────────────────────────────\n';
+    interests.forEach((interest, idx) => {
+        const answer = answers[idx];
+        const emoji = answer > 0 ? '✅' : answer < 0 ? '❌' : '⚪';
+        profileText += `${emoji} ${interest.icon} ${interest.name}: ${answer > 0 ? '+' : ''}${answer}\n`;
+    });
+    
+    profileText += '\n🏆 TOP 10 UNIVERS COMPATIBLES:\n';
+    profileText += '─────────────────────────────\n';
+    scores.slice(0, 10).forEach((item, index) => {
+        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '  ';
+        profileText += `${medal} ${index + 1}. ${item.name} → Score: ${item.score > 0 ? '+' : ''}${item.score}\n`;
+    });
+    
+    profileText += '\n📋 TOUS LES UNIVERS:\n';
+    profileText += '─────────────────────────────\n';
+    scores.forEach((item, index) => {
+        profileText += `${index + 1}. ${item.name}: ${item.score > 0 ? '+' : ''}${item.score}\n`;
+    });
+    
+    profileText += '\n─────────────────────────────\n';
+    profileText += 'Généré par IA360 Orientation\n';
+    profileText += new Date().toLocaleDateString('fr-FR');
+    
+    // Copie dans le presse-papier
+    navigator.clipboard.writeText(profileText).then(() => {
+        alert('✅ Profil copié dans le presse-papier !\n\nVous pouvez maintenant le coller dans votre GPT IA360 ou dans un document.');
+    }).catch(err => {
+        console.error('Erreur lors de la copie:', err);
+        alert('❌ Impossible de copier automatiquement. Veuillez sélectionner et copier manuellement.');
+    });
 }
 
-// ---------- Reset
-function resetAll(){
-  state.stepIndex = 0;
-  state.selections.interets.clear();
-  state.selections.personnalite.clear();
-  state.selections.valeurs.clear();
-  ids.results.classList.add('hidden');
-  ids.progressBar.style.width = '0%';
-  renderStep();
-}
-
-// ---------- Init
-document.addEventListener('DOMContentLoaded', ()=>{
-  renderStep();
+// === INITIALISATION AU CHARGEMENT DE LA PAGE ===
+document.addEventListener('DOMContentLoaded', function() {
+    generateQuestionnaire();
 });
+
+// Génération immédiate si le DOM est déjà chargé
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', generateQuestionnaire);
+} else {
+    generateQuestionnaire();
+}
