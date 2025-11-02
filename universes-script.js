@@ -18,7 +18,7 @@ const universesData = [
             'Élevage bovin / ovin / porcin / avicole',
             'Aquaculture & pêche durable',
             'Apiculture & insectes utiles',
-            'Gestion de l\'eau, irrigation & bassins versants',
+            'Gestion de l eau, irrigation & bassins versants',
             'Valorisation & transformation des produits agricoles'
         ]
     },
@@ -26,7 +26,7 @@ const universesData = [
         id: 2,
         icon: '🎨',
         name: 'Arts, design & création',
-        description: 'Créez, dessinez, designez et exprimez votre créativité dans l\'art visuel, graphique ou appliqué.',
+        description: 'Créez, dessinez, designez et exprimez votre créativité dans l art visuel, graphique ou appliqué.',
         subUniverses: [
             'Arts visuels & peinture',
             'Sculpture & installations',
@@ -36,12 +36,12 @@ const universesData = [
             'Photographie & image numérique',
             'Cinéma, audiovisuel & animation',
             'Mode, stylisme & textile',
-            'Artisanat d\'art traditionnel',
-            'Scénographie & design d\'espace',
+            'Artisanat d art traditionnel',
+            'Scénographie & design d espace',
             'Illustration & bande dessinée',
-            'Patrimoine, muséographie & restauration d\'art',
+            'Patrimoine, muséographie & restauration d art',
             'Spectacle vivant & arts de la scène',
-            'Métiers du luxe & savoir-faire d\'exception',
+            'Métiers du luxe & savoir-faire d exception',
             'Régie & technique du spectacle'
         ]
     },
@@ -72,12 +72,12 @@ const universesData = [
         id: 4,
         icon: '🎙️',
         name: 'Communication, médias & culture',
-        description: 'Informez, divertissez, communiquez à travers les médias, la culture et l\'événementiel.',
+        description: 'Informez, divertissez, communiquez à travers les médias, la culture et l événementiel.',
         subUniverses: [
             'Journalisme & presse écrite',
             'Audiovisuel & production radio/TV',
             'Relations publiques & événementiel',
-            'Communication d\'entreprise',
+            'Communication d entreprise',
             'Communication publique & politique',
             'Édition & correction',
             'Création de contenus numériques',
@@ -132,7 +132,7 @@ const universesData = [
         id: 7,
         icon: '🎓',
         name: 'Éducation, formation & apprentissage',
-        description: 'Enseignez, formez, transmettez vos connaissances et accompagnez l\'apprentissage.',
+        description: 'Enseignez, formez, transmettez vos connaissances et accompagnez l apprentissage.',
         subUniverses: [
             'Enseignement primaire',
             'Enseignement secondaire',
@@ -142,7 +142,7 @@ const universesData = [
             'Coaching & développement personnel',
             'Ingénierie pédagogique',
             'Éducation spécialisée & médiation éducative',
-            'Recherche en sciences de l\'éducation',
+            'Recherche en sciences de l éducation',
             'Animation socioculturelle'
         ]
     },
@@ -153,9 +153,9 @@ const universesData = [
         description: 'Protégez la planète, développez les énergies renouvelables et luttez contre le changement climatique.',
         subUniverses: [
             'Gestion des déchets & recyclage',
-            'Traitement de l\'eau & dépollution',
+            'Traitement de l eau & dépollution',
             'Énergies renouvelables (solaire, éolien, hydraulique)',
-            'Hydrogène & stockage d\'énergie',
+            'Hydrogène & stockage d énergie',
             'Énergie nucléaire & sûreté',
             'Génie climatique & efficacité énergétique',
             'Adaptation au changement climatique',
@@ -181,7 +181,7 @@ const universesData = [
             'Trésorerie & financement',
             'Banque & assurance',
             'Conseil en gestion de patrimoine',
-            'Gestion d\'entreprise & administration',
+            'Gestion d entreprise & administration',
             'Finance durable & investissement responsable',
             'Gestion de projets financiers',
             'Fintech & services financiers numériques',
@@ -193,7 +193,7 @@ const universesData = [
         id: 10,
         icon: '🍽️',
         name: 'Hôtellerie, restauration & tourisme',
-        description: 'Accueillez, servez, cuisinez et faites découvrir des destinations dans l\'hospitalité.',
+        description: 'Accueillez, servez, cuisinez et faites découvrir des destinations dans l hospitalité.',
         subUniverses: [
             'Cuisine gastronomique',
             'Restauration collective',
@@ -215,7 +215,7 @@ const universesData = [
         description: 'Conseillez, gérez, valorisez les biens immobiliers et le patrimoine.',
         subUniverses: [
             'Transaction immobilière résidentielle',
-            'Transaction immobilière d\'entreprise & commerces',
+            'Transaction immobilière d entreprise & commerces',
             'Promotion & développement immobilier',
             'Gestion locative & syndic de copropriété',
             'Expertise & évaluation immobilière',
@@ -223,7 +223,7 @@ const universesData = [
             'Aménagement foncier & urbanisme opérationnel',
             'Immobilier social & logement accompagné',
             'Facility management & gestion technique de bâtiments',
-            'Immobilier de luxe & biens d\'exception'
+            'Immobilier de luxe & biens d exception'
         ]
     },
     {
@@ -277,12 +277,12 @@ const universesData = [
         name: 'Management, entrepreneuriat & stratégie',
         description: 'Dirigez, entreprenez, élaborez des stratégies et pilotez des équipes vers le succès.',
         subUniverses: [
-            'Création d\'entreprise & start-up',
+            'Création d entreprise & start-up',
             'Gestion de projets',
             'Innovation & transformation digitale',
-            'Management d\'équipe',
+            'Management d équipe',
             'RSE & développement durable',
-            'Stratégie d\'entreprise',
+            'Stratégie d entreprise',
             'Pilotage de structures publiques ou privées',
             'Management interculturel',
             'Conseil & accompagnement stratégique',
@@ -384,10 +384,10 @@ const universesData = [
             'Handicap & inclusion',
             'Santé mentale & accompagnement',
             'Animation & médiation sociale',
-            'Protection de l\'enfance',
+            'Protection de l enfance',
             'Économie sociale & solidaire',
             'Bénévolat & engagement citoyen',
-            'Gestion d\'établissements médico-sociaux',
+            'Gestion d établissements médico-sociaux',
             'Médiation familiale',
             'Services à la personne & assistance familiale',
             'Accompagnement funéraire & thanatologie'
@@ -403,11 +403,11 @@ const universesData = [
             'Animation & loisirs',
             'Éducation physique & enseignement du sport',
             'Encadrement sportif & fédérations',
-            'Gestion d\'équipements sportifs',
+            'Gestion d équipements sportifs',
             'Médiation par le sport',
             'Nutrition & bien-être',
             'Sport santé & réathlétisation',
-            'Organisation d\'événements sportifs',
+            'Organisation d événements sportifs',
             'Tourisme sportif',
             'E-sport & compétition numérique'
         ]
@@ -416,7 +416,7 @@ const universesData = [
         id: 21,
         icon: '🚀',
         name: 'Technologies émergentes & futur du travail',
-        description: 'Explorez l\'IA, la robotique, le métavers et les nouvelles formes de travail.',
+        description: 'Explorez l IA, la robotique, le métavers et les nouvelles formes de travail.',
         subUniverses: [
             'Robotique humanoïde avancée',
             'Technologies immersives nouvelle génération (XR, haptique)',
@@ -432,32 +432,38 @@ const universesData = [
 
 // Fonction pour générer les cartes d'univers
 function renderUniverses() {
+    console.log('Début de renderUniverses');
     const grid = document.getElementById('universesGrid');
     
     if (!grid) {
-        console.error('Element universesGrid not found');
+        console.error('Élément universesGrid introuvable !');
         return;
     }
     
-    grid.innerHTML = universesData.map(universe => `
-        <div class="universe-card">
-            <div class="universe-image">
-                ${universe.icon}
-            </div>
-            <div class="universe-content">
-                <div class="universe-name">${universe.name}</div>
-                <div class="universe-description">${universe.description}</div>
-            </div>
-            <div class="sub-universes">
-                ${universe.subUniverses.map(sub => `
-                    <div class="sub-universe-item">&bull; ${sub}</div>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
+    console.log('Grid trouvée, nombre d univers:', universesData.length);
+    
+    const html = universesData.map(function(universe) {
+        const subUniversesHTML = universe.subUniverses.map(function(sub) {
+            return '<div class="sub-universe-item">• ' + sub + '</div>';
+        }).join('');
+        
+        return '<div class="universe-card">' +
+            '<div class="universe-image">' + universe.icon + '</div>' +
+            '<div class="universe-content">' +
+                '<div class="universe-name">' + universe.name + '</div>' +
+                '<div class="universe-description">' + universe.description + '</div>' +
+            '</div>' +
+            '<div class="sub-universes">' + subUniversesHTML + '</div>' +
+        '</div>';
+    }).join('');
+    
+    grid.innerHTML = html;
+    console.log('Univers rendus avec succès');
 }
 
 // Initialisation
-document.addEventListener('DOMContentLoaded', function() {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderUniverses);
+} else {
     renderUniverses();
-});
+}
