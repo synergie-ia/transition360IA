@@ -1,114 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Univers Professionnels - Orientation 360 IA</title>
-    <link rel="stylesheet" href="universes-style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Les Univers Professionnels - Orientation 360 IA</title>
+  <link rel="stylesheet" href="universes-style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="index.html" class="back-btn">← Retour</a>
-            <h1>🌐 Les Univers Professionnels</h1>
-            <button class="show-all-btn" onclick="toggleAllSubUniverses()">
-                📋 Afficher tous les sous-univers
-            </button>
-        </div>
-        
-        <div class="universes-grid" id="universesGrid"></div>
+  <div class="container">
+    <div class="header">
+      <a href="index.html" class="back-btn">Accueil</a>
+      <h1>Les 21 univers & sous-univers</h1>
+      <button class="show-all-btn" id="toggleAllBtn">Afficher tous les univers</button>
     </div>
 
-    <!-- Modal pour afficher la définition -->
-    <div class="modal" id="definitionModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 id="modalTitle"></h3>
-            <p id="modalDescription"></p>
-        </div>
+    <div id="universesGrid" class="universes-grid"></div>
+  </div>
+
+  <!-- Modale définition -->
+  <div id="defModal" class="modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="defTitle">
+      <button class="modal-close" id="closeModal" aria-label="Fermer">×</button>
+      <h3 id="defTitle"></h3>
+      <p id="defText"></p>
     </div>
+  </div>
 
-    <script src="universes-data.js"></script>
-    <script>
-        var allSubUniversesVisible = false;
-
-        function renderUniverses() {
-            var grid = document.getElementById('universesGrid');
-            var html = '';
-            
-            for (var i = 0; i < universesData.length; i++) {
-                var universe = universesData[i];
-                var subHtml = '';
-                
-                for (var j = 0; j < universe.subUniverses.length; j++) {
-                    var sub = universe.subUniverses[j];
-                    subHtml += '<div class="sub-universe-item" onclick="showDefinition(\'' + 
-                        sub.name.replace(/'/g, "\\'") + '\')">' +
-                        '<span class="sub-universe-emoji">' + sub.emoji + '</span>' +
-                        '<span>' + sub.name + '</span>' +
-                    '</div>';
-                }
-                
-                html += '<div class="universe-card">' +
-                    '<div class="universe-image">' + universe.icon + '</div>' +
-                    '<div class="universe-content">' +
-                        '<div class="universe-name">' + universe.name + '</div>' +
-                        '<div class="universe-description">' + universe.description + '</div>' +
-                    '</div>' +
-                    '<div class="sub-universes" id="sub-' + i + '">' +
-                        '<div class="sub-universes-content">' + subHtml + '</div>' +
-                    '</div>' +
-                '</div>';
-            }
-            
-            grid.innerHTML = html;
-        }
-
-        function toggleAllSubUniverses() {
-            allSubUniversesVisible = !allSubUniversesVisible;
-            var button = document.querySelector('.show-all-btn');
-            
-            for (var i = 0; i < universesData.length; i++) {
-                var subDiv = document.getElementById('sub-' + i);
-                
-                if (allSubUniversesVisible) {
-                    subDiv.classList.add('open');
-                } else {
-                    subDiv.classList.remove('open');
-                }
-            }
-            
-            button.textContent = allSubUniversesVisible ? 
-                '📋 Masquer tous les sous-univers' : 
-                '📋 Afficher tous les sous-univers';
-        }
-
-        function showDefinition(subUniverseName) {
-            var definition = subUniverseDefinitions[subUniverseName];
-            if (definition) {
-                document.getElementById('modalTitle').textContent = subUniverseName;
-                document.getElementById('modalDescription').textContent = definition;
-                document.getElementById('definitionModal').style.display = 'block';
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('definitionModal').style.display = 'none';
-        }
-
-        // Fermer le modal en cliquant à l'extérieur
-        window.onclick = function(event) {
-            var modal = document.getElementById('definitionModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', renderUniverses);
-        } else {
-            renderUniverses();
-        }
-    </script>
+  <script src="data.js"></script>
+  <script src="universes-script.js"></script>
 </body>
 </html>
