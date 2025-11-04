@@ -38,7 +38,7 @@ function openModal(universeId) {
     modalTitle.textContent = universe.icon + ' ' + universe.name;
     
     subUniversesList.innerHTML = universe.subUniverses.map((sub, index) => `
-        <div class="sub-universe-card" data-universe-id="${universeId}" data-sub-index="${index}">
+        <div class="sub-universe-card">
             <div class="sub-universe-header">
                 <div class="sub-universe-icon">${sub.icon}</div>
                 <div class="sub-universe-name">${sub.name}</div>
@@ -46,13 +46,6 @@ function openModal(universeId) {
             <div class="sub-universe-description">${sub.description}</div>
         </div>
     `).join('');
-    
-    // Ajouter les event listeners pour les sous-univers
-    document.querySelectorAll('.sub-universe-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            this.classList.toggle('expanded');
-        });
-    });
     
     modal.style.display = 'block';
 }
