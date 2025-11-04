@@ -63,7 +63,20 @@ window.onclick = function(event) {
     }
 }
 
+// Vérifier si on arrive depuis les résultats avec un ID
+function checkURLParameter() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const universeId = urlParams.get('id');
+    if (universeId) {
+        // Ouvrir automatiquement le modal de cet univers
+        setTimeout(() => {
+            openModal(parseInt(universeId));
+        }, 300);
+    }
+}
+
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
     renderUniverses();
+    checkURLParameter();
 });
