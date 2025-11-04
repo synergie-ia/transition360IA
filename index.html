@@ -1,158 +1,36 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.hero-section {
-    max-width: 1200px;
-    width: 100%;
-}
-
-.hero-content {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.hero-title {
-    font-size: 2.5em;
-    color: white;
-    margin-bottom: 15px;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    animation: fadeInDown 0.8s ease;
-}
-
-.hero-subtitle {
-    font-size: 1.3em;
-    color: white;
-    margin-bottom: 40px;
-    opacity: 0.95;
-    animation: fadeInDown 1s ease;
-    line-height: 1.5;
-}
-
-.cta-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeInUp 1.4s ease;
-    margin-bottom: 50px;
-}
-
-.cta-btn {
-    padding: 20px 40px;
-    font-size: 1.2em;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-}
-
-.cta-btn.primary {
-    background: white;
-    color: #667eea;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.cta-btn.primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    animation: fadeInUp 1.6s ease;
-}
-
-.feature-card {
-    background: white;
-    padding: 40px 30px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.feature-icon {
-    font-size: 3em;
-    margin-bottom: 20px;
-}
-
-.feature-card h3 {
-    color: #333;
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-.feature-card p {
-    color: #666;
-    line-height: 1.6;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 1.8em;
-    }
-    
-    .hero-subtitle {
-        font-size: 1em;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-    }
-    
-    .cta-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .features {
-        grid-template-columns: 1fr;
-    }
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientation 360 IA</title>
+    <link rel="stylesheet" href="home-style.css">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenue sur la plateforme Orientation 360 IA</h1>
+            <p class="hero-subtitle">L'intelligence artificielle au service de l'orientation, la reconversion et le bilan de compétence</p>
+            
+            <div class="cta-buttons">
+                <a href="universes.html" class="cta-btn primary">
+                    🌐 Voir les univers
+                </a>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card" onclick="window.location.href='test.html'">
+                <div class="feature-icon">📋</div>
+                <h3>Tester ses univers préférentiels</h3>
+                <p>12 dimensions d'intérêts pour identifier vos préférences professionnelles</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧭</div>
+                <h3>S'orienter avec l'assistant virtuel</h3>
+                <p>Bénéficiez d'un conseiller virtuel pour affiner votre projet</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
