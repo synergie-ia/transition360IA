@@ -186,12 +186,10 @@ body {
     padding: 20px;
     border-left: 4px solid #667eea;
     transition: all 0.3s;
-    cursor: pointer;
 }
 
 .sub-universe-card:hover {
-    background: #e9ecef;
-    transform: translateX(5px);
+    background: #f8f9fa;
 }
 
 .sub-universe-header {
@@ -216,14 +214,14 @@ body {
     color: #666;
     line-height: 1.5;
     font-size: 0.9em;
-    display: none;
-}
-
-.sub-universe-card.expanded .sub-universe-description {
     display: block;
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid #ddd;
+}
+
+.sub-universe-card.expanded .sub-universe-description {
+    display: block;
 }
 
 @media (max-width: 768px) {
