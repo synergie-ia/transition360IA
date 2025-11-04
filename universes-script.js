@@ -38,6 +38,14 @@ function openModal(universeId) {
     const modalTitle = document.getElementById('modalTitle');
     const subUniversesList = document.getElementById('subUniversesList');
     
+    // Vérifier si on vient des résultats
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromResults = urlParams.get('from');
+    
+    if (fromResults === 'results') {
+        modal.classList.add('fullscreen');
+    }
+    
     modalTitle.textContent = universe.icon + ' ' + universe.name;
     
     subUniversesList.innerHTML = universe.subUniverses.map((sub, index) => `
@@ -59,12 +67,19 @@ function closeModal() {
     const fromResults = urlParams.get('from');
     
     if (fromResults === 'results') {
-        // Retourner à la page test avec les résultats
+        // Toujours retourner à la page test avec les résultats
         window.location.href = 'test.html';
     } else {
         document.getElementById('subUniversesModal').style.display = 'none';
     }
 }
+
+// Gérer aussi la touche Echap
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
 
 // Fermer le modal si on clique en dehors
 window.onclick = function(event) {
@@ -78,11 +93,22 @@ window.onclick = function(event) {
 function checkURLParameter() {
     const urlParams = new URLSearchParams(window.location.search);
     const universeId = urlParams.get('id');
+    const fromResults = urlParams.get('from');
+    
     if (universeId) {
+        // Masquer la grille des univers si on vient des résultats
+        if (fromResults === 'results') {
+            document.querySelector('.container').style.display = 'none';
+            // Afficher seulement le modal
+            const modal = document.getElementById('subUniversesModal');
+            modal.style.display = 'block';
+            modal.style.background = 'white';
+        }
+        
         // Ouvrir automatiquement le modal de cet univers
         setTimeout(() => {
             openModal(parseInt(universeId));
-        }, 300);
+        }, 100);
     }
 }
 
