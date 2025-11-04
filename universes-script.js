@@ -55,7 +55,15 @@ function openModal(universeId) {
 
 // Fonction pour fermer le modal
 function closeModal() {
-    document.getElementById('subUniversesModal').style.display = 'none';
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromResults = urlParams.get('from');
+    
+    if (fromResults === 'results') {
+        // Retourner à la page test avec les résultats
+        window.location.href = 'test.html';
+    } else {
+        document.getElementById('subUniversesModal').style.display = 'none';
+    }
 }
 
 // Fermer le modal si on clique en dehors
