@@ -196,37 +196,59 @@ body {
     animation: fadeIn 0.5s;
 }
 
-.results-actions {
+.top-actions {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
+    margin-bottom: 40px;
 }
 
-.icon-btn {
-    background: none;
-    border: none;
-    font-size: 2em;
+.pdf-btn, .copy-btn {
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 15px;
+    padding: 20px 30px;
     cursor: pointer;
     transition: all 0.3s;
-    padding: 10px;
-    border-radius: 50%;
-    opacity: 0.7;
+    font-size: 2em;
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.icon-btn:hover {
-    opacity: 1;
-    transform: scale(1.2);
+.pdf-btn span, .copy-btn span {
+    font-size: 0.4em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.pdf-btn:hover, .copy-btn:hover {
+    background: #667eea;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.pdf-btn:hover span, .copy-btn:hover span {
+    color: white;
+}
+
+.diagnostic-section {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
 }
 
 .diagnostic-btn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 15px 35px;
+    padding: 20px 50px;
     border-radius: 50px;
-    font-size: 1.1em;
+    font-size: 1.3em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
@@ -235,7 +257,7 @@ body {
 
 .diagnostic-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
 }
 
 .action-btn {
