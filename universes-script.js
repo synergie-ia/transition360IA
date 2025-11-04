@@ -95,17 +95,17 @@ function checkURLParameter() {
     const universeId = urlParams.get('id');
     const fromResults = urlParams.get('from');
     
-    if (universeId) {
-        // Masquer la grille des univers si on vient des résultats
-        if (fromResults === 'results') {
-            document.querySelector('.container').style.display = 'none';
-            // Afficher seulement le modal
-            const modal = document.getElementById('subUniversesModal');
-            modal.style.display = 'block';
-            modal.style.background = 'white';
-        }
+    if (universeId && fromResults === 'results') {
+        // Masquer seulement la grille, pas tout le container
+        document.getElementById('universesGrid').style.display = 'none';
+        document.querySelector('.header').style.display = 'none';
         
-        // Ouvrir automatiquement le modal de cet univers
+        // Ouvrir automatiquement le modal
+        setTimeout(() => {
+            openModal(parseInt(universeId));
+        }, 100);
+    } else if (universeId) {
+        // Ouvrir le modal normalement
         setTimeout(() => {
             openModal(parseInt(universeId));
         }, 100);
