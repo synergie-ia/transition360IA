@@ -74,133 +74,133 @@ const interests = [
     }
 ];
 
-// Les 21 univers professionnels avec les matrices ajustées 
+// Les 21 univers professionnels avec la NOUVELLE MATRICE (Règle des 50%)
 // Ordre des poids: [Données, Règles, Action, Leadership, Aide, Relations, Arts, Idées, Activités physiques, Manuel, Investigation, Sciences]
 const universes = [
     {
         id: 1,
         icon: '🌾',
         name: 'Agriculture, nature & animaux', 
-        weights: [0, 1, 2, 0, 1, 0, 0, 0, 3, 3, 1, 1]
+        weights: [2, 2, 2, 2, 1, 1, 0, 2, 3, 3, 2, 2]
     },
     {
         id: 2,
         icon: '🎨',
         name: 'Arts, design & création', 
-        weights: [0, 0, 0, 0, 0, 1, 3, 3, 0, 1, 1, 0]
+        weights: [1, 2, 2, 1, 1, 2, 3, 3, 0, 2, 1, 1]
     },
     {
         id: 3,
         icon: '🛒',
         name: 'Commerce, marketing & vente', 
-        weights: [1, 0, 2, 3, 1, 3, 1, 1, 0, 0, 0, 0]
+        weights: [2, 2, 3, 2, 1, 3, 1, 2, 0, 1, 2, 1]
     },
     {
         id: 4,
         icon: '📺',
         name: 'Communication, médias & culture', 
-        weights: [0, 0, 1, 2, 1, 3, 3, 3, 0, 0, 1, 0]
+        weights: [2, 2, 3, 2, 1, 3, 2, 3, 0, 0, 2, 2]
     },
     {
         id: 5,
         icon: '🏗️',
         name: 'Construction, BTP & habitat', 
-        weights: [1, 3, 2, 0, 0, 0, 0, 1, 2, 3, 0, 1]
+        weights: [2, 3, 2, 2, 1, 2, 0, 2, 1, 3, 2, 2]
     },
     {
         id: 6,
         icon: '⚖️',
         name: 'Droit, administration & politique publique', 
-        weights: [3, 3, 1, 2, 1, 1, 0, 2, 0, 0, 2, 1]
+        weights: [2, 3, 2, 2, 2, 2, 0, 2, 0, 0, 3, 1]
     },
     {
         id: 7,
         icon: '📚',
         name: 'Éducation, formation & apprentissage', 
-        weights: [0, 0, 0, 0, 2, 3, 1, 1, 0, 0, 3, 1]
+        weights: [2, 2, 2, 2, 3, 3, 1, 2, 1, 1, 2, 2]
     },
     {
         id: 8,
         icon: '🌍',
         name: 'Environnement, climat & énergies', 
-        weights: [0, 0, 1, 0, 1, 0, 0, 1, 3, 2, 1, 2]
+        weights: [2, 3, 2, 2, 1, 2, 0, 3, 1, 2, 3, 3]
     },
     {
         id: 9,
         icon: '💼',
         name: 'Gestion, finance & comptabilité', 
-        weights: [3, 3, 1, 2, 0, 0, 0, 1, 0, 1, 1, 1]
+        weights: [3, 3, 2, 2, 1, 2, 0, 2, 0, 0, 2, 2]
     },
     {
         id: 10,
         icon: '🏨',
         name: 'Hôtellerie, restauration & tourisme', 
-        weights: [0, 0, 2, 1, 2, 3, 0, 1, 2, 0, 0, 0]
+        weights: [2, 2, 2, 2, 2, 3, 1, 2, 1, 2, 2, 1]
     },
     {
         id: 11,
         icon: '🏠',
         name: 'Immobilier & patrimoine', 
-        weights: [2, 3, 2, 3, 0, 0, 0, 1, 1, 1, 1, 1]
+        weights: [3, 3, 2, 3, 2, 3, 0, 2, 0, 1, 2, 2]
     },
     {
         id: 12,
         icon: '🏭',
         name: 'Industrie, fabrication & production', 
-        weights: [1, 2, 1, 1, 0, 0, 0, 1, 1, 3, 1, 3]
+        weights: [2, 3, 2, 2, 1, 2, 0, 2, 0, 3, 2, 3]
     },
     {
         id: 13,
         icon: '🚚',
         name: 'Logistique, transport & mobilité', 
-        weights: [1, 2, 2, 1, 0, 0, 0, 1, 3, 3, 0, 1]
+        weights: [2, 3, 2, 3, 2, 3, 0, 2, 1, 2, 2, 2]
     },
     {
         id: 14,
         icon: '📈',
         name: 'Management, entrepreneuriat & stratégie', 
-        weights: [2, 1, 3, 3, 0, 2, 0, 1, 0, 0, 1, 1]
+        weights: [3, 3, 3, 3, 3, 3, 0, 3, 0, 0, 3, 2]
     },
     {
         id: 15,
         icon: '💻',
         name: 'Numérique, informatique & data', 
-        weights: [3, 1, 1, 2, 0, 0, 0, 2, 0, 1, 1, 3]
+        weights: [3, 3, 2, 2, 1, 2, 0, 3, 0, 1, 2, 3]
     },
     {
         id: 16,
         icon: '🏥',
         name: 'Santé, bien-être & médical', 
-        weights: [1, 0, 0, 0, 3, 2, 0, 0, 1, 1, 3, 1]
+        weights: [2, 3, 2, 2, 3, 3, 0, 2, 0, 2, 3, 3]
     },
     {
         id: 17,
         icon: '🔬',
         name: 'Sciences, recherche & innovation', 
-        weights: [2, 1, 0, 0, 0, 0, 1, 3, 0, 0, 3, 3]
+        weights: [3, 3, 2, 2, 2, 2, 0, 3, 0, 1, 3, 3]
     },
     {
         id: 18,
         icon: '🚨',
         name: 'Sécurité, défense & urgence', 
-        weights: [0, 2, 3, 2, 0, 0, 0, 1, 3, 2, 1, 1]
+        weights: [3, 3, 3, 3, 2, 3, 0, 2, 1, 2, 3, 3]
     },
     {
         id: 19,
         icon: '❤️',
         name: 'Social, aide & solidarité', 
-        weights: [0, 0, 1, 0, 3, 3, 0, 0, 0, 0, 1, 0]
+        weights: [2, 3, 2, 2, 3, 3, 0, 2, 1, 1, 2, 1]
     },
     {
         id: 20,
         icon: '⚽',
         name: 'Sport, loisirs & vie active', 
-        weights: [0, 0, 3, 1, 1, 3, 1, 0, 3, 1, 1, 0]
+        weights: [2, 2, 3, 2, 3, 3, 1, 2, 3, 1, 2, 2]
     },
     {
         id: 21,
         icon: '🚀',
         name: 'Technologies émergentes & futur du travail', 
-        weights: [3, 1, 2, 2, 0, 0, 1, 2, 1, 1, 2, 3]
+        weights: [3, 3, 3, 3, 1, 2, 0, 3, 0, 2, 3, 3]
     }
 ];
