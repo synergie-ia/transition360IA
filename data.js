@@ -1,196 +1,206 @@
-// Les 12 intérêts avec leurs descriptions
+// Les 12 intérêts avec le nouveau questionnaire
 const interests = [
     {
         id: 1, 
-        icon: '🏃', 
-        title: 'Activités physiques & nature', 
-        verbs: 'Bouger, respirer, explorer, agir', 
-        description: "Je me vois plutôt dans un métier où je pourrai être en mouvement, vivre dehors et sentir l'énergie du corps."
-    },
-    {
-        id: 2, 
-        icon: '🔧', 
-        title: 'Manuel & technique', 
-        verbs: 'Fabriquer, réparer, construire, ajuster', 
-        description: "Je me vois plutôt dans un métier où je pourrai créer ou réparer avec mes mains et voir le résultat concret de mon travail."
-    },
-    {
-        id: 3, 
-        icon: '🔍', 
-        title: 'Investigation & information', 
-        verbs: 'Observer, comprendre, apprendre', 
-        description: "Je me vois plutôt dans un métier où je pourrai chercher à comprendre comment les choses fonctionnent et approfondir mes connaissances."
-    },
-    {
-        id: 4, 
-        icon: '🧪', 
-        title: 'Sciences & technologies', 
-        verbs: 'Tester, modéliser, programmer, innover', 
-        description: "Je me vois plutôt dans un métier où je pourrai expérimenter, utiliser des technologies et résoudre des problèmes complexes."
-    },
-    {
-        id: 5, 
-        icon: '🎨', 
-        title: 'Arts & expression', 
-        verbs: 'Imaginer, exprimer, créer, interpréter', 
-        description: "Je me vois plutôt dans un métier où je pourrai créer des œuvres originales et m'exprimer à travers l'art et la créativité."
-    },
-    {
-        id: 6, 
-        icon: '💡', 
-        title: 'Idées & conception', 
-        verbs: 'Concevoir, structurer, inventer, organiser', 
-        description: "Je me vois plutôt dans un métier où je pourrai imaginer de nouveaux concepts et organiser des idées de manière innovante."
-    },
-    {
-        id: 7, 
-        icon: '🤝', 
-        title: 'Aide & accompagnement', 
-        verbs: 'Soutenir, écouter, former, accompagner', 
-        description: "Je me vois plutôt dans un métier où je pourrai aider les autres à progresser et les accompagner dans leurs difficultés."
-    },
-    {
-        id: 8, 
-        icon: '👥', 
-        title: 'Relations & sociabilité', 
-        verbs: 'Communiquer, relier, partager, coopérer', 
-        description: "Je me vois plutôt dans un métier où je pourrai échanger avec les autres, créer du lien et travailler en équipe."
-    },
-    {
-        id: 9, 
-        icon: '⚡', 
-        title: 'Action & initiative', 
-        verbs: 'Agir, entreprendre, dynamiser, décider', 
-        description: "Je me vois plutôt dans un métier où je pourrai prendre des initiatives, lancer des projets et passer à l'action rapidement."
-    },
-    {
-        id: 10, 
-        icon: '👑', 
-        title: 'Leadership & stratégie', 
-        verbs: 'Motiver, diriger, influencer, décider', 
-        description: "Je me vois plutôt dans un métier où je pourrai guider les autres, prendre des décisions importantes et définir une vision."
-    },
-    {
-        id: 11, 
-        icon: '📊', 
+        icon: '📊',
         title: 'Données & chiffres', 
-        verbs: 'Calculer, comparer, interpréter, vérifier', 
-        description: "Je me vois plutôt dans un métier où je pourrai travailler avec des données chiffrées et analyser des informations précises."
-    },
-    {
-        id: 12, 
-        icon: '📋', 
-        title: 'Règles & méthodes', 
-        verbs: 'Contrôler, sécuriser, appliquer, structurer', 
-        description: "Je me vois plutôt dans un métier où je pourrai suivre des procédures rigoureuses et m'assurer que tout est en ordre."
-    }
-];
-
-// Les 21 univers professionnels avec les matrices CORRIGÉES du document
-const universes = [
-    {
-        id: 1,
-        name: '🌾 Agriculture, nature & animaux', 
-        weights: [3, 3, 1, 1, 0, 0, 1, 0, 2, 0, 0, 1]
+        description: "Travailler avec des chiffres, analyser des données, créer des tableaux et interpréter des statistiques"
     },
     {
         id: 2,
-        name: '🎨 Arts, design & création', 
-        weights: [0, 1, 1, 0, 3, 3, 0, 1, 0, 0, 0, 0]
+        icon: '📋',
+        title: 'Règles & méthodes', 
+        description: "Suivre des procédures précises, appliquer des règles strictes, vérifier la conformité et organiser méthodiquement"
     },
     {
         id: 3,
-        name: '🛒 Commerce, marketing & vente', 
-        weights: [0, 0, 0, 0, 1, 1, 1, 3, 2, 3, 1, 0]
+        icon: '⚡',
+        title: 'Action & initiative', 
+        description: "Prendre des initiatives, lancer de nouveaux projets, saisir les opportunités et relever des défis"
     },
     {
         id: 4,
-        name: '📺 Communication, médias & culture', 
-        weights: [0, 0, 1, 0, 3, 3, 1, 3, 1, 2, 0, 0]
+        icon: '👑',
+        title: 'Leadership & stratégie', 
+        description: "Diriger une équipe, prendre des décisions stratégiques, avoir une vision d'ensemble et motiver les autres"
     },
     {
         id: 5,
-        name: '🏗️ Construction, BTP & habitat', 
-        weights: [2, 3, 0, 1, 0, 1, 0, 0, 2, 0, 1, 3]
+        icon: '🤝',
+        title: 'Aide & accompagnement', 
+        description: "Aider les autres, les accompagner dans leurs progrès, les écouter et les soutenir"
     },
     {
         id: 6,
-        name: '⚖️ Droit, administration & politique publique', 
-        weights: [0, 0, 2, 1, 0, 2, 1, 1, 1, 2, 3, 3]
+        icon: '👥',
+        title: 'Relations & sociabilité', 
+        description: "Échanger avec les autres, travailler en équipe, communiquer et créer des liens"
     },
     {
         id: 7,
-        name: '📚 Éducation, formation & apprentissage', 
-        weights: [0, 0, 3, 1, 1, 1, 2, 3, 0, 0, 0, 0]
+        icon: '🎨',
+        title: 'Arts & expression', 
+        description: "Créer des choses artistiques, exprimer votre créativité, jouer avec les formes et les couleurs"
     },
     {
         id: 8,
-        name: '🌍 Environnement, climat & énergies', 
-        weights: [3, 2, 1, 2, 0, 1, 1, 0, 1, 0, 0, 0]
+        icon: '💡',
+        title: 'Idées & conception', 
+        description: "Imaginer de nouvelles idées, concevoir des solutions innovantes, structurer des projets et inventer"
     },
     {
         id: 9,
-        name: '💼 Gestion, finance & comptabilité', 
-        weights: [0, 1, 1, 1, 0, 1, 0, 0, 1, 2, 3, 3]
+        icon: '🏃',
+        title: 'Activités physiques & nature', 
+        description: "Bouger, faire des activités en extérieur, être actif physiquement et explorer la nature"
     },
     {
         id: 10,
-        name: '🏨 Hôtellerie, restauration & tourisme', 
-        weights: [2, 0, 0, 0, 0, 1, 2, 3, 2, 1, 0, 0]
+        icon: '🔧',
+        title: 'Manuel & technique', 
+        description: "Fabriquer ou réparer des objets avec vos mains, utiliser des outils et réaliser des tâches concrètes"
     },
     {
         id: 11,
-        name: '🏠 Immobilier & patrimoine', 
-        weights: [1, 1, 1, 1, 0, 1, 0, 0, 2, 3, 2, 3]
+        icon: '🔍',
+        title: 'Investigation & information', 
+        description: "Chercher des informations, enquêter, faire des recherches et approfondir vos connaissances"
     },
     {
         id: 12,
-        name: '🏭 Industrie, fabrication & production', 
-        weights: [1, 3, 1, 3, 0, 1, 0, 0, 1, 1, 1, 2]
+        icon: '🧪',
+        title: 'Sciences & technologies', 
+        description: "Faire des expériences, tester de nouvelles technologies, comprendre comment les choses fonctionnent"
+    }
+];
+
+// Les 21 univers professionnels avec les matrices ajustées 
+// Ordre des poids: [Données, Règles, Action, Leadership, Aide, Relations, Arts, Idées, Activités physiques, Manuel, Investigation, Sciences]
+const universes = [
+    {
+        id: 1,
+        icon: '🌾',
+        name: 'Agriculture, nature & animaux', 
+        weights: [0, 1, 2, 0, 1, 0, 0, 0, 3, 3, 1, 1]
+    },
+    {
+        id: 2,
+        icon: '🎨',
+        name: 'Arts, design & création', 
+        weights: [0, 0, 0, 0, 0, 1, 3, 3, 0, 1, 1, 0]
+    },
+    {
+        id: 3,
+        icon: '🛒',
+        name: 'Commerce, marketing & vente', 
+        weights: [1, 0, 2, 3, 1, 3, 1, 1, 0, 0, 0, 0]
+    },
+    {
+        id: 4,
+        icon: '📺',
+        name: 'Communication, médias & culture', 
+        weights: [0, 0, 1, 2, 1, 3, 3, 3, 0, 0, 1, 0]
+    },
+    {
+        id: 5,
+        icon: '🏗️',
+        name: 'Construction, BTP & habitat', 
+        weights: [1, 3, 2, 0, 0, 0, 0, 1, 2, 3, 0, 1]
+    },
+    {
+        id: 6,
+        icon: '⚖️',
+        name: 'Droit, administration & politique publique', 
+        weights: [3, 3, 1, 2, 1, 1, 0, 2, 0, 0, 2, 1]
+    },
+    {
+        id: 7,
+        icon: '📚',
+        name: 'Éducation, formation & apprentissage', 
+        weights: [0, 0, 0, 0, 2, 3, 1, 1, 0, 0, 3, 1]
+    },
+    {
+        id: 8,
+        icon: '🌍',
+        name: 'Environnement, climat & énergies', 
+        weights: [0, 0, 1, 0, 1, 0, 0, 1, 3, 2, 1, 2]
+    },
+    {
+        id: 9,
+        icon: '💼',
+        name: 'Gestion, finance & comptabilité', 
+        weights: [3, 3, 1, 2, 0, 0, 0, 1, 0, 1, 1, 1]
+    },
+    {
+        id: 10,
+        icon: '🏨',
+        name: 'Hôtellerie, restauration & tourisme', 
+        weights: [0, 0, 2, 1, 2, 3, 0, 1, 2, 0, 0, 0]
+    },
+    {
+        id: 11,
+        icon: '🏠',
+        name: 'Immobilier & patrimoine', 
+        weights: [2, 3, 2, 3, 0, 0, 0, 1, 1, 1, 1, 1]
+    },
+    {
+        id: 12,
+        icon: '🏭',
+        name: 'Industrie, fabrication & production', 
+        weights: [1, 2, 1, 1, 0, 0, 0, 1, 1, 3, 1, 3]
     },
     {
         id: 13,
-        name: '🚚 Logistique, transport & mobilité', 
-        weights: [3, 3, 0, 1, 0, 1, 0, 0, 2, 1, 1, 2]
+        icon: '🚚',
+        name: 'Logistique, transport & mobilité', 
+        weights: [1, 2, 2, 1, 0, 0, 0, 1, 3, 3, 0, 1]
     },
     {
         id: 14,
-        name: '📈 Management, entrepreneuriat & stratégie', 
-        weights: [0, 0, 1, 1, 0, 1, 0, 2, 3, 3, 2, 1]
+        icon: '📈',
+        name: 'Management, entrepreneuriat & stratégie', 
+        weights: [2, 1, 3, 3, 0, 2, 0, 1, 0, 0, 1, 1]
     },
     {
         id: 15,
-        name: '💻 Numérique, informatique & data', 
-        weights: [0, 1, 1, 3, 0, 2, 0, 0, 1, 2, 3, 1]
+        icon: '💻',
+        name: 'Numérique, informatique & data', 
+        weights: [3, 1, 1, 2, 0, 0, 0, 2, 0, 1, 1, 3]
     },
     {
         id: 16,
-        name: '🏥 Santé, bien-être & médical', 
-        weights: [1, 1, 3, 1, 0, 0, 3, 2, 0, 0, 1, 0]
+        icon: '🏥',
+        name: 'Santé, bien-être & médical', 
+        weights: [1, 0, 0, 0, 3, 2, 0, 0, 1, 1, 3, 1]
     },
     {
         id: 17,
-        name: '🔬 Sciences, recherche & innovation', 
-        weights: [0, 0, 3, 3, 1, 3, 0, 0, 0, 0, 2, 1]
+        icon: '🔬',
+        name: 'Sciences, recherche & innovation', 
+        weights: [2, 1, 0, 0, 0, 0, 1, 3, 0, 0, 3, 3]
     },
     {
         id: 18,
-        name: '🚨 Sécurité, défense & urgence', 
-        weights: [3, 2, 1, 1, 0, 1, 0, 0, 3, 2, 0, 2]
+        icon: '🚨',
+        name: 'Sécurité, défense & urgence', 
+        weights: [0, 2, 3, 2, 0, 0, 0, 1, 3, 2, 1, 1]
     },
     {
         id: 19,
-        name: '❤️ Social, aide & solidarité', 
-        weights: [0, 0, 1, 0, 0, 0, 3, 3, 1, 0, 0, 0]
+        icon: '❤️',
+        name: 'Social, aide & solidarité', 
+        weights: [0, 0, 1, 0, 3, 3, 0, 0, 0, 0, 1, 0]
     },
     {
         id: 20,
-        name: '⚽ Sport, loisirs & vie active', 
-        weights: [3, 1, 1, 0, 1, 0, 1, 3, 3, 1, 0, 0]
+        icon: '⚽',
+        name: 'Sport, loisirs & vie active', 
+        weights: [0, 0, 3, 1, 1, 3, 1, 0, 3, 1, 1, 0]
     },
     {
         id: 21,
-        name: '🚀 Technologies émergentes & futur du travail', 
-        weights: [1, 1, 2, 3, 1, 2, 0, 0, 2, 2, 3, 1]
+        icon: '🚀',
+        name: 'Technologies émergentes & futur du travail', 
+        weights: [3, 1, 2, 2, 0, 0, 1, 2, 1, 1, 2, 3]
     }
 ];
