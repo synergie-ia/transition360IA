@@ -23,16 +23,16 @@ function renderInterests() {
             <div class="interest-header">
                 <div class="interest-icon">${interest.icon}</div>
                 <div class="interest-title">
-                    <h3>${interest.title}</h3>
-                    <div class="interest-verbs">${interest.verbs}</div>
+                    <h3>Question ${interest.id} - ${interest.title}</h3>
                 </div>
             </div>
             <div class="interest-description">${interest.description}</div>
             <div class="rating-buttons">
-                <button class="rating-btn level-0" data-interest="${interest.id}" data-value="0">❌ Pas du tout</button>
-                <button class="rating-btn level-1" data-interest="${interest.id}" data-value="1">🤔 Un peu</button>
-                <button class="rating-btn level-2" data-interest="${interest.id}" data-value="2">👍 Plutôt</button>
-                <button class="rating-btn level-3" data-interest="${interest.id}" data-value="3">✅ Totalement</button>
+                <button class="rating-btn level-0" data-interest="${interest.id}" data-value="0">Pas du tout</button>
+                <button class="rating-btn level-1" data-interest="${interest.id}" data-value="1">Un peu</button>
+                <button class="rating-btn level-2" data-interest="${interest.id}" data-value="2">Moyennement</button>
+                <button class="rating-btn level-3" data-interest="${interest.id}" data-value="3">Plutôt</button>
+                <button class="rating-btn level-4" data-interest="${interest.id}" data-value="4">Totalement</button>
             </div>
         </div>
     `).join('');
@@ -84,7 +84,7 @@ function createUserProfile() {
     
     interests.forEach(interest => {
         const rating = ratings[interest.id] || 0;
-        const ratingLabels = ['Pas du tout', 'Un peu', 'Plutôt', 'Totalement'];
+        const ratingLabels = ['Pas du tout', 'Un peu', 'Moyennement', 'Plutôt', 'Totalement'];
         profile += `${interest.title}\n`;
         profile += `   ${ratingLabels[rating]}\n\n`;
     });
@@ -96,11 +96,11 @@ function createUserProfile() {
 function calculateResults() {
     // Vérifier que toutes les questions ont été répondues
     if (Object.keys(ratings).length < interests.length) {
-        alert('⚠️ Veuillez répondre à toutes les questions avant de calculer vos résultats.');
+        alert('Veuillez répondre à toutes les questions avant de calculer vos résultats.');
         return;
     }
 
-    // Calcul du score pour chaque univers selon l'algorithme du document
+    // Calcul du score pour chaque univers selon l'algorithme
     const results = universes.map(universe => {
         let score = 0;
         let maxScore = 0;
@@ -113,8 +113,8 @@ function calculateResults() {
             // Score = somme des (note utilisateur × poids univers)
             score += userRating * weight;
             
-            // Score max = somme des poids × 3 (note max possible)
-            maxScore += weight * 3;
+            // Score max = somme des poids × 4 (note max possible avec nouvelle échelle)
+            maxScore += weight * 4;
         });
         
         // Calcul du pourcentage de compatibilité
@@ -123,6 +123,7 @@ function calculateResults() {
         return {
             id: universe.id,
             name: universe.name,
+            icon: universe.icon,
             score: score,
             maxScore: maxScore,
             percentage: percentage
@@ -135,7 +136,7 @@ function calculateResults() {
     // Stocker TOUS les résultats globalement
     currentResults = results;
 
-    // Affichage des résultats (la fonction displayResults gère top 5 + reste)
+    // Affichage des résultats
     displayResults(currentResults);
 }
 
@@ -150,7 +151,7 @@ function displayResults(results) {
     let html = top5.map((result, index) => `
         <div class="result-card">
             <div class="result-info">
-                <div class="result-title">#${index + 1} ${result.name}</div>
+                <div class="result-title">${result.icon} #${index + 1} ${result.name}</div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: ${result.percentage}%"></div>
                 </div>
@@ -158,7 +159,7 @@ function displayResults(results) {
             <div class="result-actions">
                 <div class="result-score">${Math.round(result.percentage)}%</div>
                 <button class="view-universe-btn" onclick="viewUniverseDetails(${result.id})" title="Voir les sous-univers">
-                    👁️
+                    👁
                 </button>
             </div>
         </div>
@@ -174,7 +175,7 @@ function displayResults(results) {
                 ${remaining.map((result, index) => `
                     <div class="result-card">
                         <div class="result-info">
-                            <div class="result-title">#${index + 6} ${result.name}</div>
+                            <div class="result-title">${result.icon} #${index + 6} ${result.name}</div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: ${result.percentage}%"></div>
                             </div>
@@ -182,7 +183,7 @@ function displayResults(results) {
                         <div class="result-actions">
                             <div class="result-score">${Math.round(result.percentage)}%</div>
                             <button class="view-universe-btn" onclick="viewUniverseDetails(${result.id})" title="Voir les sous-univers">
-                                👁️
+                                👁
                             </button>
                         </div>
                     </div>
@@ -227,7 +228,7 @@ function viewUniverseDetails(universeId) {
 // Fonction pour télécharger les résultats en PDF
 function downloadResults() {
     if (currentResults.length === 0) {
-        alert('⚠️ Aucun résultat à télécharger. Veuillez d\'abord passer le test.');
+        alert('Aucun résultat à télécharger. Veuillez d\\'abord passer le test.');
         return;
     }
     
@@ -245,7 +246,7 @@ function downloadResults() {
     
     doc.setFontSize(12);
     doc.setFont(undefined, 'normal');
-    doc.text('Résultats du test d\'orientation', 105, yPos, { align: 'center' });
+    doc.text('Resultats du test d\\'orientation', 105, yPos, { align: 'center' });
     yPos += 5;
     doc.text('Date : ' + date, 105, yPos, { align: 'center' });
     yPos += 15;
@@ -253,7 +254,7 @@ function downloadResults() {
     // Profil d'intérêts
     doc.setFontSize(14);
     doc.setFont(undefined, 'bold');
-    doc.text('MON PROFIL D\'INTERETS', 20, yPos);
+    doc.text('MON PROFIL D\\'INTERETS', 20, yPos);
     yPos += 10;
     
     doc.setFontSize(10);
@@ -265,7 +266,7 @@ function downloadResults() {
             yPos = 20;
         }
         const rating = ratings[interest.id] || 0;
-        const ratingLabels = ['Pas du tout', 'Un peu', 'Plutot', 'Totalement'];
+        const ratingLabels = ['Pas du tout', 'Un peu', 'Moyennement', 'Plutot', 'Totalement'];
         doc.text(interest.title, 20, yPos);
         yPos += 5;
         doc.text('   ' + ratingLabels[rating], 20, yPos);
@@ -293,11 +294,8 @@ function downloadResults() {
             doc.addPage();
             yPos = 20;
         }
-        // Enlever les emojis et nettoyer le nom
-        let cleanName = result.name.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').trim();
-        cleanName = cleanName.replace(/[^\x00-\x7F]/g, ''); // Enlever tous caractères non-ASCII
         doc.setFont(undefined, 'bold');
-        doc.text('#' + (index + 1) + ' ' + cleanName, 20, yPos);
+        doc.text('#' + (index + 1) + ' ' + result.name, 20, yPos);
         yPos += 5;
         doc.setFont(undefined, 'normal');
         doc.text('   Compatibilite : ' + Math.round(result.percentage) + '%', 20, yPos);
@@ -324,9 +322,7 @@ function downloadResults() {
                 doc.addPage();
                 yPos = 20;
             }
-            let cleanName = result.name.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').trim();
-            cleanName = cleanName.replace(/[^\x00-\x7F]/g, '');
-            doc.text('#' + (index + 6) + ' ' + cleanName + ' - ' + Math.round(result.percentage) + '%', 20, yPos);
+            doc.text('#' + (index + 6) + ' ' + result.name + ' - ' + Math.round(result.percentage) + '%', 20, yPos);
             yPos += 6;
         });
     }
@@ -334,18 +330,18 @@ function downloadResults() {
     // Sauvegarde
     doc.save('Orientation360IA_Resultats_' + date.replace(/\//g, '-') + '.pdf');
     
-    showNotification('✅ PDF téléchargé avec succès !');
+    showNotification('PDF téléchargé avec succès !');
 }
 
 // Fonction pour copier les résultats
 function copyResults() {
     if (currentResults.length === 0) {
-        alert('⚠️ Aucun résultat à copier. Veuillez d\'abord passer le test.');
+        alert('Aucun résultat à copier. Veuillez d\\'abord passer le test.');
         return;
     }
     
     const date = new Date().toLocaleDateString('fr-FR');
-    let content = "🎯 ORIENTATION 360 IA - RÉSULTATS\n";
+    let content = "ORIENTATION 360 IA - RÉSULTATS\n";
     content += "Date : " + date + "\n";
     content += "=".repeat(60) + "\n\n";
     
@@ -354,11 +350,11 @@ function copyResults() {
     content += "\n" + "=".repeat(60) + "\n\n";
     
     // Ajout des résultats
-    content += "🏆 TOP 5 DES UNIVERS COMPATIBLES\n";
+    content += "TOP 5 DES UNIVERS COMPATIBLES\n";
     content += "=".repeat(60) + "\n\n";
     
     currentResults.slice(0, 5).forEach((result, index) => {
-        content += `#${index + 1} ${result.name}\n`;
+        content += `#${index + 1} ${result.icon} ${result.name}\n`;
         content += `   Compatibilité : ${Math.round(result.percentage)}%\n\n`;
     });
     
@@ -366,29 +362,16 @@ function copyResults() {
         content += "\nAUTRES UNIVERS\n";
         content += "=".repeat(60) + "\n\n";
         currentResults.slice(5).forEach((result, index) => {
-            content += `#${index + 6} ${result.name} - ${Math.round(result.percentage)}%\n`;
+            content += `#${index + 6} ${result.icon} ${result.name} - ${Math.round(result.percentage)}%\n`;
         });
     }
     
     // Copie dans le presse-papier
     navigator.clipboard.writeText(content).then(() => {
-        showNotification('✅ Résultats copiés dans le presse-papier !');
+        showNotification('Résultats copiés dans le presse-papier !');
     }).catch(err => {
-        alert('❌ Erreur lors de la copie : ' + err);
+        alert('Erreur lors de la copie : ' + err);
     });
-}
-
-// Fonction pour ouvrir l'assistant virtuel
-function openAssistant() {
-    if (currentResults.length === 0) {
-        alert('⚠️ Veuillez d\'abord passer le test avant de consulter l\'assistant virtuel.');
-        return;
-    }
-    
-    // Pour l'instant, afficher un message (sera connecté à un GPT plus tard)
-    alert('🚀 Fonctionnalité à venir !\n\nL\'assistant virtuel sera bientôt disponible pour analyser votre profil en détail.');
-    
-    // TODO: Intégrer avec un GPT pour l'analyse du profil
 }
 
 // Fonction pour afficher une notification
