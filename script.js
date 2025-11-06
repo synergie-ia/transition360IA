@@ -132,9 +132,15 @@ function calculateResults() {
     let score = 0;
     let maxScore = 0;
     
-    // Pour chaque intérêt (12 au total)
+    // CORRECTION IMPORTANTE : Mapper les poids de l'univers aux bonnes réponses de l'utilisateur
+    // Les poids sont dans l'ordre de la matrice Excel, les ratings sont par ID d'intérêt
+    // Ordre des weights: [Activités physiques, Manuel, Investigation, Sciences, Arts, Idées, Aide, Relations, Leadership, Action, Règles, Données]
+    // Correspondance des ID: [9, 10, 11, 12, 7, 8, 5, 6, 4, 3, 2, 1]
+    
+    const interestMapping = [9, 10, 11, 12, 7, 8, 5, 6, 4, 3, 2, 1];
+    
     universe.weights.forEach((weight, index) => {
-      const interestId = index + 1;
+      const interestId = interestMapping[index];
       const userRating = ratings[interestId] || 0;
       
       // Score = somme des (note utilisateur × poids univers)
