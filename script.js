@@ -121,31 +121,27 @@ function calculateResults() {
     return;
   }
 
-  // Vérifier que subUniverses existe
-  if (typeof subUniverses === 'undefined' || !subUniverses.length) {
-    alert('Erreur: Les sous-univers professionnels ne sont pas chargés.');
+  // Vérifier que universes existe
+  if (typeof universes === 'undefined' || !universes.length) {
+    alert('Erreur: Les univers professionnels ne sont pas chargés.');
     return;
   }
 
-  // Mapping des intérêts pour correspondre à l'ordre de la matrice
-  // Ordre dans data.js: [Activités physiques(9), Manuel(10), Investigation(11), Sciences(12), Arts(7), Idées(8), Aide(5), Relations(6), Leadership(4), Action(3), Règles(2), Données(1)]
-  // Ordre dans sub-universes: [RM(2), MT(10), DC(1), ST(12), II(11), RS(6), PN(9), LS(4), AI(3), IC(8), AA(5), AE(7)]
-  // Mapping: Position dans weights → ID d'intérêt
-  const interestMapping = [2, 10, 1, 12, 11, 6, 9, 4, 3, 8, 5, 7];
-
-  // Calcul du score pour chaque sous-univers
-  const results = subUniverses.map(subUniverse => {
+  // Calcul du score pour chaque univers selon l'algorithme
+  // Les poids et les intérêts sont dans le même ordre (1 à 12)
+  const results = universes.map(universe => {
     let score = 0;
     let maxScore = 0;
     
-    subUniverse.weights.forEach((weight, index) => {
-      const interestId = interestMapping[index];
+    // Pour chaque intérêt (12 au total)
+    universe.weights.forEach((weight, index) => {
+      const interestId = index + 1; // Les IDs commencent à 1
       const userRating = ratings[interestId] || 0;
       
-      // Score = somme des (note utilisateur × poids sous-univers)
+      // Score = somme des (note utilisateur × poids univers)
       score += userRating * weight;
       
-      // Score max = somme des poids × 4 (note max possible)
+      // Score max = somme des poids × 4 (note max possible avec nouvelle échelle)
       maxScore += weight * 4;
     });
     
@@ -153,11 +149,9 @@ function calculateResults() {
     const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
     
     return {
-      id: subUniverse.id,
-      universeId: subUniverse.universeId,
-      universeName: subUniverse.universeName,
-      name: subUniverse.name,
-      icon: subUniverse.icon,
+      id: universe.id,
+      name: universe.name,
+      icon: universe.icon,
       score: score,
       maxScore: maxScore,
       percentage: percentage
@@ -183,69 +177,48 @@ function displayResults(results) {
     return;
   }
   
-  // Afficher le TOP 10
-  const top10 = results.slice(0, 10);
-  const next10 = results.slice(10, 20);
-  const remaining = results.slice(20);
+  // Afficher seulement les 5 premiers
+  const top5 = results.slice(0, 5);
+  const remaining = results.slice(5);
 
-  let html = '<h2 style="text-align: center; margin-bottom: 30px;">🏆 Top 10 des sous-univers les plus compatibles</h2>';
-  
-  html += top10.map((result, index) => `
+  let html = top5.map((result, index) => `
     <div class="result-card">
       <div class="result-info">
         <div class="result-title">${result.icon} #${index + 1} ${result.name}</div>
-        <div class="result-subtitle">${result.universeName}</div>
         <div class="progress-bar">
           <div class="progress-fill" style="width: ${result.percentage}%"></div>
         </div>
       </div>
       <div class="result-actions">
         <div class="result-score">${Math.round(result.percentage)}%</div>
+        <button class="view-universe-btn" onclick="viewUniverseDetails(${result.id})" title="Voir les sous-univers">
+          👁
+        </button>
       </div>
     </div>
   `).join('');
 
-  // Ajouter le bouton pour voir les 10 suivants
-  if (next10.length > 0) {
+  // Ajouter le bouton pour voir les univers restants
+  if (remaining.length > 0) {
     html += `
-      <button class="show-more-btn" onclick="showNext10()" id="showNext10Btn" style="margin-top: 30px;">
-        👇 Voir les 10 sous-univers suivants
+      <button class="show-more-btn" onclick="showRemainingUniverses()" id="showMoreBtn">
+        👇 Voir les ${remaining.length} univers restants
       </button>
-      <div id="next10Results" style="display: none; margin-top: 30px;">
-        <h2 style="text-align: center; margin-bottom: 30px;">Sous-univers 11 à 20</h2>
-        ${next10.map((result, index) => `
+      <div id="remainingUniverses" style="display: none;">
+        ${remaining.map((result, index) => `
           <div class="result-card">
             <div class="result-info">
-              <div class="result-title">${result.icon} #${index + 11} ${result.name}</div>
-              <div class="result-subtitle">${result.universeName}</div>
+              <div class="result-title">${result.icon} #${index + 6} ${result.name}</div>
               <div class="progress-bar">
                 <div class="progress-fill" style="width: ${result.percentage}%"></div>
               </div>
             </div>
             <div class="result-actions">
               <div class="result-score">${Math.round(result.percentage)}%</div>
+              <button class="view-universe-btn" onclick="viewUniverseDetails(${result.id})" title="Voir les sous-univers">
+                👁
+              </button>
             </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  // Ajouter le bouton pour voir tous les autres
-  if (remaining.length > 0) {
-    html += `
-      <button class="show-more-btn" onclick="showAllRemaining()" id="showAllBtn" style="display: none; margin-top: 20px;">
-        📋 Voir tous les autres sous-univers (${remaining.length})
-      </button>
-      <div id="remainingResults" style="display: none; margin-top: 30px;">
-        <h2 style="text-align: center; margin-bottom: 30px;">Autres sous-univers</h2>
-        ${remaining.map((result, index) => `
-          <div class="result-card-compact">
-            <span class="result-rank">#${index + 21}</span>
-            <span class="result-icon">${result.icon}</span>
-            <span class="result-name-compact">${result.name}</span>
-            <span class="result-universe-compact">${result.universeName}</span>
-            <span class="result-score-compact">${Math.round(result.percentage)}%</span>
           </div>
         `).join('')}
       </div>
@@ -271,34 +244,23 @@ function displayResults(results) {
   }
 }
 
-// Fonction pour afficher les 10 suivants
-function showNext10() {
-  const next10Div = document.getElementById('next10Results');
-  const btn = document.getElementById('showNext10Btn');
-  const showAllBtn = document.getElementById('showAllBtn');
-  
-  if (next10Div) next10Div.style.display = 'block';
-  if (btn) btn.style.display = 'none';
-  if (showAllBtn) showAllBtn.style.display = 'block';
-  
-  // Scroll vers les nouveaux résultats
-  if (next10Div) {
-    next10Div.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-// Fonction pour afficher tous les restants
-function showAllRemaining() {
-  const remainingDiv = document.getElementById('remainingResults');
-  const btn = document.getElementById('showAllBtn');
+// Fonction pour afficher les univers restants
+function showRemainingUniverses() {
+  const remainingDiv = document.getElementById('remainingUniverses');
+  const btn = document.getElementById('showMoreBtn');
   
   if (remainingDiv) remainingDiv.style.display = 'block';
   if (btn) btn.style.display = 'none';
-  
-  // Scroll vers les nouveaux résultats
-  if (remainingDiv) {
-    remainingDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Fonction pour voir les détails d'un univers
+function viewUniverseDetails(universeId) {
+  try {
+    sessionStorage.setItem('fromResults', 'true');
+  } catch (e) {
+    console.log('sessionStorage not available:', e);
   }
+  window.location.href = `universes.html?id=${universeId}&from=results`;
 }
 
 // Fonction pour télécharger les résultats en PDF
@@ -360,7 +322,7 @@ function downloadResults() {
 
   yPos += 10;
 
-  // Top 10 des sous-univers
+  // Top 5 des univers
   if (yPos > 200) {
     doc.addPage();
     yPos = 20;
@@ -368,55 +330,51 @@ function downloadResults() {
 
   doc.setFontSize(14);
   doc.setFont(undefined, 'bold');
-  doc.text('TOP 10 DES SOUS-UNIVERS COMPATIBLES', 20, yPos);
+  doc.text('TOP 5 DES UNIVERS COMPATIBLES', 20, yPos);
   
   yPos += 10;
-  doc.setFontSize(9);
+  doc.setFontSize(10);
   doc.setFont(undefined, 'normal');
 
-  currentResults.slice(0, 10).forEach((result, index) => {
-    if (yPos > 265) {
+  currentResults.slice(0, 5).forEach((result, index) => {
+    if (yPos > 270) {
       doc.addPage();
       yPos = 20;
     }
     
     doc.setFont(undefined, 'bold');
     doc.text('#' + (index + 1) + ' ' + result.name, 20, yPos);
-    yPos += 4;
+    yPos += 5;
     doc.setFont(undefined, 'normal');
-    doc.setFontSize(8);
-    doc.text('  ' + result.universeName, 20, yPos);
-    yPos += 4;
-    doc.setFontSize(9);
     doc.text('  Compatibilite : ' + Math.round(result.percentage) + '%', 20, yPos);
     yPos += 8;
   });
 
-  // Sous-univers 11-20
-  if (currentResults.length > 10) {
+  // Autres univers
+  if (currentResults.length > 5) {
     yPos += 5;
     
-    if (yPos > 240) {
+    if (yPos > 250) {
       doc.addPage();
       yPos = 20;
     }
 
     doc.setFontSize(12);
     doc.setFont(undefined, 'bold');
-    doc.text('SOUS-UNIVERS 11 A 20', 20, yPos);
+    doc.text('AUTRES UNIVERS', 20, yPos);
     
     yPos += 8;
-    doc.setFontSize(8);
+    doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
 
-    currentResults.slice(10, 20).forEach((result, index) => {
+    currentResults.slice(5).forEach((result, index) => {
       if (yPos > 270) {
         doc.addPage();
         yPos = 20;
       }
       
-      doc.text('#' + (index + 11) + ' ' + result.name + ' - ' + Math.round(result.percentage) + '%', 20, yPos);
-      yPos += 5;
+      doc.text('#' + (index + 6) + ' ' + result.name + ' - ' + Math.round(result.percentage) + '%', 20, yPos);
+      yPos += 6;
     });
   }
 
@@ -443,22 +401,20 @@ function copyResults() {
   content += "\n" + "=".repeat(60) + "\n\n";
 
   // Ajout des résultats
-  content += "TOP 10 DES SOUS-UNIVERS COMPATIBLES\n";
+  content += "TOP 5 DES UNIVERS COMPATIBLES\n";
   content += "=".repeat(60) + "\n\n";
 
-  currentResults.slice(0, 10).forEach((result, index) => {
+  currentResults.slice(0, 5).forEach((result, index) => {
     content += `#${index + 1} ${result.icon} ${result.name}\n`;
-    content += `   ${result.universeName}\n`;
-    content += `   Compatibilité : ${Math.round(result.percentage)}%\n\n`;
+    content += `  Compatibilité : ${Math.round(result.percentage)}%\n\n`;
   });
 
-  if (currentResults.length > 10) {
-    content += "\nSOUS-UNIVERS 11 À 20\n";
+  if (currentResults.length > 5) {
+    content += "\nAUTRES UNIVERS\n";
     content += "=".repeat(60) + "\n\n";
 
-    currentResults.slice(10, 20).forEach((result, index) => {
-      content += `#${index + 11} ${result.icon} ${result.name} - ${Math.round(result.percentage)}%\n`;
-      content += `   ${result.universeName}\n\n`;
+    currentResults.slice(5).forEach((result, index) => {
+      content += `#${index + 6} ${result.icon} ${result.name} - ${Math.round(result.percentage)}%\n`;
     });
   }
 
@@ -519,52 +475,6 @@ style.textContent = `
       transform: translateX(400px);
       opacity: 0;
     }
-  }
-  
-  .result-subtitle {
-    font-size: 0.85em;
-    color: #666;
-    margin-top: 5px;
-    font-style: italic;
-  }
-  
-  .result-card-compact {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 20px;
-    background: white;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  .result-rank {
-    font-weight: bold;
-    color: #666;
-    min-width: 40px;
-  }
-  
-  .result-icon {
-    font-size: 1.5em;
-  }
-  
-  .result-name-compact {
-    flex: 1;
-    font-weight: 600;
-  }
-  
-  .result-universe-compact {
-    color: #666;
-    font-size: 0.85em;
-    font-style: italic;
-  }
-  
-  .result-score-compact {
-    font-weight: bold;
-    color: #27ae60;
-    min-width: 50px;
-    text-align: right;
   }
 `;
 document.head.appendChild(style);
