@@ -2,30 +2,66 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Questionnaire d'intérêts professionnels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test d'intérêts - Reconversion 360 IA</title>
   <link rel="stylesheet" href="test-style.css">
 </head>
 <body>
+  <div class="progress-container">
+    <div class="progress-indicator" id="progressBar"></div>
+  </div>
+  
+  <div class="container">
+    <div class="header">
+      <a href="index.html" class="back-home-btn">← Retour</a>
+      <h1>🎯 Test d'intérêts professionnels</h1>
+      <p>Découvrez les univers professionnels qui correspondent à votre profil</p>
+    </div>
 
-<div class="progress-container">
-  <div class="progress-indicator" id="progress-bar"></div>
-</div>
+    <div class="content">
+      <div class="legend">
+        <h3>📝 Comment répondre ?</h3>
+        <p style="margin-bottom: 15px; font-weight: 600;">Pour chaque situation, indiquez à quel point elle vous correspond :</p>
+        
+        <div class="legend-item">
+          <div class="legend-box" style="background: #e74c3c;"></div>
+          <span><strong>0 - Pas du tout</strong> : Ça ne me correspond pas</span>
+        </div>
+        
+        <div class="legend-item">
+          <div class="legend-box" style="background: #e67e22;"></div>
+          <span><strong>1 - Un peu</strong> : Ça me correspond légèrement</span>
+        </div>
+        
+        <div class="legend-item">
+          <div class="legend-box" style="background: #f39c12;"></div>
+          <span><strong>2 - Moyennement</strong> : Ça me correspond modérément</span>
+        </div>
+        
+        <div class="legend-item">
+          <div class="legend-box" style="background: #2ecc71;"></div>
+          <span><strong>3 - Plutôt</strong> : Ça me correspond bien</span>
+        </div>
+        
+        <div class="legend-item">
+          <div class="legend-box" style="background: #27ae60;"></div>
+          <span><strong>4 - Totalement</strong> : Ça me correspond parfaitement</span>
+        </div>
+      </div>
 
-<div class="container">
-  <div class="header">
-    <h1>🧭 Questionnaire d'intérêts professionnels</h1>
-    <p>Réponds aux affirmations selon ce qui te ressemble le plus.</p>
+      <div id="interestsList"></div>
+
+      <button class="calculate-btn" onclick="calculateResults()">
+        🎯 Calculer mes résultats
+      </button>
+
+      <div class="results" id="results">
+        <div id="resultsList"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="content">
-    <div id="questions-container"></div>
-    <button class="calculate-btn" id="calculate-btn">🎯 Calculer mes résultats</button>
-    <div class="results" id="results"></div>
-  </div>
-</div>
-
-<script src="test-data.js"></script>
-<script src="test-script.js"></script>
-
+  <script src="test-data.js"></script>
+  <script src="test-script.js"></script>
 </body>
 </html>
