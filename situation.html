@@ -3,24 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilan de Situation Personnelle - IA360</title>
+    <title>Bilan de Situation - Reconversion 360 IA</title>
     <link rel="stylesheet" href="situation-style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <a href="index.html" class="back-btn">← Retour</a>
-            <h1>📋 Bilan de Situation Personnelle</h1>
-            <p class="subtitle">Répondez précisément à toutes les questions pour un diagnostic optimal</p>
-        </div>
-
-        <div class="info-banner">
-            <div class="info-icon">💡</div>
-            <div class="info-text">
-                <strong>Pourquoi ces questions sont importantes ?</strong><br>
-                Répondre avec précision permet à votre coach virtuel de vous proposer des recommandations 
-                de métiers et de formations parfaitement adaptées à votre situation personnelle.
-            </div>
+            <h1>📋 Faites votre bilan de situation professionnelle</h1>
+            <p class="subtitle">Répondez précisément à toutes les questions pour un accompagnement optimal</p>
         </div>
 
         <div class="content">
@@ -36,15 +27,8 @@
                     
                     <div class="question-block">
                         <label>Situation actuelle *</label>
-                        <select name="situation" required>
-                            <option value="">-- Sélectionnez --</option>
-                            <option value="etudiant">Étudiant(e)</option>
-                            <option value="salarie">Salarié(e)</option>
-                            <option value="independant">Indépendant(e) / Auto-entrepreneur</option>
-                            <option value="demandeur_emploi">Demandeur d'emploi</option>
-                            <option value="retraite">Retraité(e)</option>
-                            <option value="autre">Autre</option>
-                        </select>
+                        <textarea name="situation" rows="2" required placeholder="Décrivez votre situation actuelle (salarié, demandeur d'emploi, étudiant...)"></textarea>
+                        <small>Apportez des précisions sur votre situation</small>
                     </div>
                 </div>
 
@@ -67,8 +51,8 @@
                     </div>
                     
                     <div class="question-block">
-                        <label>Domaine de formation principal</label>
-                        <input type="text" name="domaine_formation" placeholder="Ex: Commerce, Informatique, Santé...">
+                        <label>Domaine de formation principal *</label>
+                        <input type="text" name="domaine_formation" required placeholder="Ex: Commerce, Informatique, Santé...">
                     </div>
                     
                     <div class="question-block">
@@ -85,8 +69,8 @@
                     </div>
                     
                     <div class="question-block">
-                        <label>Secteur(s) d'activité où vous avez travaillé</label>
-                        <textarea name="secteurs" rows="3" placeholder="Listez les secteurs dans lesquels vous avez une expérience..."></textarea>
+                        <label>Secteur(s) d'activité où vous avez travaillé *</label>
+                        <textarea name="secteurs" rows="3" required placeholder="Listez les secteurs dans lesquels vous avez une expérience..."></textarea>
                     </div>
                 </div>
 
@@ -121,8 +105,8 @@
                     </div>
                     
                     <div class="question-block">
-                        <label>Décrivez votre projet professionnel</label>
-                        <textarea name="description_projet" rows="4" placeholder="Expliquez ce que vous souhaitez faire, vos objectifs, vos motivations..."></textarea>
+                        <label>Décrivez votre projet professionnel *</label>
+                        <textarea name="description_projet" rows="4" required placeholder="Expliquez ce que vous souhaitez faire, vos objectifs, vos motivations..."></textarea>
                     </div>
                 </div>
 
@@ -132,14 +116,17 @@
                     
                     <div class="question-block">
                         <label>Mobilité géographique *</label>
-                        <select name="mobilite" required>
+                        <select name="mobilite" id="mobiliteSelect" required onchange="checkMobilite()">
                             <option value="">-- Sélectionnez --</option>
-                            <option value="locale">Locale uniquement (même ville)</option>
-                            <option value="regionale">Régionale (même région)</option>
+                            <option value="locale">Locale uniquement</option>
+                            <option value="regionale">Régionale</option>
                             <option value="nationale">Nationale (toute la France)</option>
                             <option value="internationale">Internationale</option>
                             <option value="teletravail">Télétravail prioritaire</option>
                         </select>
+                        <div id="mobilitePrecision" style="display: none; margin-top: 10px;">
+                            <input type="text" name="mobilite_precision" placeholder="Précisez la ville ou la région">
+                        </div>
                     </div>
                     
                     <div class="question-block">
@@ -175,13 +162,13 @@
                     <h2>💪 Compétences et atouts</h2>
                     
                     <div class="question-block">
-                        <label>Vos principales compétences techniques</label>
-                        <textarea name="competences_techniques" rows="3" placeholder="Ex: Langages informatiques, utilisation de logiciels, conduite d'engins..."></textarea>
+                        <label>Vos principales compétences techniques *</label>
+                        <textarea name="competences_techniques" rows="3" required placeholder="Ex: Langages informatiques, utilisation de logiciels, conduite d'engins..."></textarea>
                     </div>
                     
                     <div class="question-block">
-                        <label>Vos principales qualités personnelles</label>
-                        <textarea name="qualites" rows="3" placeholder="Ex: Autonomie, créativité, rigueur, empathie..."></textarea>
+                        <label>Vos principales qualités personnelles *</label>
+                        <textarea name="qualites" rows="3" required placeholder="Ex: Autonomie, créativité, rigueur, empathie..."></textarea>
                     </div>
                     
                     <div class="question-block">
@@ -196,7 +183,10 @@
                             <label><input type="checkbox" name="permis" value="moto"> Permis moto</label>
                             <label><input type="checkbox" name="permis" value="poids_lourds"> Poids lourds</label>
                             <label><input type="checkbox" name="permis" value="caces"> CACES</label>
-                            <label><input type="checkbox" name="permis" value="autre"> Autre</label>
+                            <label><input type="checkbox" name="permis" value="autre" onchange="toggleAutrePermis()"> Autre</label>
+                        </div>
+                        <div id="autrePermis" style="display: none; margin-top: 10px;">
+                            <input type="text" name="autre_permis" placeholder="Apportez des précisions">
                         </div>
                     </div>
                 </div>
@@ -217,13 +207,12 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="submit-btn">📥 Télécharger mes réponses en PDF</button>
+                    <button type="submit" class="submit-btn">✅ Valider mon bilan de situation</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="situation-script.js"></script>
 </body>
 </html>
