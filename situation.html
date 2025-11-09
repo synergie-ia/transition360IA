@@ -27,21 +27,8 @@
                     
                     <div class="question-block">
                         <label>Situation actuelle *</label>
-                        <select name="situation" onchange="toggleAutre('situation')" required>
-                            <option value="">-- Sélectionnez --</option>
-                            <option value="salarie_cdi">Salarié en CDI</option>
-                            <option value="salarie_cdd">Salarié en CDD</option>
-                            <option value="demandeur_emploi">Demandeur d'emploi</option>
-                            <option value="etudiant">Étudiant</option>
-                            <option value="independant">Indépendant / Auto-entrepreneur</option>
-                            <option value="interim">Intérimaire</option>
-                            <option value="fonction_publique">Fonctionnaire</option>
-                            <option value="retraite">Retraité</option>
-                            <option value="autre">Autre</option>
-                        </select>
-                        <div id="autreSituation" style="display: none; margin-top: 10px;">
-                            <input type="text" name="situation_autre" placeholder="Précisez votre situation">
-                        </div>
+                        <textarea name="situation" rows="2" required placeholder="Décrivez votre situation actuelle (salarié, demandeur d'emploi, étudiant...)"></textarea>
+                        <small>Apportez des précisions sur votre situation</small>
                     </div>
                 </div>
 
@@ -51,7 +38,7 @@
                     
                     <div class="question-block">
                         <label>Niveau d'études *</label>
-                        <select name="niveau_etudes" onchange="toggleAutre('niveau_etudes')" required>
+                        <select name="niveau_etudes" required>
                             <option value="">-- Sélectionnez --</option>
                             <option value="sans_diplome">Sans diplôme</option>
                             <option value="cap_bep">CAP / BEP</option>
@@ -60,11 +47,7 @@
                             <option value="bac_3">Bac +3 (Licence)</option>
                             <option value="bac_5">Bac +5 (Master, Ingénieur)</option>
                             <option value="bac_8">Bac +8 et plus (Doctorat)</option>
-                            <option value="autre">Autre</option>
                         </select>
-                        <div id="autreNiveau_etudes" style="display: none; margin-top: 10px;">
-                            <input type="text" name="niveau_etudes_autre" placeholder="Précisez votre niveau d'études">
-                        </div>
                     </div>
                     
                     <div class="question-block">
@@ -74,7 +57,7 @@
                     
                     <div class="question-block">
                         <label>Années d'expérience professionnelle *</label>
-                        <select name="experience" onchange="toggleAutre('experience')" required>
+                        <select name="experience" required>
                             <option value="">-- Sélectionnez --</option>
                             <option value="0">Aucune expérience</option>
                             <option value="0-2">Moins de 2 ans</option>
@@ -82,11 +65,7 @@
                             <option value="5-10">5 à 10 ans</option>
                             <option value="10-20">10 à 20 ans</option>
                             <option value="20+">Plus de 20 ans</option>
-                            <option value="autre">Autre</option>
                         </select>
-                        <div id="autreExperience" style="display: none; margin-top: 10px;">
-                            <input type="text" name="experience_autre" placeholder="Précisez vos années d'expérience">
-                        </div>
                     </div>
                     
                     <div class="question-block">
@@ -101,7 +80,7 @@
                     
                     <div class="question-block">
                         <label>Type de projet *</label>
-                        <select name="type_projet" onchange="toggleAutre('type_projet')" required>
+                        <select name="type_projet" required>
                             <option value="">-- Sélectionnez --</option>
                             <option value="premier_emploi">Recherche de premier emploi</option>
                             <option value="evolution">Évolution dans mon métier actuel</option>
@@ -110,27 +89,19 @@
                             <option value="formation">Formation / Montée en compétences</option>
                             <option value="reprise_etudes">Reprise d'études</option>
                             <option value="exploration">Phase d'exploration</option>
-                            <option value="autre">Autre</option>
                         </select>
-                        <div id="autreType_projet" style="display: none; margin-top: 10px;">
-                            <input type="text" name="type_projet_autre" placeholder="Précisez votre type de projet">
-                        </div>
                     </div>
                     
                     <div class="question-block">
                         <label>Échéance de votre projet *</label>
-                        <select name="echeance" onchange="toggleAutre('echeance')" required>
+                        <select name="echeance" required>
                             <option value="">-- Sélectionnez --</option>
                             <option value="immediat">Immédiat (moins de 3 mois)</option>
                             <option value="court_terme">Court terme (3 à 6 mois)</option>
                             <option value="moyen_terme">Moyen terme (6 mois à 1 an)</option>
                             <option value="long_terme">Long terme (1 à 2 ans)</option>
                             <option value="reflexion">En réflexion (plus de 2 ans)</option>
-                            <option value="autre">Autre</option>
                         </select>
-                        <div id="autreEcheance" style="display: none; margin-top: 10px;">
-                            <input type="text" name="echeance_autre" placeholder="Précisez votre échéance">
-                        </div>
                     </div>
                     
                     <div class="question-block">
@@ -152,10 +123,9 @@
                             <option value="nationale">Nationale (toute la France)</option>
                             <option value="internationale">Internationale</option>
                             <option value="teletravail">Télétravail prioritaire</option>
-                            <option value="autre">Autre</option>
                         </select>
                         <div id="mobilitePrecision" style="display: none; margin-top: 10px;">
-                            <input type="text" name="mobilite_precision" placeholder="Précisez la ville, la région ou votre type de mobilité">
+                            <input type="text" name="mobilite_precision" placeholder="Précisez la ville ou la région">
                         </div>
                     </div>
                     
@@ -168,30 +138,22 @@
                             <label><input type="checkbox" name="contrat" value="alternance"> Alternance</label>
                             <label><input type="checkbox" name="contrat" value="stage"> Stage</label>
                             <label><input type="checkbox" name="contrat" value="independant"> Indépendant</label>
-                            <label><input type="checkbox" name="contrat" value="autre" onchange="toggleAutreCheckbox('contrat')"> Autre</label>
-                        </div>
-                        <div id="autreContrat" style="display: none; margin-top: 10px;">
-                            <input type="text" name="contrat_autre" placeholder="Précisez le type de contrat">
                         </div>
                     </div>
                     
                     <div class="question-block">
                         <label>Temps de travail souhaité *</label>
-                        <select name="temps_travail" onchange="toggleAutre('temps_travail')" required>
+                        <select name="temps_travail" required>
                             <option value="">-- Sélectionnez --</option>
                             <option value="temps_plein">Temps plein</option>
                             <option value="temps_partiel">Temps partiel</option>
                             <option value="flexible">Flexible</option>
-                            <option value="autre">Autre</option>
                         </select>
-                        <div id="autreTemps_travail" style="display: none; margin-top: 10px;">
-                            <input type="text" name="temps_travail_autre" placeholder="Précisez votre temps de travail souhaité">
-                        </div>
                     </div>
                     
                     <div class="question-block">
-                        <label>Contraintes personnelles à prendre en compte *</label>
-                        <textarea name="contraintes" rows="3" required placeholder="Ex: Horaires, famille, santé, déplacements..."></textarea>
+                        <label>Contraintes personnelles à prendre en compte</label>
+                        <textarea name="contraintes" rows="3" placeholder="Ex: Horaires, famille, santé, déplacements..."></textarea>
                     </div>
                 </div>
 
@@ -210,22 +172,21 @@
                     </div>
                     
                     <div class="question-block">
-                        <label>Langues parlées (et niveau) *</label>
-                        <textarea name="langues" rows="2" required placeholder="Ex: Anglais (courant), Espagnol (intermédiaire)..."></textarea>
+                        <label>Langues parlées (et niveau)</label>
+                        <textarea name="langues" rows="2" placeholder="Ex: Anglais (courant), Espagnol (intermédiaire)..."></textarea>
                     </div>
                     
                     <div class="question-block">
-                        <label>Permis et habilitations *</label>
+                        <label>Permis et habilitations</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="permis" value="b"> Permis B</label>
                             <label><input type="checkbox" name="permis" value="moto"> Permis moto</label>
                             <label><input type="checkbox" name="permis" value="poids_lourds"> Poids lourds</label>
                             <label><input type="checkbox" name="permis" value="caces"> CACES</label>
-                            <label><input type="checkbox" name="permis" value="aucun"> Aucun</label>
-                            <label><input type="checkbox" name="permis" value="autre" onchange="toggleAutreCheckbox('permis')"> Autre</label>
+                            <label><input type="checkbox" name="permis" value="autre" onchange="toggleAutrePermis()"> Autre</label>
                         </div>
                         <div id="autrePermis" style="display: none; margin-top: 10px;">
-                            <input type="text" name="permis_autre" placeholder="Précisez vos permis et habilitations">
+                            <input type="text" name="autre_permis" placeholder="Apportez des précisions">
                         </div>
                     </div>
                 </div>
@@ -240,8 +201,8 @@
                     </div>
                     
                     <div class="question-block">
-                        <label>Qu'est-ce qui vous freine ou vous inquiète dans votre projet ? *</label>
-                        <textarea name="freins" rows="3" required placeholder="Ex: Financier, peur de l'échec, manque de compétences, âge..."></textarea>
+                        <label>Qu'est-ce qui vous freine ou vous inquiète dans votre projet ?</label>
+                        <textarea name="freins" rows="3" placeholder="Ex: Financier, peur de l'échec, manque de compétences, âge..."></textarea>
                     </div>
                 </div>
 
