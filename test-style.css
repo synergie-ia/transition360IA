@@ -126,17 +126,10 @@ body {
   margin-bottom: 20px;
 }
 
-.interest-name {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-}
-
 .interest-question {
-  color: #555;
-  font-size: 1.1em;
-  font-style: italic;
+  color: #333;
+  font-size: 1.2em;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
@@ -235,6 +228,42 @@ body {
 .results.show {
   display: block;
   animation: fadeIn 0.5s;
+}
+
+.interest-profile-section {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.interest-profile-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.interest-profile-name {
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.interest-profile-score {
+  text-align: right;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 5px;
 }
 
 .result-card {
@@ -362,6 +391,10 @@ body {
   .rating-btn {
     width: 50px;
     height: 50px;
+  }
+  
+  .interests-grid {
+    grid-template-columns: 1fr;
   }
   
   .result-card {
