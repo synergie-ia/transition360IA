@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Univers Professionnels - Reconversion 360 IA</title>
-    <link rel="stylesheet" href="universes-style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sélection de vos univers métiers</title>
+  <link rel="stylesheet" href="universes-style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="index.html" class="back-btn">← Retour</a>
-            <h1>🌐 Sélectionnez vos univers professionnels</h1>
-            <p class="subtitle">Choisissez jusqu'à 5 univers qui vous intéressent</p>
-        </div>
-        
-        <div class="top-actions">
-            <button class="test-btn" onclick="window.location.href='test.html'">
-                📝 Si vous hésitez, passez le test d'intérêts professionnels
-            </button>
-        </div>
-        
-        <div class="selection-info" id="selectionInfo">
-            <span id="selectionCount">0 univers sélectionné(s)</span>
-            <span id="selectionLimit" style="color: #e74c3c; display: none;">Maximum 5 univers</span>
-        </div>
-        
-        <div class="universes-grid" id="universesGrid"></div>
-        
-        <!-- Modal pour les sous-univers -->
-        <div class="modal" id="subUniversesModal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal()">&times;</span>
-                <h2 id="modalTitle"></h2>
-                <div class="sub-universes-grid" id="subUniversesList"></div>
-            </div>
-        </div>
-    </div>
 
-    <script src="universes-data.js"></script>
-    <script src="universes-script.js"></script>
+<div class="container">
+
+  <button class="back-btn" onclick="location.href='test.html'">← Retour au test</button>
+
+  <h1 class="page-title">🌍 Univers métiers recommandés</h1>
+
+  <p class="instructions">
+    Voici les univers classés selon ton profil.<br>
+    <strong>Clique sur le cercle</strong> pour choisir ceux qui t'intéressent.<br>
+    <strong>Clique sur le nom</strong> pour dérouler les sous-univers.
+  </p>
+
+  <div id="universList"></div>
+
+  <button id="finishBtn" class="main-btn">✅ Terminer ma sélection</button>
+
+</div>
+
+<script src="universes-data.js"></script>
+<script src="universes-script.js"></script>
+
 </body>
 </html>
