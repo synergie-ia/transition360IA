@@ -1,100 +1,249 @@
+/* =========================================================
+   IA360 – UNIVERS – STYLE GLOBAL
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f5f7;
-  color: #333;
+  padding: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #fafafa;
+  color: #222;
+  line-height: 1.5;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 800px;
   margin: auto;
-  padding: 25px;
+  padding: 20px;
 }
 
-.page-title {
+/* =========================================================
+   TITRES, BOUTONS, INFORMATIONS
+   ========================================================= */
+
+h1 {
+  margin-top: 0;
+  font-size: 1.8rem;
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 12px;
+  font-weight: 700;
 }
 
-.instructions {
+#selectedCount {
   text-align: center;
-  color: #555;
-  margin-bottom: 35px;
+  margin: 8px 0 20px;
+  font-size: 0.95rem;
+  color: #444;
 }
 
-.back-btn {
+.main-btn,
+.alt-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 8px;
   border: none;
-  background: none;
-  font-size: 16px;
   cursor: pointer;
-  margin-bottom: 15px;
-}
-
-.universe-block {
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.08);
-}
-
-.universe-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.universe-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.universe-score {
-  font-weight: bold;
-  color: #0073ff;
-}
-
-.select-circle {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #888;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.select-circle.selected {
-  background: #29a329;
-  border-color: #29a329;
-}
-
-.subunivers {
-  margin-top: 12px;
-  padding-left: 10px;
-  border-left: 3px solid #e3e3e3;
-  display: none;
-}
-
-.sub-item {
-  margin: 6px 0;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 14px;
+  font-weight: 600;
 }
 
 .main-btn {
-  display: block;
-  width: 100%;
-  background: #0073ff;
+  background: #2b7bff;
   color: white;
-  border: none;
-  padding: 16px;
+}
+
+.main-btn.disabled {
+  background: #d3d3d3;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.alt-btn {
+  background: #f1f1f1;
+  color: #333;
+}
+
+/* Boutons retour */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.nav-buttons .main-btn {
+  width: 48%;
+}
+
+/* =========================================================
+   CARTE UNIVERS + ACCORDÉON
+   ========================================================= */
+
+.uni-card {
+  background: #fff;
   border-radius: 12px;
-  font-size: 18px;
+  margin-bottom: 14px;
+  border: 1px solid #e6e6e6;
+  overflow: hidden;
+  transition: border-color .25s ease;
+}
+
+.uni-card:hover {
+  border-color: #bcd6ff;
+}
+
+.uni-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
   cursor: pointer;
-  margin-top: 30px;
+}
+
+.uni-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.uni-icon {
+  font-size: 1.8rem;
+  width: 40px;
+  text-align: center;
+}
+
+.uni-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.uni-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.uni-desc {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Score */
+.uni-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.uni-score .bar {
+  position: relative;
+  width: 70px;
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.uni-score .bar span {
+  display: block;
+  height: 100%;
+  background: #2b7bff;
+  border-radius: 4px;
+}
+
+.uni-score .pct {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Sélecteur : cercle */
+.select-dot {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #999;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: 0.25s;
+  position: relative;
+}
+
+.select-dot.on {
+  border-color: #3bc25b;
+  background: #3bc25b;
+}
+
+/* Accordéon */
+.uni-body {
+  background: #fcfcfc;
+  padding: 0 14px 14px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .35s ease;
+  border-top: 1px solid #efefef;
+}
+
+/* =========================================================
+   SOUS-UNIVERS
+   ========================================================= */
+
+.sub-list {
+  padding-top: 12px;
+}
+
+.sub-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.sub-icon {
+  font-size: 1.3rem;
+  width: 28px;
+  text-align: center;
+}
+
+.sub-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sub-desc {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Message vide */
+.sub-empty {
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .uni-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .uni-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .bar {
+    width: 100px;
+  }
 }
