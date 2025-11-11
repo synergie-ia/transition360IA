@@ -8,21 +8,24 @@
 </head>
 <body>
 
-  <div class="top-nav">
-    <button id="btn-back-top" class="nav-btn hidden">⬅️ Retour</button>
-  </div>
-
   <div class="container">
 
+    <!-- Bouton retour en haut -->
+    <a href="universes.html" class="back-btn">← Retour aux univers</a>
+
     <h1 class="page-title">🎯 Test d'intérêts professionnels</h1>
+
     <p class="intro">
-      Pour chaque proposition, clique sur le rond correspondant.<br>
+      Pour chaque proposition, clique sur le niveau qui te correspond.<br>
       <strong>0 = Pas du tout</strong> → <strong>4 = Totalement</strong>
     </p>
 
     <div id="questionnaire"></div>
 
     <button id="btn-calc-profile" class="main-btn">✅ Calculer mon profil</button>
+
+    <!-- Bouton retour en bas -->
+    <a href="universes.html" class="back-btn back-bottom">← Retour aux univers</a>
 
     <div id="profile-section" class="hidden">
       <h2>📊 Ton profil d'intérêts</h2>
@@ -39,10 +42,8 @@
       <button id="btn-show-all" class="alt-btn hidden">Voir tous les univers</button>
     </div>
 
-  </div>
+    <p id="recalc-hint" class="hidden hint-msg">Des réponses ont changé → recalculer le profil</p>
 
-  <div class="bottom-nav">
-    <button id="btn-back-bottom" class="nav-btn hidden">⬅️ Retour</button>
   </div>
 
   <script src="test-data.js"></script>
