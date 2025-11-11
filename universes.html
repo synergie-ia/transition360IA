@@ -1,45 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌍 Sélection des univers métiers - IA360</title>
-  <link rel="stylesheet" href="universes-style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Univers métiers – sélection</title>
+  <link rel="stylesheet" href="universes-style.css"/>
 </head>
-
 <body>
 
-  <div class="container">
+  <header class="page-header">
+    <h1>🌍 Univers métiers</h1>
+    <p class="subtitle">
+      Sélectionne librement les univers qui t’attirent.
+      Appuie sur <span class="pill">🔎</span> pour voir les sous-univers.
+    </p>
+    <div id="selectedCounter" class="counter">0 univers sélectionné</div>
+  </header>
 
-    <header class="header">
-      <h1>🌍 Vos univers métiers recommandés</h1>
-      <p class="subtitle">
-        Basé sur votre profil professionnel.  
-        Cliquez sur un univers pour <strong>voir les sous-univers</strong>,  
-        cliquez sur le rond à droite pour <strong>le sélectionner</strong>.
-      </p>
+  <main id="universList" class="univers-list" aria-live="polite"></main>
 
-      <button id="backToTest" class="small-btn">← Revenir au questionnaire</button>
-    </header>
+  <footer class="page-footer">
+    <button id="btnClear" class="alt-btn" type="button">↩️ Réinitialiser la sélection</button>
+  </footer>
 
-    <div id="universList"></div>
-
-    <div class="footer">
-      <p id="selectedCount">Aucun univers sélectionné.</p>
-
-      <button id="validateSelection" class="main-btn disabled" disabled>
-        ✅ Valider ma sélection et continuer
-      </button>
-
-      <button id="backToHome" class="alt-btn">🏠 Retour à l'accueil</button>
-    </div>
-
-  </div>
-
-  <!-- Scripts -->
-  <script src="test-data.js"></script>
   <script src="universes-data.js"></script>
   <script src="universes-script.js"></script>
-
 </body>
 </html>
