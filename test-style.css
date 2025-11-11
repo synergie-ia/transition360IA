@@ -5,7 +5,6 @@
   --ink:#1f2a37;
   --muted:#6b7280;
   --line:#e5e7eb;
-  /* Couleurs d'échelle */
   --c0:#e74c3c;
   --c1:#f39c12;
   --c2:#9ca3af;
@@ -33,29 +32,30 @@ html,body{
 }
 
 .page-title{
-  font-size:clamp(22px,4.5vw,32px);
-  margin:16px 0 16px;
+  font-size:clamp(20px,4.5vw,30px);
+  margin:12px 0;
   line-height:1.3;
   text-align:center;
 }
 
-/* Boîte d'information */
+/* Boîte d'information - Version compacte */
 .info-box{
   background:#fff3cd;
   border:1px solid #ffc107;
-  border-radius:12px;
-  padding:16px;
-  margin:16px 0;
-  font-size:14px;
-  line-height:1.6;
+  border-radius:10px;
+  padding:12px 14px;
+  margin:12px 0;
+  font-size:13px;
+  line-height:1.5;
 }
 
 .info-box p{
-  margin:8px 0;
+  margin:4px 0;
 }
 
 .info-box p:first-child{
   margin-top:0;
+  font-size:14px;
 }
 
 .info-box p:last-child{
@@ -63,21 +63,22 @@ html,body{
 }
 
 .intro{
-  color:var(--muted);
-  margin:16px 0;
-  font-size:clamp(14px,2.7vw,16px);
+  color:var(--ink);
+  margin:12px 0 10px;
+  font-size:clamp(14px,2.7vw,15px);
   text-align:center;
 }
 
-/* Légende de l'échelle */
+/* Légende de l'échelle - Version compacte */
 .legend-box{
   background:var(--card);
   border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-  margin:16px 0;
-  font-size:clamp(13px,2.5vw,14px);
+  border-radius:10px;
+  padding:10px 12px;
+  margin:10px 0 16px;
+  font-size:clamp(12px,2.5vw,13px);
   text-align:center;
+  line-height:1.6;
 }
 
 .hidden{display:none}
@@ -100,7 +101,6 @@ html,body{
   color:var(--ink);
 }
 
-/* Une ligne = libellé + 5 ronds */
 .option-row{
   display:flex;
   align-items:center;
@@ -119,14 +119,12 @@ html,body{
   font-size:clamp(14px,2.8vw,16px);
 }
 
-/* Groupe de ronds */
 .rating-buttons{
   display:flex;
   gap:6px;
   flex:0 0 auto;
 }
 
-/* Responsive pour petits écrans */
 @media (max-width: 640px) {
   .option-row{
     flex-direction:column;
@@ -146,7 +144,7 @@ html,body{
   }
 }
 
-/* ---------- Ronds (état par défaut = blancs) ---------- */
+/* ---------- Ronds ---------- */
 .rate-btn{
   min-width:38px;
   width:38px;
@@ -176,7 +174,6 @@ html,body{
   }
 }
 
-/* Mobile - ronds plus grands */
 @media (max-width: 640px) {
   .rate-btn{
     min-width:44px;
@@ -186,7 +183,6 @@ html,body{
   }
 }
 
-/* États sélectionnés par valeur */
 .rate-btn.selected.v0{background:var(--c0);border-color:var(--c0);color:#fff}
 .rate-btn.selected.v1{background:var(--c1);border-color:var(--c1);color:#fff}
 .rate-btn.selected.v2{background:var(--c2);border-color:var(--c2);color:#fff}
@@ -233,17 +229,12 @@ html,body{
 
 /* ---------- Cartes univers ---------- */
 .univers-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
   border:2px solid var(--line);
   border-radius:12px;
   padding:14px;
   margin:10px 0;
   background:#fff;
   transition:all .2s ease;
-  cursor:pointer;
-  position:relative;
 }
 
 .univers-card:hover{
@@ -254,6 +245,13 @@ html,body{
 .univers-card.selected{
   border-color:var(--green);
   background:#f0fdf4;
+}
+
+.univers-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
 .univers-main{
@@ -297,6 +295,7 @@ html,body{
   font-size:13px;
   cursor:pointer;
   white-space:nowrap;
+  transition:all .2s ease;
 }
 
 .btn-toggle-sub:hover{
@@ -365,7 +364,6 @@ html,body{
   margin-top:2px;
 }
 
-/* Compteur d'univers sélectionnés */
 .counter-univers{
   text-align:center;
   font-weight:600;
@@ -377,7 +375,6 @@ html,body{
   border-radius:8px;
 }
 
-/* Boutons retour */
 .section-header, .section-footer{
   margin:16px 0;
   text-align:center;
@@ -441,15 +438,9 @@ html,body{
   text-align:center;
 }
 
-/* Responsive mobile */
 @media (max-width: 640px) {
-  .univers-card{
+  .univers-header{
     flex-wrap:wrap;
-    gap:10px;
-  }
-  
-  .univers-main{
-    flex:1 1 100%;
   }
   
   .univers-score{
