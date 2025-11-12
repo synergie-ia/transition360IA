@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bilan de situation - Orientation 360 IA</title>
+  <title>Bilan de situation - Reconversion 360 IA</title>
   <link rel="stylesheet" href="situation-style.css" />
 </head>
 <body>
@@ -50,30 +50,12 @@
         
         <div class="form-group">
           <label for="q2">Q2. Quel est votre statut actuel ? <span class="required">*</span></label>
-          <select id="q2" name="q2" required>
-            <option value="">Sélectionnez...</option>
-            <option value="salarie-cdi">Salarié en CDI</option>
-            <option value="salarie-cdd">Salarié en CDD</option>
-            <option value="independant">Indépendant / Freelance</option>
-            <option value="recherche">En recherche d'emploi</option>
-            <option value="etudiant">Étudiant</option>
-            <option value="formation">En formation</option>
-            <option value="autre">Autre</option>
-          </select>
+          <textarea id="q2" name="q2" rows="2" required placeholder="Ex: Salarié en CDI, En recherche d'emploi, Indépendant..."></textarea>
         </div>
         
         <div class="form-group">
           <label for="q3">Q3. Quel est votre niveau de formation le plus élevé ? <span class="required">*</span></label>
-          <select id="q3" name="q3" required>
-            <option value="">Sélectionnez...</option>
-            <option value="sans-diplome">Sans diplôme</option>
-            <option value="cap-bep">CAP / BEP</option>
-            <option value="bac">Baccalauréat</option>
-            <option value="bac-2">Bac+2 (BTS, DUT, DEUG)</option>
-            <option value="bac-3">Bac+3 (Licence)</option>
-            <option value="bac-5">Bac+5 (Master, Ingénieur)</option>
-            <option value="doctorat">Doctorat</option>
-          </select>
+          <textarea id="q3" name="q3" rows="2" required placeholder="Ex: Bac+3 Licence en Sciences, CAP Électricien..."></textarea>
         </div>
         
         <div class="form-group">
