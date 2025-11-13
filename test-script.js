@@ -226,22 +226,14 @@ function attachRatingEvents(){
   Exemple : { MO: 30, PT: 16, AL: 45, SI: 50, ... }
 */
 function calcProfile(){
-  // Initialiser tous les scores à 0
   const scores = Object.fromEntries(DIMENSIONS.map(d => [d.code, 0]));
   
-  // Pour chaque réponse du questionnaire
   Object.keys(answers).forEach(key => {
-    const [, dim] = key.split("-");  // Extraire la dimension (ex: "q1-MO" → "MO")
-    const val = answers[key];        // Valeur de la réponse (0 à 4)
-    
-    // Ajouter le CARRÉ de la réponse au score de cette dimension
+    const [, dim] = key.split("-");
+    const val = answers[key];
     scores[dim] += val * val;
-    
-    // Exemple : si val = 4, on ajoute 16 au score
-    // Exemple : si val = 2, on ajoute 4 au score
   });
   
-  // Log pour debug (optionnel)
   console.log("📊 Scores quadratiques par dimension:", scores);
   
   return scores;
@@ -262,6 +254,56 @@ function percentFromSum(sum){
 
 /* 
   ============================================
+  ÉCHELLE OFFICIELLE DE COMPATIBILITÉ
+  ============================================
+  
+  Nouvelle échelle à 5 niveaux basée sur les pourcentages :
+  
+  Pourcentage    Niveau                    Symboles
+  ≥ 52 %         Très compatible           ⭐⭐⭐
+  48 % – 51 %    Compatible                ⭐⭐
+  44 % – 47 %    Assez compatible          ⭐
+  40 % – 43 %    Peu compatible            ⚪
+  ≤ 39 %         Très peu compatible       ⚫
+  
+  Retourne un objet avec le niveau, les symboles et la classe CSS
+*/
+function getCompatibilityLevel(pct){
+  if(pct >= 52){
+    return {
+      level: "Très compatible",
+      stars: "⭐⭐⭐",
+      class: "level-5"
+    };
+  } else if(pct >= 48){
+    return {
+      level: "Compatible",
+      stars: "⭐⭐",
+      class: "level-4"
+    };
+  } else if(pct >= 44){
+    return {
+      level: "Assez compatible",
+      stars: "⭐",
+      class: "level-3"
+    };
+  } else if(pct >= 40){
+    return {
+      level: "Peu compatible",
+      stars: "⚪",
+      class: "level-2"
+    };
+  } else {
+    return {
+      level: "Très peu compatible",
+      stars: "⚫",
+      class: "level-1"
+    };
+  }
+}
+
+/* 
+  ============================================
   ÉTAPE 2 : CALCUL DES UNIVERS (MOYENNE PONDÉRÉE)
   ============================================
   
@@ -274,62 +316,45 @@ function percentFromSum(sum){
   Retour : Liste des 21 univers triés par score décroissant
 */
 function calcUnivers(){
-  // Récupérer les scores quadratiques de chaque dimension
   const scoresQuadratiques = calcProfile();
   
-  // Vérifier que les données sont chargées
   if(typeof universesData === 'undefined'){
     console.error("❌ universesData n'est pas défini.");
     return [];
   }
   
-  // Calculer le score de chaque univers
   const universAvecScores = universesData.map(univers => {
     let sommePonderee = 0;
     let sommePoids = 0;
     
-    // Récupérer les poids de corrélation pour cet univers
     if(typeof universes !== 'undefined'){
       const universMatch = universes.find(uv => uv.id === univers.id);
       
       if(universMatch && universMatch.weights){
-        // Pour chaque dimension, multiplier son score quadratique par son poids
         universMatch.weights.forEach((poids, index) => {
           if(index < DIMENSIONS.length){
             const dimCode = DIMENSIONS[index].code;
             const scoreQuadratique = scoresQuadratiques[dimCode];
-            
-            // Ajouter le score pondéré
             sommePonderee += scoreQuadratique * poids;
             sommePoids += poids;
-            
-            // Exemple :
-            // Si score SI (Sciences) = 45 et poids SI pour cet univers = 10
-            // → Contribution = 45 × 10 = 450
           }
         });
       } else {
-        // Fallback : tous les poids à 1 (pas de pondération)
         DIMENSIONS.forEach(dim => {
           sommePonderee += scoresQuadratiques[dim.code];
           sommePoids += 1;
         });
       }
     } else {
-      // Fallback : tous les poids à 1
       DIMENSIONS.forEach(dim => {
         sommePonderee += scoresQuadratiques[dim.code];
         sommePoids += 1;
       });
     }
     
-    // Calculer la moyenne pondérée
     const moyennePonderee = sommePoids > 0 ? sommePonderee / sommePoids : 0;
-    
-    // Convertir en pourcentage (diviser par 64 = score max théorique)
     const pourcentage = Math.round((moyennePonderee / 64) * 100);
     
-    // Log détaillé pour le premier univers (debug)
     if(univers.id === 1){
       console.log(`
 🔬 Calcul détaillé pour "${univers.name}" :
@@ -340,14 +365,11 @@ function calcUnivers(){
       `);
     }
     
-    // Retourner l'univers avec son score
     return {...univers, pct: pourcentage};
   });
   
-  // Trier par score décroissant
   const universTries = universAvecScores.sort((a, b) => b.pct - a.pct);
   
-  // Log du top 5
   console.log("🏆 Top 5 des univers compatibles:");
   universTries.slice(0, 5).forEach((u, i) => {
     console.log(`   ${i+1}. ${u.name} : ${u.pct}%`);
@@ -368,23 +390,19 @@ function displayProfile(){
   const scoresQuadratiques = calcProfile();
   const root = document.getElementById("profileResults");
   
-  // Convertir les scores quadratiques en pourcentages
   const dimensionsAvecScores = DIMENSIONS.map(dim => ({
     ...dim,
     scoreQuadratique: scoresQuadratiques[dim.code],
     pct: percentFromSum(scoresQuadratiques[dim.code])
   }));
   
-  // Trier par pourcentage décroissant
   dimensionsAvecScores.sort((a, b) => b.pct - a.pct);
   
-  // Log du profil
   console.log("👤 Profil de l'utilisateur :");
   dimensionsAvecScores.forEach(dim => {
     console.log(`   ${dim.name} : ${dim.pct}% (score quadratique: ${dim.scoreQuadratique})`);
   });
   
-  // Générer le HTML
   root.innerHTML = dimensionsAvecScores.map(dim => `
     <div class="profile-row">
       <div class="profile-label">${dim.name}</div>
@@ -426,6 +444,8 @@ function renderUniversCard(u){
   const isSelected = selectedUnivers.has(u.id);
   const hasSubUnivers = u.subUniverses && u.subUniverses.length > 0;
   
+  const compatibility = getCompatibilityLevel(u.pct);
+  
   const subUniversHTML = hasSubUnivers
     ? `<div class="sub-univers-list" id="sub-${u.id}">
         ${u.subUniverses.map(s => `
@@ -441,14 +461,14 @@ function renderUniversCard(u){
     : '';
 
   return `
-    <div class="univers-card ${isSelected ? 'selected' : ''}" id="card-${u.id}">
+    <div class="univers-card ${isSelected ? 'selected' : ''} ${compatibility.class}" id="card-${u.id}">
       <div class="univers-header">
         <div class="univers-main">
           <div class="univers-icon">${u.icon}</div>
           <div class="univers-name">${u.name}</div>
         </div>
         <div class="univers-right">
-          <div class="univers-score">${u.pct}%</div>
+          <div class="univers-stars">${compatibility.stars}</div>
           <div class="univers-actions">
             ${hasSubUnivers 
               ? `<button class="btn-toggle-sub" data-id="${u.id}" title="Voir les sous-univers">🔎</button>` 
@@ -520,7 +540,6 @@ function displayUnivers(){
       return;
     }
     
-    // Sauvegarder les pourcentages
     const percentages = {};
     list.forEach(u => {
       percentages[u.id] = u.pct;
@@ -531,7 +550,20 @@ function displayUnivers(){
     const top5 = list.slice(0, 5);
     const others = list.slice(5);
 
-    root.innerHTML = top5.map(u => renderUniversCard(u)).join("");
+    const legendHTML = `
+      <div class="stars-legend">
+        <div class="legend-title">📊 Échelle de compatibilité :</div>
+        <div class="legend-items">
+          <div class="legend-item">⭐⭐⭐ Très compatible</div>
+          <div class="legend-item">⭐⭐ Compatible</div>
+          <div class="legend-item">⭐ Assez compatible</div>
+          <div class="legend-item">⚪ Peu compatible</div>
+          <div class="legend-item">⚫ Très peu compatible</div>
+        </div>
+      </div>
+    `;
+
+    root.innerHTML = legendHTML + top5.map(u => renderUniversCard(u)).join("");
     attachUniversEvents();
     updateUniversCounter();
 
@@ -542,7 +574,7 @@ function displayUnivers(){
     btnShow.parentNode.replaceChild(newBtnShow, btnShow);
     
     newBtnShow.addEventListener("click", ()=>{
-      root.innerHTML += others.map(u => renderUniversCard(u)).join("");
+      root.innerHTML = legendHTML + list.map(u => renderUniversCard(u)).join("");
       attachUniversEvents();
       newBtnShow.classList.add("hidden");
     });
@@ -566,7 +598,6 @@ function displayUnivers(){
 
 document.addEventListener('DOMContentLoaded', function() {
   
-  // Vérification des données
   if(typeof QUESTIONS === 'undefined'){
     console.error("❌ QUESTIONS non défini");
     alert("Erreur de chargement des données. Veuillez actualiser la page.");
@@ -598,7 +629,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   renderQuestions();
 
-  // Bouton validation questionnaire
   const btnValidate = document.getElementById("validateBtn");
   const errorMessage = document.getElementById("errorMessage");
   
@@ -629,11 +659,9 @@ document.addEventListener('DOMContentLoaded', function() {
     displayProfile();
   });
 
-  // Bouton voir univers
   const btnUnivers = document.getElementById("goUniversesBtn");
   btnUnivers.addEventListener("click", displayUnivers);
 
-  // Bouton validation sélection univers
   const btnValidateSelection = document.getElementById('btnValidateSelection');
   if(btnValidateSelection){
     btnValidateSelection.addEventListener('click', ()=>{
@@ -681,7 +709,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Boutons retour accueil
   const btnAccueilTop = document.getElementById("btnAccueilTop");
   if(btnAccueilTop){
     btnAccueilTop.addEventListener("click", ()=>{
