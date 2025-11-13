@@ -2,7 +2,7 @@
   ============================================
   RECONVERSION 360 IA - PAGE D'ACCUEIL
   ============================================
-  Script avec noms complets des univers dans le presse-papier
+  Script avec récupération des vrais noms d'univers
 */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -97,43 +97,38 @@ document.addEventListener('DOMContentLoaded', function() {
     return percentages;
   }
   
-  // MAPPING COMPLET DES NOMS D'UNIVERS
-  const UNIVERS_NAMES = {
-    1: "Agriculture, nature & animaux",
-    2: "Agroalimentaire & métiers de bouche",
-    3: "Arts, culture & audiovisuel",
-    4: "Banque, finance & assurance",
-    5: "Commerce & vente",
-    6: "Communication & information",
-    7: "Construction & BTP",
-    8: "Enseignement & formation",
-    9: "Gestion, RH & administration",
-    10: "Hôtellerie, restauration & tourisme",
-    11: "Industrie & production",
-    12: "Installation & maintenance",
-    13: "Lettres, langues & sciences humaines",
-    14: "Santé & paramédical",
-    15: "Sciences & recherche",
-    16: "Services à la personne",
-    17: "Sport & animation",
-    18: "Sécurité & défense",
-    19: "Transport & logistique",
-    20: "Droit & justice",
-    21: "Informatique & numérique"
-  };
-  
-  // Récupérer les univers sélectionnés avec noms et pourcentages
+  // Récupérer les univers sélectionnés avec VRAIS noms et pourcentages
   function getSelectedUniversWithPercentages(){
+    // Charger les détails sauvegardés lors de la validation
+    const selectedDetails = localStorage.getItem('selected_univers_details');
+    
+    if(selectedDetails){
+      try {
+        const details = JSON.parse(selectedDetails);
+        
+        // Convertir en tableau et trier par pourcentage décroissant
+        return Object.entries(details).map(([id, data]) => ({
+          id: parseInt(id),
+          name: data.name,
+          percent: data.percent
+        })).sort((a, b) => b.percent - a.percent);
+        
+      } catch(e) {
+        console.error('Erreur parsing selected_univers_details:', e);
+      }
+    }
+    
+    // Fallback si pas de détails sauvegardés
+    console.warn('⚠️ Aucun détail d\'univers sauvegardé. Utilisez le bouton "Valider ma sélection" dans le questionnaire.');
+    
     const selectedIds = JSON.parse(localStorage.getItem('selectedUnivers') || '[]');
     const universPercentages = JSON.parse(localStorage.getItem('univers_percentages') || '{}');
     
-    return selectedIds.map(id => {
-      return {
-        id: id,
-        name: UNIVERS_NAMES[id] || `Univers ${id}`,
-        percent: universPercentages[id] || 0
-      };
-    }).sort((a, b) => b.percent - a.percent);
+    return selectedIds.map(id => ({
+      id: id,
+      name: `Univers ${id} (non validé)`,
+      percent: universPercentages[id] || 0
+    })).sort((a, b) => b.percent - a.percent);
   }
   
   /* ===== BOUTON RÉINITIALISER ===== */
@@ -170,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('questionnaire_answers');
         localStorage.removeItem('selectedUnivers');
         localStorage.removeItem('univers_percentages');
+        localStorage.removeItem('selected_univers_details');
         localStorage.removeItem('situation_data');
         localStorage.removeItem('data_copied');
         
