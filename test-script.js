@@ -2,6 +2,54 @@
   ============================================
   RECONVERSION 360 IA - QUESTIONNAIRE PROFIL
   ============================================
+  
+  ALGORITHME DE CALCUL :
+  
+  ÉTAPE 1 - CALCUL DU PROFIL (Scores quadratiques)
+  ------------------------------------------------
+  Pour chaque dimension, on additionne le CARRÉ des réponses.
+  
+  Exemple pour la dimension "SI" (Sciences & innovation) :
+  - Réponses : 4, 3, 4, 2
+  - Calcul : 4² + 3² + 4² + 2² = 16 + 9 + 16 + 4 = 45
+  - Score brut : 45
+  - Pourcentage : (45 / 64) × 100 = 70%
+  
+  Pourquoi 64 ? 
+  → Maximum théorique = 4 réponses × 4² = 4 × 16 = 64
+  
+  Pourquoi le carré ?
+  → Accentue les préférences fortes (4² = 16 vs 2² = 4)
+  → Minimise les réponses faibles (1² = 1)
+  → Évite les profils "moyens partout"
+  
+  
+  ÉTAPE 2 - CALCUL DES UNIVERS (Moyenne pondérée)
+  ------------------------------------------------
+  Pour chaque univers, on calcule une moyenne pondérée des scores quadratiques.
+  
+  Exemple pour l'univers "Sciences, recherche & innovation" :
+  
+  Poids de corrélation : [5, 3, 9, 10, 8, 1, 4, 8, 0, 1, 1, 3]
+  Dimensions :           MO  PT  AL  SI  CS  EC  CP  IP  MP  AE  AA  RI
+  
+  Scores utilisateur (quadratiques) :
+  MO=16, PT=0, AL=36, SI=45, CS=36, EC=1, CP=42, IP=48, MP=7, AE=16, AA=4, RI=26
+  
+  Calcul de la somme pondérée :
+  = (16×5) + (0×3) + (36×9) + (45×10) + (36×8) + (1×1) + (42×4) + (48×8) + (7×0) + (16×1) + (4×1) + (26×3)
+  = 80 + 0 + 324 + 450 + 288 + 1 + 168 + 384 + 0 + 16 + 4 + 78
+  = 1793
+  
+  Somme des poids : 5+3+9+10+8+1+4+8+0+1+1+3 = 53
+  
+  Moyenne pondérée : 1793 / 53 = 33.83
+  
+  Pourcentage final : (33.83 / 64) × 100 = 53%
+  
+  → L'univers "Sciences" a un score de 53% pour cet utilisateur
+  
+  ============================================
 */
 
 let answers = {};
@@ -161,87 +209,183 @@ function attachRatingEvents(){
   });
 }
 
-/* ===== CALCUL DU PROFIL (QUADRATIQUE) ===== */
-
-function calcProfile(){
-  const scores = Object.fromEntries(DIMENSIONS.map(d=>[d.code,0]));
+/* 
+  ============================================
+  ÉTAPE 1 : CALCUL DU PROFIL (QUADRATIQUE)
+  ============================================
   
-  Object.keys(answers).forEach(key=>{
-    const [,dim] = key.split("-");
-    const val = answers[key];
+  Cette fonction calcule le score de chaque dimension en additionnant
+  le CARRÉ de chaque réponse.
+  
+  Pourquoi le carré ?
+  - Valorise les préférences fortes (4² = 16)
+  - Minimise les réponses neutres (2² = 4)
+  - Accentue les contrastes dans le profil
+  
+  Retour : Objet avec les scores bruts (non convertis en %)
+  Exemple : { MO: 30, PT: 16, AL: 45, SI: 50, ... }
+*/
+function calcProfile(){
+  // Initialiser tous les scores à 0
+  const scores = Object.fromEntries(DIMENSIONS.map(d => [d.code, 0]));
+  
+  // Pour chaque réponse du questionnaire
+  Object.keys(answers).forEach(key => {
+    const [, dim] = key.split("-");  // Extraire la dimension (ex: "q1-MO" → "MO")
+    const val = answers[key];        // Valeur de la réponse (0 à 4)
+    
+    // Ajouter le CARRÉ de la réponse au score de cette dimension
     scores[dim] += val * val;
+    
+    // Exemple : si val = 4, on ajoute 16 au score
+    // Exemple : si val = 2, on ajoute 4 au score
   });
+  
+  // Log pour debug (optionnel)
+  console.log("📊 Scores quadratiques par dimension:", scores);
   
   return scores;
 }
 
+/* 
+  Convertit un score quadratique brut en pourcentage
+  
+  Max théorique = 64 (si l'utilisateur met 4 aux 4 réponses d'une dimension)
+  Calcul : 4² + 4² + 4² + 4² = 16 + 16 + 16 + 16 = 64
+  
+  Exemple : score de 32 → (32/64) × 100 = 50%
+*/
 function percentFromSum(sum){
-  const maxQuadratique = 64;
-  return Math.round((sum / maxQuadratique) * 100);
+  const MAX_SCORE_QUADRATIQUE = 64;
+  return Math.round((sum / MAX_SCORE_QUADRATIQUE) * 100);
 }
 
-/* ===== CALCUL DES UNIVERS (MOYENNE PONDÉRÉE) ===== */
-
-function calcUnivers(){
-  const s = calcProfile();
+/* 
+  ============================================
+  ÉTAPE 2 : CALCUL DES UNIVERS (MOYENNE PONDÉRÉE)
+  ============================================
   
+  Pour chaque univers professionnel, on calcule un score de compatibilité
+  en utilisant une moyenne pondérée des scores quadratiques.
+  
+  Formule complète :
+  Score_Univers = (Σ(Score_Dimension_Quadratique × Poids_Corrélation)) / (Σ Poids) / 64 × 100
+  
+  Retour : Liste des 21 univers triés par score décroissant
+*/
+function calcUnivers(){
+  // Récupérer les scores quadratiques de chaque dimension
+  const scoresQuadratiques = calcProfile();
+  
+  // Vérifier que les données sont chargées
   if(typeof universesData === 'undefined'){
-    console.error("universesData n'est pas défini.");
+    console.error("❌ universesData n'est pas défini.");
     return [];
   }
   
-  return universesData.map(u => {
+  // Calculer le score de chaque univers
+  const universAvecScores = universesData.map(univers => {
     let sommePonderee = 0;
     let sommePoids = 0;
     
+    // Récupérer les poids de corrélation pour cet univers
     if(typeof universes !== 'undefined'){
-      const universMatch = universes.find(uv => uv.id === u.id);
+      const universMatch = universes.find(uv => uv.id === univers.id);
       
       if(universMatch && universMatch.weights){
-        universMatch.weights.forEach((poids, i) => {
-          if(i < DIMENSIONS.length){
-            const dimCode = DIMENSIONS[i].code;
-            const scoreQuadratique = s[dimCode];
+        // Pour chaque dimension, multiplier son score quadratique par son poids
+        universMatch.weights.forEach((poids, index) => {
+          if(index < DIMENSIONS.length){
+            const dimCode = DIMENSIONS[index].code;
+            const scoreQuadratique = scoresQuadratiques[dimCode];
             
+            // Ajouter le score pondéré
             sommePonderee += scoreQuadratique * poids;
             sommePoids += poids;
+            
+            // Exemple :
+            // Si score SI (Sciences) = 45 et poids SI pour cet univers = 10
+            // → Contribution = 45 × 10 = 450
           }
         });
       } else {
+        // Fallback : tous les poids à 1 (pas de pondération)
         DIMENSIONS.forEach(dim => {
-          sommePonderee += s[dim.code];
+          sommePonderee += scoresQuadratiques[dim.code];
           sommePoids += 1;
         });
       }
     } else {
+      // Fallback : tous les poids à 1
       DIMENSIONS.forEach(dim => {
-        sommePonderee += s[dim.code];
+        sommePonderee += scoresQuadratiques[dim.code];
         sommePoids += 1;
       });
     }
     
+    // Calculer la moyenne pondérée
     const moyennePonderee = sommePoids > 0 ? sommePonderee / sommePoids : 0;
+    
+    // Convertir en pourcentage (diviser par 64 = score max théorique)
     const pourcentage = Math.round((moyennePonderee / 64) * 100);
     
-    return {...u, pct: pourcentage};
-  }).sort((a, b) => b.pct - a.pct);
+    // Log détaillé pour le premier univers (debug)
+    if(univers.id === 1){
+      console.log(`
+🔬 Calcul détaillé pour "${univers.name}" :
+   Somme pondérée : ${sommePonderee.toFixed(2)}
+   Somme des poids : ${sommePoids}
+   Moyenne pondérée : ${moyennePonderee.toFixed(2)}
+   Pourcentage final : ${pourcentage}%
+      `);
+    }
+    
+    // Retourner l'univers avec son score
+    return {...univers, pct: pourcentage};
+  });
+  
+  // Trier par score décroissant
+  const universTries = universAvecScores.sort((a, b) => b.pct - a.pct);
+  
+  // Log du top 5
+  console.log("🏆 Top 5 des univers compatibles:");
+  universTries.slice(0, 5).forEach((u, i) => {
+    console.log(`   ${i+1}. ${u.name} : ${u.pct}%`);
+  });
+  
+  return universTries;
 }
 
-/* ===== AFFICHAGE DU PROFIL ===== */
-
+/* 
+  ============================================
+  AFFICHAGE DU PROFIL
+  ============================================
+  
+  Affiche les 12 dimensions avec leurs scores en pourcentage,
+  triées par ordre décroissant.
+*/
 function displayProfile(){
-  const scores = calcProfile();
+  const scoresQuadratiques = calcProfile();
   const root = document.getElementById("profileResults");
   
-  const dimensionsWithScores = DIMENSIONS.map(dim => ({
+  // Convertir les scores quadratiques en pourcentages
+  const dimensionsAvecScores = DIMENSIONS.map(dim => ({
     ...dim,
-    sum: scores[dim.code],
-    pct: percentFromSum(scores[dim.code])
+    scoreQuadratique: scoresQuadratiques[dim.code],
+    pct: percentFromSum(scoresQuadratiques[dim.code])
   }));
   
-  dimensionsWithScores.sort((a, b) => b.pct - a.pct);
+  // Trier par pourcentage décroissant
+  dimensionsAvecScores.sort((a, b) => b.pct - a.pct);
   
-  root.innerHTML = dimensionsWithScores.map(dim => `
+  // Log du profil
+  console.log("👤 Profil de l'utilisateur :");
+  dimensionsAvecScores.forEach(dim => {
+    console.log(`   ${dim.name} : ${dim.pct}% (score quadratique: ${dim.scoreQuadratique})`);
+  });
+  
+  // Générer le HTML
+  root.innerHTML = dimensionsAvecScores.map(dim => `
     <div class="profile-row">
       <div class="profile-label">${dim.name}</div>
       <div class="profile-bar">
