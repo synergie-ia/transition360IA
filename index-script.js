@@ -1,4 +1,7 @@
 /* 
+  ============================================
+  RECONVERSION 360 IA - PAGE D'ACCUEIL
+  ============================================
   Script pour la page d'accueil avec validation complète + Réinitialisation
 */
 
@@ -95,18 +98,35 @@ document.addEventListener('DOMContentLoaded', function() {
     return percentages;
   }
   
-  // Récupérer les univers sélectionnés avec leurs pourcentages
+  // Récupérer les univers sélectionnés avec leurs pourcentages ET NOMS COMPLETS
   function getSelectedUniversWithPercentages(){
     const selectedIds = JSON.parse(localStorage.getItem('selectedUnivers') || '[]');
     const universPercentages = JSON.parse(localStorage.getItem('univers_percentages') || '{}');
     
-    if(typeof universesData === 'undefined'){
-      return selectedIds.map(id => ({
-        id: id,
-        name: `Univers ${id}`,
-        percent: universPercentages[id] || 0
-      }));
-    }
+    // Liste complète des 21 univers avec leurs noms
+    const universesData = [
+      { id: 1, name: "Agriculture, élevage, environnement" },
+      { id: 2, name: "Agroalimentaire" },
+      { id: 3, name: "Arts, artisanat d'art, audiovisuel" },
+      { id: 4, name: "Banque, assurance, immobilier" },
+      { id: 5, name: "Commerce, vente" },
+      { id: 6, name: "Communication, information, média" },
+      { id: 7, name: "Construction, bâtiment, travaux publics" },
+      { id: 8, name: "Enseignement, formation" },
+      { id: 9, name: "Gestion, administration des entreprises" },
+      { id: 10, name: "Hôtellerie, restauration, tourisme, loisirs" },
+      { id: 11, name: "Industrie" },
+      { id: 12, name: "Installation, maintenance" },
+      { id: 13, name: "Lettres, langues, sciences humaines" },
+      { id: 14, name: "Santé, médical, paramédical" },
+      { id: 15, name: "Sciences, recherche, innovation" },
+      { id: 16, name: "Services à la personne et à la collectivité" },
+      { id: 17, name: "Sport, animation" },
+      { id: 18, name: "Défense, sécurité, secours" },
+      { id: 19, name: "Transport, logistique" },
+      { id: 20, name: "Droit, justice" },
+      { id: 21, name: "Informatique, télécommunications" }
+    ];
     
     return selectedIds.map(id => {
       const univers = universesData.find(u => u.id === id);
@@ -161,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ Toutes les données ont été supprimées');
         
         // Feedback visuel
-        btnReset.innerHTML = '<span style="color:#22c55e">✓ Données supprimées !</span>';
+        btnReset.innerHTML = '<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg><span style="color:#22c55e">Données supprimées !</span>';
         btnReset.disabled = true;
         
         setTimeout(() => {
@@ -206,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       textToCopy += "\n";
       
-      // 🌍 UNIVERS-MÉTIERS SÉLECTIONNÉS
+      // 🌍 UNIVERS-MÉTIERS SÉLECTIONNÉS (avec noms complets)
       textToCopy += "🌍 UNIVERS-MÉTIERS SÉLECTIONNÉS\n\n";
       universData.forEach(u => {
         textToCopy += `${u.name}: ${u.percent}%\n`;
@@ -259,12 +279,12 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('data_copied', 'true');
         
         // Feedback visuel
-        const originalText = btnCopy.innerHTML;
-        btnCopy.innerHTML = '<span style="color:#22c55e">✓ Données copiées !</span>';
+        const originalHTML = btnCopy.innerHTML;
+        btnCopy.innerHTML = '<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg><span style="color:#22c55e">Données copiées !</span>';
         btnCopy.style.borderColor = '#22c55e';
         
         setTimeout(() => {
-          btnCopy.innerHTML = originalText;
+          btnCopy.innerHTML = originalHTML;
           btnCopy.style.borderColor = '';
         }, 3000);
         
