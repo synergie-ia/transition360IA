@@ -148,42 +148,42 @@ html,body{
   color:#9ca3af;
 }
 
-/* ===== SECTION BOUTONS ACTION ===== */
+/* ===== SECTION BOUTONS ACTION (PLUS PETITS) ===== */
 .action-buttons-section{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  padding:32px 20px 16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  padding:28px 20px 16px;
   margin:20px 0 0;
   background:var(--card);
   border:2px dashed #cbd5e1;
   border-radius:16px;
+  flex-wrap:wrap;
 }
 
-.action-btn{
+.action-btn-small{
   background:#fff;
   color:var(--ink);
   border:2px solid var(--line);
-  border-radius:12px;
-  padding:16px 24px;
-  font-size:15px;
+  border-radius:10px;
+  padding:12px 20px;
+  font-size:14px;
   font-weight:600;
   cursor:pointer;
-  display:flex;
-  flex-direction:column;
+  display:inline-flex;
   align-items:center;
-  gap:12px;
+  gap:8px;
   transition:all .2s ease;
-  min-height:120px;
-  justify-content:center;
+  white-space:nowrap;
 }
 
-.action-btn:hover:not(:disabled){
+.action-btn-small:hover:not(:disabled){
   transform:translateY(-2px);
   box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-.action-btn:disabled{
+.action-btn-small:disabled{
   opacity:0.35;
   cursor:not-allowed;
   background:#f9fafb;
@@ -191,15 +191,10 @@ html,body{
   border-color:#e5e7eb;
 }
 
-.btn-icon{
-  width:40px;
-  height:40px;
+.btn-icon-small{
+  width:20px;
+  height:20px;
   flex-shrink:0;
-}
-
-.action-btn span{
-  text-align:center;
-  line-height:1.4;
 }
 
 /* Bouton Réinitialiser (rouge) */
@@ -209,7 +204,7 @@ html,body{
   color:#dc2626;
 }
 
-.reset-btn:hover:not(:disabled) .btn-icon{
+.reset-btn:hover:not(:disabled) .btn-icon-small{
   stroke:#dc2626;
 }
 
@@ -220,7 +215,7 @@ html,body{
   color:var(--accent);
 }
 
-.copy-btn:hover:not(:disabled) .btn-icon{
+.copy-btn:hover:not(:disabled) .btn-icon-small{
   stroke:var(--accent);
 }
 
@@ -261,19 +256,13 @@ html,body{
   }
   
   .action-buttons-section{
-    grid-template-columns:1fr;
+    flex-direction:column;
     padding:24px 16px 16px;
-    gap:16px;
   }
   
-  .action-btn{
-    min-height:100px;
-    padding:16px 20px;
-  }
-  
-  .btn-icon{
-    width:36px;
-    height:36px;
+  .action-btn-small{
+    width:100%;
+    justify-content:center;
   }
 }
 
