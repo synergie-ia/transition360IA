@@ -6,7 +6,7 @@
   
   CORRECTIONS APPLIQUÉES :
   - Diviseur changé de 64 à 48 (pour 3 occurrences par dimension)
-  - Seuils de compatibilité ajustés (40%, 30%, 25%, 20%)
+  - Seuils de compatibilité ajustés (40%, 30%, 20% 10%)
   - Code dimension "PT" (pratique manuelle & technique) vérifié
   
   ALGORITHME DE CALCUL :
@@ -492,11 +492,11 @@ function displayUnivers(){
       <div class="stars-legend">
         <div class="legend-title">📊 Échelle de compatibilité :</div>
         <div class="legend-items">
-          <div class="legend-item">🟢🟢🟢 Très compatible (≥35%)</div>
-          <div class="legend-item">🔵🔵 Compatible (30-34%)</div>
-          <div class="legend-item">🟠 Assez compatible (25-29%)</div>
-          <div class="legend-item">⚪ Peu compatible (20-24%)</div>
-          <div class="legend-item">⚫ Très peu compatible (<20%)</div>
+          <div class="legend-item">🟢🟢🟢 Très compatible </div>
+          <div class="legend-item">🔵🔵 Compatible </div>
+          <div class="legend-item">🟠 Assez compatible </div>
+          <div class="legend-item">⚪ Peu compatible </div>
+          <div class="legend-item">⚫ Très peu compatible </div>
         </div>
       </div>
     `;
