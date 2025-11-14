@@ -1,204 +1,229 @@
-/* ===== CHARTE ORIENTATION 360 IA ===== */
-:root{
-  --bg:#f5f6fb;
-  --card:#ffffff;
-  --ink:#1f2a37;
-  --muted:#6b7280;
-  --line:#e5e7eb;
-  --accent:#5a4af4;
-  --green:#22c55e;
+/*
+  =====================================================
+  RECONVERSION 360 IA — STYLE (VERSION FINALE + FIXES)
+  Titre uniformisé · Boutons centrés smartphone
+  =====================================================
+*/
+
+:root {
+  --primary: #5a4af4;
+  --accent: #22c55e;
+  --danger: #ef4444;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f5f6fb;
+  --card: #ffffff;
 }
 
-*{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  line-height:1.5;
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:16px;
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
 }
 
-/* Bouton retour en haut */
-.top-nav{
-  margin:0 0 20px 0;
-  padding:12px 0;
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.btn-retour-top{
-  background:#fff;
-  color:var(--ink);
-  border:1px solid var(--line);
-  padding:10px 18px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  font-size:15px;
-  transition:all .2s ease;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+/* =====================================================
+   TITRE (POLICE IDENTIQUE PARTOUT)
+   ===================================================== */
+
+.hero {
+  text-align: center;
+  padding-top: 10px;
 }
 
-.btn-retour-top:hover{
-  background:#f3f4f6;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-  transform:translateX(-3px);
+/* Deux lignes + même police partout */
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: inherit !important; /* 🔵 même police partout */
 }
 
-.arrow{
-  font-size:18px;
-  transition:transform .2s ease;
+.hero-title .title-line1 {
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text);
+  padding: 0 10px;
+  font-family: inherit !important;
 }
 
-.btn-retour-top:hover .arrow{
-  transform:translateX(-3px);
+.hero-title .title-line2 {
+  font-size: clamp(15px, 1.8vw, 22px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  padding: 0 10px;
+  text-align: center;
+  font-family: inherit !important; /* 🔵 même police partout */
 }
 
-.page-title{
-  font-size:clamp(24px,4.5vw,34px);
-  margin:12px 0 16px;
-  line-height:1.3;
-  text-align:center;
-  color:var(--ink);
+/* =====================================================
+   CARTES
+   ===================================================== */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 26px;
 }
 
-.intro{
-  text-align:center;
-  color:var(--muted);
-  margin:0 auto 32px;
-  font-size:clamp(15px,2.7vw,17px);
-  max-width:700px;
+.action-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+
+  transition: 0.25s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
 }
 
-/* Formulaire avec bordures plus visibles */
-.situation-form{
-  background:var(--card);
-  border:3px solid #cbd5e1;
-  border-radius:16px;
-  padding:32px 24px;
-  box-shadow:0 3px 10px rgba(0,0,0,.1);
+.action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
 }
 
-.form-section{
-  margin-bottom:40px;
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
 }
 
-.form-section:last-of-type{
-  margin-bottom:24px;
+.card-title {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-.section-title{
-  font-size:20px;
-  font-weight:700;
-  margin:0 0 20px;
-  padding-bottom:10px;
-  border-bottom:2px solid var(--line);
-  color:var(--ink);
+.card-desc {
+  font-size: 15px;
+  color: #4b5563;
+  margin-bottom: 14px;
 }
 
-.form-group{
-  margin-bottom:24px;
+.card-btn {
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  background: white;
+  border: 2px solid var(--border);
+  transition: 0.2s;
 }
 
-.form-group label{
-  display:block;
-  font-weight:600;
-  margin-bottom:8px;
-  color:var(--ink);
-  font-size:15px;
+.card-btn:hover {
+  background: #f3f4f6;
 }
 
-/* Champs requis */
-.required{
-  color:#ef4444;
-  font-weight:bold;
+/* =====================================================
+   BOUTONS BAS
+   ===================================================== */
+
+.action-buttons-section {
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group select,
-.form-group textarea{
-  width:100%;
-  padding:12px 14px;
-  border:2px solid #d1d5db;
-  border-radius:10px;
-  font-size:15px;
-  font-family:inherit;
-  transition:all .2s ease;
-  background:#fff;
+.action-btn-small {
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-  outline:none;
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(90,74,244,.1);
+.action-btn-small:hover {
+  background: #f3f4f6;
 }
 
-.form-group textarea{
-  resize:vertical;
-  min-height:80px;
+.reset-btn {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
 }
 
-.form-actions{
-  text-align:center;
-  margin-top:32px;
+.btn-icon-small {
+  width: 16px;
+  height: 16px;
 }
 
-.main-btn{
-  width:100%;
-  max-width:400px;
-  border:none;
-  border-radius:12px;
-  padding:16px 24px;
-  font-weight:700;
-  font-size:16px;
-  cursor:pointer;
-  background:linear-gradient(90deg,#6d5efc,#9a63ff);
-  color:#fff;
-  transition:all .2s ease;
+.action-notice {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-.main-btn:hover{
-  box-shadow:0 6px 16px rgba(109,94,252,.4);
-  transform:translateY(-2px);
+/* FOOTER */
+.page-footer {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 12px;
+  color: var(--muted);
 }
 
-.section-footer{
-  margin:24px 0 10px;
-  text-align:center;
-}
+/* =====================================================
+   RESPONSIVE SMARTPHONE (BOUTONS CENTRÉS)
+   ===================================================== */
 
-.btn-retour{
-  background:#fff;
-  color:var(--ink);
-  border:1px solid var(--line);
-  padding:12px 24px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  font-size:15px;
-  transition:all .2s ease;
-}
-
-.btn-retour:hover{
-  background:#f3f4f6;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-/* Responsive */
 @media (max-width: 640px) {
-  .situation-form{
-    padding:24px 16px;
-    border-width:2px;
+
+  .container {
+    gap: 24px;
+    padding: 16px;
+  }
+
+  .hero-title .title-line1 {
+    font-size: 17px;
+  }
+
+  .hero-title .title-line2 {
+    font-size: 16px;
+  }
+
+  /* 🔵 Centrer parfaitement les deux boutons */
+  .action-buttons-section {
+    flex-direction: column;
+    align-items: center; /* 🔵 centrage horizontal */
+    gap: 10px;
+  }
+
+  .action-btn-small {
+    width: 100%;
+    max-width: 260px;   /* 🔵 largeur maîtrisée */
+    justify-content: center;
   }
 }
