@@ -1,4 +1,4 @@
-/* 
+/*
   ============================================
   RECONVERSION 360 IA - INDEX STYLE
   ============================================
@@ -71,7 +71,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
 }
 
 /* ===== CARTES D'ACTION ===== */
@@ -119,12 +119,12 @@ body {
 
 .card-btn {
   width: 100%;
-  padding: 16px 28px;
+  padding: 20px 32px;
   background: white;
-  color: var(--primary);
-  border: 3px solid var(--primary);
+  color: var(--muted);
+  border: 3px solid var(--muted);
   border-radius: 12px;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -133,8 +133,8 @@ body {
 
 .card-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(90, 74, 244, 0.3);
-  background: var(--primary);
+  box-shadow: 0 4px 16px rgba(107, 114, 128, 0.3);
+  background: var(--muted);
   color: white;
 }
 
@@ -259,6 +259,7 @@ body {
 
   .cards-grid {
     gap: 18px;
+    margin-bottom: 40px;
   }
 
   .action-card {
@@ -280,8 +281,8 @@ body {
   }
 
   .card-btn {
-    padding: 14px 24px;
-    font-size: 16px;
+    padding: 18px 28px;
+    font-size: 18px;
   }
 
   .action-buttons-section {
@@ -327,7 +328,7 @@ body {
 
   .cards-grid {
     gap: 18px;
-    margin-bottom: 8px;
+    margin-bottom: 35px;
   }
 
   .action-card {
@@ -350,8 +351,8 @@ body {
   }
 
   .card-btn {
-    padding: 14px 24px;
-    font-size: 16px;
+    padding: 16px 28px;
+    font-size: 17px;
   }
 
   .action-buttons-section {
@@ -391,7 +392,7 @@ body {
 
   .cards-grid {
     gap: 14px;
-    margin-bottom: 6px;
+    margin-bottom: 25px;
   }
 
   .action-card {
@@ -414,8 +415,8 @@ body {
   }
 
   .card-btn {
-    padding: 12px 20px;
-    font-size: 15px;
+    padding: 14px 24px;
+    font-size: 16px;
   }
 
   .action-buttons-section {
@@ -467,7 +468,7 @@ body {
 
   .cards-grid {
     gap: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
   }
 
   .action-card {
@@ -490,8 +491,8 @@ body {
   }
 
   .card-btn {
-    padding: 10px 16px;
-    font-size: 13px;
+    padding: 12px 20px;
+    font-size: 14px;
   }
 
   .action-buttons-section {
