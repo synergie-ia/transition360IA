@@ -5,7 +5,7 @@
 // ===== DIMENSIONS =====
 const DIMENSIONS = [
   { code: "MO", name: "Méthode & organisation" },
-  { code: "MT", name: "Manuel & technique" },
+  { code: "PT", name: "Pratique & technique" },
   { code: "AL", name: "Analyse & logique" },
   { code: "SI", name: "Sciences & innovation" },
   { code: "CS", name: "Conception & structuration d'idées" },
@@ -121,7 +121,7 @@ const QUESTIONS = [
 ];
 
 // ===== MATRICES DE CORRÉLATION =====
-// Ordre : MO, MT, AL, SI, CS, EC, CP, IP, MP, AE, AA, RI
+// Ordre : MO, PT, AL, SI, CS, EC, CP, IP, MP, AE, AA, RI
 const universes = [
   { id: 1, weights: [4, 10, 4, 5, 3, 2, 4, 4, 9, 8, 3, 2] },
   { id: 2, weights: [3, 3, 2, 2, 10, 10, 4, 9, 2, 2, 3, 5] },
