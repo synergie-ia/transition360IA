@@ -148,7 +148,7 @@ h2.section-title {
 
 /* ===== FORM GROUPS ===== */
 .form-group {
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .form-group label {
@@ -156,7 +156,8 @@ h2.section-title {
   font-size: 15px;
   font-weight: 600;
   color: var(--text-dark);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .required {
