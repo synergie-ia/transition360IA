@@ -1,6 +1,8 @@
 // ============================================
 // RECONVERSION 360 IA - DONNÉES COMPLÈTES
 // ============================================
+// VERSION OPTIMISÉE - Coefficients selon l'algorithme
+// Ordre des dimensions : MO, PT, AL, SI, CS, EC, CP, IP, MP, AE, AA, RI
 
 // ===== DIMENSIONS =====
 const DIMENSIONS = [
@@ -18,16 +20,18 @@ const DIMENSIONS = [
   { code: "RI", name: "Relation & influence" }
 ];
 
+// ===== FIN DU FICHIER =====
+
 // ===== QUESTIONS DU QUESTIONNAIRE =====
 const QUESTIONS = [
   {
     id: "q1",
     title: "SITUATION 1 — Découvrir un nouveau sujet",
     options: [
-      { text: "J’ai besoin de mettre de l’ordre dans les informations (étapes, catégories, priorités) pour commencer à être à l’aise.", dim: "MO" },
-      { text: "J’ai envie de manipuler concrètement quelque chose en lien avec le sujet (objet, outil, support, dispositif) pour mieux le comprendre.", dim: "PT" },
+      { text: "J'ai besoin de mettre de l'ordre dans les informations (étapes, catégories, priorités) pour commencer à être à l'aise.", dim: "MO" },
+      { text: "J'ai envie de manipuler concrètement quelque chose en lien avec le sujet (objet, outil, support, dispositif) pour mieux le comprendre.", dim: "PT" },
       { text: "Je cherche spontanément à observer, comparer et analyser pour comprendre les causes et les conséquences.", dim: "AL" },
-      { text: "Ce qui m’attire le plus, c’est d’explorer des idées, des hypothèses ou des découvertes liées à ce sujet.", dim: "SI" }
+      { text: "Ce qui m'attire le plus, c'est d'explorer des idées, des hypothèses ou des découvertes liées à ce sujet.", dim: "SI" }
     ]
   },
 
@@ -35,10 +39,10 @@ const QUESTIONS = [
     id: "q2",
     title: "SITUATION 2 — Contribuer à un projet",
     options: [
-      { text: "J’aime concevoir la structure globale du projet : l’architecture, les grands axes, le “scénario” d’ensemble.", dim: "CS" },
+      { text: "J'aime concevoir la structure globale du projet : l'architecture, les grands axes, le "scénario" d'ensemble.", dim: "CS" },
       { text: "Je prends plaisir à imaginer et produire des contenus créatifs (idées visuelles, textes, ambiances, mises en forme).", dim: "EC" },
       { text: "Je suis naturellement porté(e) vers le fait de superviser, planifier et gérer les priorités pour que le projet avance.", dim: "CP" },
-      { text: "Je me reconnais dans le fait de lancer, entreprendre, oser : proposer de nouveaux projets, prendre l’initiative, démarrer quelque chose.", dim: "IP" }
+      { text: "Je me reconnais dans le fait de lancer, entreprendre, oser : proposer de nouveaux projets, prendre l'initiative, démarrer quelque chose.", dim: "IP" }
     ]
   },
 
@@ -46,8 +50,8 @@ const QUESTIONS = [
     id: "q3",
     title: "SITUATION 3 — Agir avec et pour les autres",
     options: [
-      { text: "J’aime quand une activité me permet de bouger, me déplacer, être physiquement actif(ve) plutôt que de rester toujours au même endroit.", dim: "MP" },
-      { text: "Je suis à l’aise quand il faut intervenir vite, passer à l’action et être efficace sur le terrain.", dim: "AE" },
+      { text: "J'aime quand une activité me permet de bouger, me déplacer, être physiquement actif(ve) plutôt que de rester toujours au même endroit.", dim: "MP" },
+      { text: "Je suis à l'aise quand il faut intervenir vite, passer à l'action et être efficace sur le terrain.", dim: "AE" },
       { text: "Je me retrouve bien dans le fait de soutenir, écouter, former ou prendre soin des autres.", dim: "AA" },
       { text: "Je me sens dans mon élément lorsque je peux convaincre, négocier, influencer ou représenter un groupe, une idée, une position.", dim: "RI" }
     ]
@@ -57,10 +61,10 @@ const QUESTIONS = [
     id: "q4",
     title: "SITUATION 4 — Porter une responsabilité ou un dossier",
     options: [
-      { text: "Je veille naturellement à structurer le travail : procédures, méthodes, outils d’organisation, suivi rigoureux.", dim: "MO" },
+      { text: "Je veille naturellement à structurer le travail : procédures, méthodes, outils d'organisation, suivi rigoureux.", dim: "MO" },
       { text: "Je me vois bien dans un rôle où je supervise, coordonne et ajuste le travail des autres au fil du temps.", dim: "CP" },
-      { text: "Ce qui me correspond, c’est de prendre des initiatives, proposer des projets, ouvrir des pistes nouvelles plutôt que d’attendre qu’on me dise quoi faire.", dim: "IP" },
-      { text: "J’accorde une place importante au fait de accompagner les personnes, les soutenir, les rassurer, les aider à progresser.", dim: "AA" }
+      { text: "Ce qui me correspond, c'est de prendre des initiatives, proposer des projets, ouvrir des pistes nouvelles plutôt que d'attendre qu'on me dise quoi faire.", dim: "IP" },
+      { text: "J'accorde une place importante au fait d'accompagner les personnes, les soutenir, les rassurer, les aider à progresser.", dim: "AA" }
     ]
   },
 
@@ -68,10 +72,10 @@ const QUESTIONS = [
     id: "q5",
     title: "SITUATION 5 — Résoudre un problème concret",
     options: [
-      { text: "J’aime être en lien avec la dimension pratique ou technique : manipuler, ajuster, bricoler, faire fonctionner un dispositif ou un outil.", dim: "PT" },
-      { text: "Mon premier réflexe est souvent d’analyser calmement la situation : observer, poser un “diagnostic”, comprendre ce qui cloche.", dim: "AL" },
-      { text: "Je prends plaisir à formuler des hypothèses, à tester des pistes, à chercher des explications “scientifiques” ou rationnelles.", dim: "SI" },
-      { text: "Ce qui m’attire, c’est de passer rapidement à l’action pour tester une solution concrète et voir si elle fonctionne.", dim: "AE" }
+      { text: "J'aime être en lien avec la dimension pratique ou technique : manipuler, ajuster, bricoler, faire fonctionner un dispositif ou un outil.", dim: "PT" },
+      { text: "Mon premier réflexe est souvent d'analyser calmement la situation : observer, poser un "diagnostic", comprendre ce qui cloche.", dim: "AL" },
+      { text: "Je prends plaisir à formuler des hypothèses, à tester des pistes, à chercher des explications "scientifiques" ou rationnelles.", dim: "SI" },
+      { text: "Ce qui m'attire, c'est de passer rapidement à l'action pour tester une solution concrète et voir si elle fonctionne.", dim: "AE" }
     ]
   },
 
@@ -79,9 +83,9 @@ const QUESTIONS = [
     id: "q6",
     title: "SITUATION 6 — Activités qui vous nourrissent vraiment",
     options: [
-      { text: "Je suis stimulé(e) par le fait de concevoir des idées structurées, des concepts, des scénarios, des plans d’ensemble.", dim: "CS" },
+      { text: "Je suis stimulé(e) par le fait de concevoir des idées structurées, des concepts, des scénarios, des plans d'ensemble.", dim: "CS" },
       { text: "Je ressens un vrai plaisir à créer : écrire, dessiner, imaginer des univers, produire des choses expressives ou artistiques.", dim: "EC" },
-      { text: "J’aime que mon activité me permette d’être en mouvement, de changer de lieu, d’avoir une part physique ou “plein air”.", dim: "MP" },
+      { text: "J'aime que mon activité me permette d'être en mouvement, de changer de lieu, d'avoir une part physique ou "plein air".", dim: "MP" },
       { text: "Je me sens vivant(e) quand je peux parler, argumenter, influencer, créer un lien fort par la parole ou la présence.", dim: "RI" }
     ]
   },
@@ -90,9 +94,9 @@ const QUESTIONS = [
     id: "q7",
     title: "SITUATION 7 — Une journée de travail variée",
     options: [
-      { text: "J’apprécie les moments où je peux organiser : préparer un planning, structurer des dossiers, clarifier les priorités.", dim: "MO" },
-      { text: "J’aime aussi les moments où je peux faire quelque chose de concret avec mes mains : assembler, installer, ajuster, manipuler des outils ou du matériel.", dim: "PT" },
-      { text: "Je suis à l’aise dès que mon activité me permet de bouger, d’alterner les lieux ou les postures, de ne pas rester figé.", dim: "MP" },
+      { text: "J'apprécie les moments où je peux organiser : préparer un planning, structurer des dossiers, clarifier les priorités.", dim: "MO" },
+      { text: "J'aime aussi les moments où je peux faire quelque chose de concret avec mes mains : assembler, installer, ajuster, manipuler des outils ou du matériel.", dim: "PT" },
+      { text: "Je suis à l'aise dès que mon activité me permet de bouger, d'alterner les lieux ou les postures, de ne pas rester figé.", dim: "MP" },
       { text: "Je me retrouve bien dans des tâches où il faut agir efficacement, aller au résultat, être utile de façon très pratique.", dim: "AE" }
     ]
   },
@@ -101,9 +105,9 @@ const QUESTIONS = [
     id: "q8",
     title: "SITUATION 8 — Réfléchir à une décision importante",
     options: [
-      { text: "Je prends le temps d’observer la situation sous plusieurs angles, d’identifier les signaux faibles, les risques, les effets possibles.", dim: "AL" },
-      { text: "Je cherche à m’appuyer sur des principes généraux, des connaissances, des explications solides pour orienter mon choix.", dim: "SI" },
-      { text: "Je pense naturellement à la répartition des rôles, au calendrier, aux priorités, comme si j’organisais un petit système.", dim: "CP" },
+      { text: "Je prends le temps d'observer la situation sous plusieurs angles, d'identifier les signaux faibles, les risques, les effets possibles.", dim: "AL" },
+      { text: "Je cherche à m'appuyer sur des principes généraux, des connaissances, des explications solides pour orienter mon choix.", dim: "SI" },
+      { text: "Je pense naturellement à la répartition des rôles, au calendrier, aux priorités, comme si j'organisais un petit système.", dim: "CP" },
       { text: "Je tiens compte de la façon dont je pourrai expliquer, défendre et faire accepter cette décision aux autres.", dim: "RI" }
     ]
   },
@@ -112,83 +116,81 @@ const QUESTIONS = [
     id: "q9",
     title: "SITUATION 9 — Imaginer un projet qui a du sens pour vous",
     options: [
-      { text: "J’aimerais pouvoir concevoir la logique d’ensemble d’un projet : son concept, son architecture, la façon dont tout s’articule.", dim: "CS" },
-      { text: "J’aimerais aussi que ce projet laisse de la place à l’expression, la créativité, la production de contenus originaux.", dim: "EC" },
-      { text: "Il serait important pour moi que ce projet me permette d’accompagner, former, soutenir ou prendre soin d’autres personnes.", dim: "AA" },
-      { text: "Je me vois bien dans un projet que je pourrais lancer moi-même, faire évoluer, développer avec une part de prise de risque ou d’innovation.", dim: "IP" }
+      { text: "J'aimerais pouvoir concevoir la logique d'ensemble d'un projet : son concept, son architecture, la façon dont tout s'articule.", dim: "CS" },
+      { text: "J'aimerais aussi que ce projet laisse de la place à l'expression, la créativité, la production de contenus originaux.", dim: "EC" },
+      { text: "Il serait important pour moi que ce projet me permette d'accompagner, former, soutenir ou prendre soin d'autres personnes.", dim: "AA" },
+      { text: "Je me vois bien dans un projet que je pourrais lancer moi-même, faire évoluer, développer avec une part de prise de risque ou d'innovation.", dim: "IP" }
     ]
   }
 ];
 
 // ===== MATRICES DE CORRÉLATION =====
 // Ordre : MO, PT, AL, SI, CS, EC, CP, IP, MP, AE, AA, RI
-// ===== MATRICES DE CORRÉLATION OPTIMISÉES =====
-// VERSION 2.0 - Optimisation pour pondération quadratique
-// Ordre : MO, PT, AL, SI, CS, EC, CP, IP, MP, AE, AA, RI
+// Coefficients : 6=essentiel, 5=très important, 4=important, 3=utile, 2=bonus
 
 const UNIVERS_WEIGHTS = [
   // 1 — Agriculture, nature & animaux
-  { id: 1,  weights: [3,12,0,6,0,0,6,0,12,0,0,3] },
+  { id: 1,  weights: [0, 6, 0, 0, 0, 0, 0, 0, 6, 5, 0, 0] },
 
-  // 2 — Arts, design & création (optimisé)
-  { id: 2,  weights: [0,0,3,3,12,12,3,6,0,0,6,3] },
+  // 2 — Arts, design & création
+  { id: 2,  weights: [0, 0, 0, 0, 6, 6, 0, 4, 0, 0, 0, 0] },
 
-  // 3 — Commerce, marketing & vente (optimisé)
-  { id: 3,  weights: [0,0,3,0,6,6,6,12,0,6,6,12] },
+  // 3 — Commerce, marketing & vente
+  { id: 3,  weights: [0, 0, 0, 0, 2, 4, 0, 0, 0, 0, 0, 6] },
 
-  // 4 — Communication, médias & culture (optimisé)
-  { id: 4,  weights: [0,0,3,3,6,12,3,6,0,6,6,12] },
+  // 4 — Communication, médias & culture
+  { id: 4,  weights: [0, 0, 0, 0, 4, 6, 0, 0, 0, 0, 0, 6] },
 
   // 5 — Construction, BTP & habitat
-  { id: 5,  weights: [6,12,3,3,0,0,12,0,0,6,0,0] },
+  { id: 5,  weights: [0, 6, 0, 0, 0, 0, 5, 0, 6, 0, 0, 0] },
 
   // 6 — Droit, administration & politique publique
-  { id: 6,  weights: [0,0,12,0,3,0,0,3,0,12,6,6] },
+  { id: 6,  weights: [6, 0, 6, 0, 0, 0, 4, 0, 0, 0, 0, 0] },
 
-  // 7 — Éducation, formation & apprentissage (optimisé ✨)
-  { id: 7,  weights: [0,0,0,3,6,3,3,6,0,6,12,12] },
+  // 7 — Éducation, formation & apprentissage
+  { id: 7,  weights: [5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6] },
 
-  // 8 — Environnement, climat & énergies (optimisé)
-  { id: 8,  weights: [0,6,6,12,0,0,6,3,6,3,0,3] },
+  // 8 — Environnement, climat & énergies
+  { id: 8,  weights: [0, 5, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0] },
 
   // 9 — Gestion, finance & comptabilité
-  { id: 9,  weights: [3,0,12,0,3,0,0,6,0,12,0,0] },
+  { id: 9,  weights: [6, 0, 6, 0, 0, 0, 4, 0, 0, 0, 0, 0] },
 
-  // 10 — Hôtellerie, restauration & tourisme (optimisé ✨)
-  { id: 10, weights: [0,6,0,0,0,3,12,3,12,12,6,3] },
+  // 10 — Hôtellerie, restauration & tourisme
+  { id: 10, weights: [0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0] },
 
-  // 11 — Immobilier & patrimoine (optimisé)
-  { id: 11, weights: [3,0,6,0,3,0,6,12,0,12,6,3] },
+  // 11 — Immobilier & patrimoine
+  { id: 11, weights: [4, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 6] },
 
-  // 12 — Industrie, fabrication & production (optimisé)
-  { id: 12, weights: [6,12,6,3,0,0,6,0,0,6,0,0] },
+  // 12 — Industrie, fabrication & production
+  { id: 12, weights: [6, 6, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0] },
 
-  // 13 — Logistique, transport & mobilité (optimisé)
-  { id: 13, weights: [6,12,3,0,0,0,12,3,6,6,0,0] },
+  // 13 — Logistique, transport & mobilité
+  { id: 13, weights: [6, 0, 0, 0, 0, 0, 5, 0, 6, 0, 0, 0] },
 
   // 14 — Management, entrepreneuriat & stratégie
-  { id: 14, weights: [3,0,6,0,6,0,0,12,0,12,3,0] },
+  { id: 14, weights: [5, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0] },
 
   // 15 — Numérique, informatique & data
-  { id: 15, weights: [0,0,12,12,0,0,0,6,0,6,0,0] },
+  { id: 15, weights: [0, 5, 6, 0, 0, 0, 0, 6, 0, 0, 0, 0] },
 
-  // 16 — Santé, bien-être & médical (optimisé ✨)
-  { id: 16, weights: [0,0,6,3,0,0,0,3,0,6,12,12] },
+  // 16 — Santé, bien-être & médical
+  { id: 16, weights: [0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0] },
 
   // 17 — Sciences, recherche & innovation
-  { id: 17, weights: [0,0,12,12,6,0,0,0,0,3,0,0] },
+  { id: 17, weights: [0, 0, 6, 6, 5, 0, 0, 0, 0, 0, 0, 0] },
 
-  // 18 — Sécurité, défense & urgence (optimisé)
-  { id: 18, weights: [0,6,0,0,0,0,12,0,12,12,3,0] },
+  // 18 — Sécurité, défense & urgence
+  { id: 18, weights: [3, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0] },
 
-  // 19 — Social, aide & solidarité (optimisé ✨)
-  { id: 19, weights: [0,0,0,0,0,3,3,6,0,6,12,12] },
+  // 19 — Social, aide & solidarité
+  { id: 19, weights: [0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 6, 6] },
 
-  // 20 — Sport, loisirs & vie active (optimisé)
-  { id: 20, weights: [0,6,0,0,0,3,12,3,12,6,3,0] },
+  // 20 — Sport, loisirs & vie active
+  { id: 20, weights: [0, 6, 0, 0, 0, 0, 2, 0, 6, 0, 0, 0] },
 
   // 21 — Technologies émergentes & futur du travail
-  { id: 21, weights: [0,0,6,12,6,0,0,12,0,3,0,0] }
+  { id: 21, weights: [0, 0, 6, 6, 0, 0, 0, 5, 0, 0, 0, 0] }
 ];
 
 // ===== DONNÉES DES UNIVERS =====
@@ -617,4 +619,3 @@ const universesData = [
       { icon: "🌐", name: "Économie collaborative & plateformes", description: "Partage, freelance, gig economy." }
     ]
   }
-];
