@@ -39,7 +39,7 @@ const QUESTIONS = [
     id: "q2",
     title: "SITUATION 2 — Contribuer à un projet",
     options: [
-      { text: "J'aime concevoir la structure globale du projet : l'architecture, les grands axes, le "scénario" d'ensemble.", dim: "CS" },
+      { text: "J'aime concevoir la structure globale du projet : l'architecture, les grands axes, le scénario d'ensemble.", dim: "CS" },
       { text: "Je prends plaisir à imaginer et produire des contenus créatifs (idées visuelles, textes, ambiances, mises en forme).", dim: "EC" },
       { text: "Je suis naturellement porté(e) vers le fait de superviser, planifier et gérer les priorités pour que le projet avance.", dim: "CP" },
       { text: "Je me reconnais dans le fait de lancer, entreprendre, oser : proposer de nouveaux projets, prendre l'initiative, démarrer quelque chose.", dim: "IP" }
