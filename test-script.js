@@ -2,13 +2,13 @@
   ============================================
   RECONVERSION 360 IA - QUESTIONNAIRE PROFIL
   ============================================
-  VERSION OPTIMISÉE - Avec ronds de compatibilité
+  VERSION OPTIMISÉE - Cartouches colorés sans ronds
   Date : Novembre 2025
   
   AMÉLIORATIONS :
   ✅ Extraction intelligente des dimensions principales (top 3 + égalités à 10%)
   ✅ Calcul par addition des coefficients des dimensions communes
-  ✅ Ronds de couleur au lieu d'étoiles
+  ✅ Cartouches colorés selon compatibilité
   ✅ Score masqué pour l'utilisateur
   ✅ Design responsive optimisé
   
@@ -280,37 +280,37 @@ function calcUnivers(){
 /* 
   ============================================
   ÉCHELLE DE COMPATIBILITÉ
-  Basée sur les scores absolus - AVEC RONDS DE COULEUR
+  Basée sur les scores absolus - CARTOUCHES COLORÉS
   ============================================
 */
 function getCompatibilityLevel(score){
   if(score >= 14){
     return {
-      level: "TRÈS COMPATIBLE",
+      level: "très compatible",
       color: "#047857",
       class: "level-5"
     };
   } else if(score >= 10){
     return {
-      level: "COMPATIBLE",
+      level: "compatible",
       color: "#10b981",
       class: "level-4"
     };
   } else if(score >= 7){
     return {
-      level: "MOYENNEMENT COMPATIBLE",
+      level: "moyennement compatible",
       color: "#d1d5db",
       class: "level-3"
     };
   } else if(score >= 4){
     return {
-      level: "PEU COMPATIBLE",
+      level: "peu compatible",
       color: "#f97316",
       class: "level-2"
     };
   } else {
     return {
-      level: "PAS COMPATIBLE",
+      level: "pas compatible",
       color: "#dc2626",
       class: "level-1"
     };
@@ -418,7 +418,6 @@ function renderUniversCard(u){
           <div class="univers-name">${u.name}</div>
         </div>
         <div class="univers-right">
-          <div class="univers-compatibility-dot"></div>
           <div class="univers-actions">
             ${hasSubUnivers 
               ? `<button class="btn-toggle-sub" data-id="${u.id}" title="Voir sous-univers">🔎</button>` 
@@ -509,13 +508,13 @@ function displayUnivers(){
 
     const legendHTML = `
       <div class="stars-legend">
-        <div class="legend-title">📊 Échelle de compatibilité :</div>
+        <div class="legend-title">📊 Échelle de compatibilité</div>
         <div class="legend-items">
-          <div class="legend-item"><span class="dot" style="background:#047857;width:16px;height:16px;"></span> TRÈS COMPATIBLE (score ≥ 14)</div>
-          <div class="legend-item"><span class="dot" style="background:#10b981;width:16px;height:16px;"></span> COMPATIBLE (score 10-13)</div>
-          <div class="legend-item"><span class="dot" style="background:#d1d5db;width:16px;height:16px;"></span> MOYENNEMENT COMPATIBLE (score 7-9)</div>
-          <div class="legend-item"><span class="dot" style="background:#f97316;width:16px;height:16px;"></span> PEU COMPATIBLE (score 4-6)</div>
-          <div class="legend-item"><span class="dot" style="background:#dc2626;width:16px;height:16px;"></span> PAS COMPATIBLE (score 0-3)</div>
+          <div class="legend-item"><span class="dot" style="background:#047857;width:12px;height:12px;"></span> très compatible</div>
+          <div class="legend-item"><span class="dot" style="background:#10b981;width:12px;height:12px;"></span> compatible</div>
+          <div class="legend-item"><span class="dot" style="background:#d1d5db;width:12px;height:12px;"></span> moyennement</div>
+          <div class="legend-item"><span class="dot" style="background:#f97316;width:12px;height:12px;"></span> peu compatible</div>
+          <div class="legend-item"><span class="dot" style="background:#dc2626;width:12px;height:12px;"></span> pas compatible</div>
         </div>
       </div>
     `;
