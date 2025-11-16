@@ -20,7 +20,9 @@ const DIMENSIONS = [
   { code: "DC", name: "Données & Chiffres" }
 ];
 
-// ===== QUESTIONS DU QUESTIONNAIRE =====
+// ===== QUESTIONS DU QUESTIONNAIRE - VERSION CORRIGÉE =====
+// Chaque dimension apparaît EXACTEMENT 3 fois
+
 const QUESTIONS = [
   {
     id: "q1",
@@ -49,7 +51,7 @@ const QUESTIONS = [
     title: "SITUATION 3 — Agir avec et pour les autres",
     options: [
       { text: "J'aime quand une activité me permet de bouger, me déplacer, être physiquement actif(ve) plutôt que de rester toujours au même endroit.", dim: "MP" },
-      { text: "Je suis à l'aise quand il faut intervenir vite, passer à l'action et être efficace sur le terrain.", dim: "AI" },
+      { text: "Je suis à l'aise quand il faut intervenir vite, passer à l'action et être efficace sur le terrain.", dim: "DC" },
       { text: "Je me retrouve bien dans le fait de soutenir, écouter, former ou prendre soin des autres.", dim: "AA" },
       { text: "Je me sens dans mon élément lorsque je peux convaincre, négocier, influencer ou représenter un groupe, une idée, une position.", dim: "RS" }
     ]
@@ -95,7 +97,7 @@ const QUESTIONS = [
       { text: "J'apprécie les moments où je peux organiser : préparer un planning, structurer des dossiers, clarifier les priorités.", dim: "RM" },
       { text: "J'aime aussi les moments où je peux faire quelque chose de concret avec mes mains : assembler, installer, ajuster, manipuler des outils ou du matériel.", dim: "MT" },
       { text: "Je suis à l'aise dès que mon activité me permet de bouger, d'alterner les lieux ou les postures, de ne pas rester figé.", dim: "MP" },
-      { text: "Je me retrouve bien dans des tâches où il faut agir efficacement, aller au résultat, être utile de façon très pratique.", dim: "AI" }
+      { text: "Je me retrouve bien dans des tâches où il faut agir efficacement, aller au résultat, être utile de façon très pratique.", dim: "DC" }
     ]
   },
 
@@ -117,10 +119,12 @@ const QUESTIONS = [
       { text: "J'aimerais pouvoir concevoir la logique d'ensemble d'un projet : son concept, son architecture, la façon dont tout s'articule.", dim: "IC" },
       { text: "J'aimerais aussi que ce projet laisse de la place à l'expression, la créativité, la production de contenus originaux.", dim: "AE" },
       { text: "Il serait important pour moi que ce projet me permette d'accompagner, former, soutenir ou prendre soin d'autres personnes.", dim: "AA" },
-      { text: "Je me vois bien dans un projet que je pourrais lancer moi-même, faire évoluer, développer avec une part de prise de risque ou d'innovation.", dim: "AI" }
+      { text: "Je me vois bien dans un projet que je pourrais lancer moi-même, faire évoluer, développer avec une part de prise de risque ou d'innovation.", dim: "DC" }
     ]
   }
 ];
+
+
 // ===== MATRICES DE CORRÉLATION =====
 // Ordre : MP, MT, IN, ST, AE, IC, AA, RS, LS, AI, RM, DC
 // Coefficients : 6=essentiel, 4=important, 2=utile
