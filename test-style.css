@@ -117,48 +117,114 @@ html,body{
   margin-bottom:0;
 }
 
-/* ===== LÉGENDE ===== */
+/* ===== LÉGENDE AVEC AVERTISSEMENT ===== */
 .legend-box{
-  background:#fff;
-  border:3px solid #cbd5e1;
+  background:linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border:3px solid #f59e0b;
   border-radius:12px;
-  padding:14px 16px;
-  margin:10px 0 20px;
-  font-size:clamp(13px,2.7vw,14px);
+  padding:16px 18px;
+  margin:16px 0 24px;
+  box-shadow:0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.legend-warning{
+  font-size:15px;
+  font-weight:700;
+  color:#92400e;
   text-align:center;
-  line-height:1.8;
-  font-weight:600;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  margin-bottom:14px;
+  padding-bottom:12px;
+  border-bottom:2px solid #fbbf24;
+}
+
+.legend-scale{
   display:flex;
-  flex-wrap:wrap;
-  gap:12px;
   justify-content:center;
   align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
 }
 
 .legend-item{
   display:inline-flex;
   align-items:center;
-  gap:6px;
+  gap:8px;
+  font-size:14px;
+  font-weight:600;
+  color:#374151;
+  white-space:nowrap;
 }
 
-.legend-sep{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.dot{
-  width:14px;
-  height:14px;
+.legend-item .dot{
+  width:16px;
+  height:16px;
   border-radius:50%;
+  display:inline-block;
+  flex-shrink:0;
+  box-shadow:0 2px 4px rgba(0,0,0,0.15);
+}
+
+.legend-item .label{
   display:inline-block;
 }
 
+/* Suppression complète des séparateurs */
+.legend-sep{
+  display:none !important;
+}
+
+/* Couleurs des ronds dans la légende */
 .dot-0{background:var(--c0)}
 .dot-1{background:var(--c1)}
 .dot-2{background:var(--c2)}
 .dot-3{background:var(--c3)}
 .dot-4{background:var(--c4)}
+
+/* Responsive légende */
+@media (max-width: 768px) {
+  .legend-scale{
+    gap:10px;
+  }
+  
+  .legend-item{
+    font-size:13px;
+    gap:6px;
+  }
+  
+  .legend-item .dot{
+    width:14px;
+    height:14px;
+  }
+  
+  .legend-warning{
+    font-size:14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .legend-scale{
+    flex-direction:column;
+    gap:8px;
+    align-items:flex-start;
+  }
+  
+  .legend-item{
+    width:100%;
+  }
+}
+
+/* ===== NOTE D'HIÉRARCHIE DANS QUESTIONS ===== */
+.hierarchy-note{
+  background:#fef3c7;
+  border:2px solid #fbbf24;
+  border-radius:8px;
+  padding:10px 12px;
+  margin:0 0 16px 0;
+  font-size:13px;
+  font-weight:600;
+  color:#92400e;
+  text-align:center;
+}
 
 /* ===== LÉGENDE DE COMPATIBILITÉ ===== */
 .stars-legend{
@@ -195,6 +261,7 @@ html,body{
   justify-content:center;
   gap:6px;
 }
+
 /* ===== MESSAGE D'ERREUR ===== */
 .error-message{
   background:#fee;
@@ -299,8 +366,14 @@ html,body{
 
 .rate-btn:active{transform:scale(.94)}
 
+.rate-btn.disabled{
+  opacity:0.4;
+  cursor:not-allowed;
+  background:#f3f4f6;
+}
+
 @media (hover:hover){
-  .rate-btn:hover{
+  .rate-btn:hover:not(.disabled){
     border-color:#cbd5e1;
     box-shadow:0 2px 8px rgba(0,0,0,.12);
   }
@@ -775,19 +848,5 @@ html,body{
   .univers-right{
     order:2;
     margin-left:auto;
-  }
-  
-  .legend-box{
-    flex-direction:column;
-    gap:8px;
-  }
-  
-  .legend-item{
-    width:100%;
-    justify-content:center;
-  }
-  
-  .legend-sep{
-    display:none;
   }
 }
