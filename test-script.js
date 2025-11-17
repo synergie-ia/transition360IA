@@ -782,6 +782,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         alert("✅ Sélection de " + selectedUnivers.size + " univers enregistrée !\n\nVous pouvez retourner à l'accueil.");
         
-      } catch(error) {
-    console.error('❌ Erreur lors de la validation de la sélection :', error);
-}
+          } catch(error) {
+        console.error('❌ Erreur lors de la validation de la sélection :', error);
+      }
+
+    }); // ← fermeture de l'event listener btnValidateSelection
+
+  }); // ← fermeture du DOMContentLoaded
+
