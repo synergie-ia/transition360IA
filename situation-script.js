@@ -322,34 +322,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-/* ===== CONFIRMATION AVANT QUITTER ===== */
-
-let formModified = false;
-
-// Détecter les modifications du formulaire
-document.addEventListener('input', function(event) {
-  if(event.target.matches('#situationForm input, #situationForm textarea')) {
-    formModified = true;
-  }
-});
-
-// Avertir avant de quitter si des modifications non sauvegardées
-window.addEventListener('beforeunload', function(event) {
-  if(formModified) {
-    event.preventDefault();
-    event.returnValue = '';
-    return '';
-  }
-});
-
-// Réinitialiser le flag après sauvegarde
-const originalHandleFormSubmit = handleFormSubmit;
-window.handleFormSubmit = function(event) {
-  const result = originalHandleFormSubmit(event);
-  if(result !== false) {
-    formModified = false;
-  }
-  return result;
-};
+/* ===== CONFIRMATION AVANT QUITTER - DÉSACTIVÉ ===== */
+// Les données sont automatiquement sauvegardées, pas besoin d'avertissement
 
 console.log("✅ Script situation chargé et prêt");
