@@ -9,7 +9,7 @@ const DIMENSIONS = [
   { code: "MP", name: "Mouvement & plein air" },
   { code: "MT", name: "Manuel & Technique" },
   { code: "IN", name: "Investigation & Information" },
-  { code: "ST", name: "Sciences & Technologies" },
+  { code: "ST", name: "Sciences & Technologies" }, 
   { code: "AE", name: "Arts & Expressions" },
   { code: "IC", name: "Idées & Conception" },
   { code: "AA", name: "Aide & Accompagnement" },
