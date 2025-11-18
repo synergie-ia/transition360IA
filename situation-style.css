@@ -11,7 +11,7 @@
   --text-light: #9ca3af;
   --bg-light: #f9fafb;
   --bg-white: #ffffff;
-  --border: #e5e7eb;
+  --border: #d1d5db;
   --border-focus: #667eea;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
@@ -125,7 +125,7 @@ h1 {
   padding: 30px;
   background: var(--bg-light);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
 }
 
 .section-title {
@@ -165,7 +165,7 @@ h2.section-title {
   margin-left: 4px;
 }
 
-/* ===== INPUTS ===== */
+/* ===== INPUTS - BORDURES MARQUÉES ===== */
 input[type="text"],
 input[type="number"],
 textarea {
@@ -174,7 +174,7 @@ textarea {
   font-size: 15px;
   color: var(--text-dark);
   background: var(--bg-white);
-  border: 2px solid var(--border);
+  border: 3px solid #9ca3af;
   border-radius: var(--radius-md);
   transition: var(--transition);
   font-family: inherit;
@@ -185,7 +185,8 @@ input[type="number"]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-width: 3px;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 input[type="text"]::placeholder,
@@ -313,11 +314,12 @@ textarea {
 input.error,
 textarea.error {
   border-color: var(--danger);
+  border-width: 3px;
 }
 
 input.error:focus,
 textarea.error:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
 }
 
 .error-message {
