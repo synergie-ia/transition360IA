@@ -3,6 +3,7 @@
   RECONVERSION 360 IA - PAGE D'ACCUEIL
   ============================================
   Gestion des badges de complétion et actions
+  VERSION 48 ITEMS
   ============================================
 */
 
@@ -11,28 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log("🏠 PAGE D'ACCUEIL - Initialisation");
   console.log("====================================\n");
   
-  // Vérification des complétions
   updateCompletionBadges();
   
-  // Bouton Réinitialiser
   const btnReset = document.getElementById('btnResetData');
   if(btnReset){
     btnReset.addEventListener('click', confirmReset);
   }
   
-  // Bouton Copier
   const btnCopy = document.getElementById('btnCopyResults');
   if(btnCopy){
     btnCopy.addEventListener('click', copyResultsToClipboard);
   }
   
-  // Bouton Télécharger PDF
   const btnPDF = document.getElementById('btnDownloadPDF');
   if(btnPDF){
     btnPDF.addEventListener('click', downloadPDF);
   }
   
-  // Bouton Construire Projet
   const btnProject = document.getElementById('btnConstructProject');
   if(btnProject){
     btnProject.addEventListener('click', checkProjectAccess);
@@ -42,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ===== BADGES DE COMPLÉTION ===== */
 
 function updateCompletionBadges() {
-  // Badge Questionnaire
   const hasAnswers = localStorage.getItem('questionnaire_answers');
   const hasProfile = localStorage.getItem('profile_percentages');
   const hasUnivers = localStorage.getItem('selected_univers_details');
@@ -57,7 +52,6 @@ function updateCompletionBadges() {
     console.log('✅ Badge Questionnaire ajouté');
   }
   
-  // Badge Bilan
   const hasSituation = localStorage.getItem('situation_data');
   if(cards[1] && hasSituation){
     const badge = document.createElement('div');
@@ -75,7 +69,7 @@ function confirmReset() {
     "⚠️ ATTENTION ⚠️\n\n" +
     "Êtes-vous sûr de vouloir SUPPRIMER TOUTES vos données ?\n\n" +
     "Cela inclut :\n" +
-    "• Vos réponses au questionnaire\n" +
+    "• Vos réponses au questionnaire (48 items)\n" +
     "• Votre profil calculé\n" +
     "• Vos univers sélectionnés\n" +
     "• Votre bilan personnel\n\n" +
@@ -97,7 +91,6 @@ function confirmReset() {
 
 function resetAllData() {
   try {
-    // Liste de toutes les clés localStorage utilisées
     const keysToRemove = [
       'questionnaire_answers',
       'profile_percentages',
@@ -116,7 +109,6 @@ function resetAllData() {
     
     alert("✅ Toutes vos données ont été supprimées avec succès.\n\nLa page va se recharger.");
     
-    // Recharger la page
     location.reload();
     
   } catch(error) {
@@ -143,11 +135,10 @@ function copyResultsToClipboard() {
   try {
     console.log("📋 Début de la copie des résultats...");
     
-    // Vérification des données requises
     const { hasUnivers, hasSituation } = checkRequiredData();
     
     if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire et sélectionner des univers\n• Compléter votre bilan personnel");
+      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire (48 items) et sélectionner des univers\n• Compléter votre bilan personnel");
       return;
     }
     
@@ -161,7 +152,6 @@ function copyResultsToClipboard() {
       return;
     }
     
-    // Récupération des données
     const profileData = localStorage.getItem('profile_percentages');
     const universData = localStorage.getItem('selected_univers_details');
     const situationData = localStorage.getItem('situation_data');
@@ -175,13 +165,14 @@ function copyResultsToClipboard() {
       try {
         const profile = JSON.parse(profileData);
         textToCopy += "📊 MON PROFIL D'INTÉRÊT PROFESSIONNEL\n";
-        textToCopy += "───────────────────────────────────────\n\n";
+        textToCopy += "───────────────────────────────────────\n";
+        textToCopy += "(Basé sur 48 items évalués)\n\n";
         
         const sortedDims = Object.entries(profile)
           .sort((a, b) => b[1].pct - a[1].pct);
         
         sortedDims.forEach(([code, data]) => {
-          textToCopy += `• ${data.name}: ${data.pct}% (${data.score} points)\n`;
+          textToCopy += `• ${data.name}: ${data.pct}% (${data.score}/16 points)\n`;
         });
         
         textToCopy += "\n";
@@ -283,7 +274,6 @@ function copyResultsToClipboard() {
     }) + "\n";
     textToCopy += "═══════════════════════════════════════";
     
-    // Copie dans le presse-papiers
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
@@ -310,11 +300,10 @@ function downloadPDF() {
   try {
     console.log("📄 Début de la génération PDF...");
     
-    // Vérification des données requises
     const { hasUnivers, hasSituation } = checkRequiredData();
     
     if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire et sélectionner des univers\n• Compléter votre bilan personnel");
+      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire (48 items) et sélectionner des univers\n• Compléter votre bilan personnel");
       return;
     }
     
@@ -330,14 +319,12 @@ function downloadPDF() {
     
     alert("📄 Génération du PDF en cours...\n\nLe téléchargement va démarrer dans quelques secondes.");
     
-    // Récupération des données
     const profileData = localStorage.getItem('profile_percentages');
     const universData = localStorage.getItem('selected_univers_details');
     const situationData = localStorage.getItem('situation_data');
     
     let pdfContent = "";
     
-    // En-tête
     pdfContent += "═══════════════════════════════════════════════════════\n";
     pdfContent += "        RECONVERSION 360 IA - MES RÉSULTATS\n";
     pdfContent += "═══════════════════════════════════════════════════════\n\n";
@@ -348,20 +335,20 @@ function downloadPDF() {
       day: 'numeric' 
     }) + "\n\n";
     
-    // PROFIL
     if(profileData){
       try {
         const profile = JSON.parse(profileData);
         pdfContent += "───────────────────────────────────────────────────────\n";
         pdfContent += "📊 MON PROFIL D'INTÉRÊT PROFESSIONNEL\n";
-        pdfContent += "───────────────────────────────────────────────────────\n\n";
+        pdfContent += "───────────────────────────────────────────────────────\n";
+        pdfContent += "(Basé sur 48 items évalués)\n\n";
         
         const sortedDims = Object.entries(profile)
           .sort((a, b) => b[1].pct - a[1].pct);
         
         sortedDims.forEach(([code, data]) => {
           pdfContent += `   ${data.name}\n`;
-          pdfContent += `   Score: ${data.pct}% (${data.score} points)\n\n`;
+          pdfContent += `   Score: ${data.pct}% (${data.score}/16 points)\n\n`;
         });
         
         console.log("✅ Profil ajouté au PDF");
@@ -370,7 +357,6 @@ function downloadPDF() {
       }
     }
     
-    // UNIVERS
     if(universData){
       try {
         const univers = JSON.parse(universData);
@@ -396,7 +382,6 @@ function downloadPDF() {
       }
     }
     
-    // BILAN PERSONNEL
     if(situationData){
       try {
         const situation = JSON.parse(situationData);
@@ -455,13 +440,11 @@ function downloadPDF() {
       }
     }
     
-    // Pied de page
     pdfContent += "═══════════════════════════════════════════════════════\n";
     pdfContent += "Document généré par Reconversion 360 IA\n";
     pdfContent += "© 2025 Synergie IA\n";
     pdfContent += "═══════════════════════════════════════════════════════";
     
-    // Création et téléchargement du fichier
     const blob = new Blob([pdfContent], { type: 'text/plain;charset=utf-8' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -490,7 +473,7 @@ function checkProjectAccess() {
   const { hasUnivers, hasSituation } = checkRequiredData();
   
   if(!hasUnivers && !hasSituation){
-    alert("⚠️ Accès non autorisé\n\nPour construire votre projet, vous devez d'abord :\n\n1. Compléter le questionnaire\n2. Sélectionner au moins 3 univers\n3. Remplir votre bilan personnel");
+    alert("⚠️ Accès non autorisé\n\nPour construire votre projet, vous devez d'abord :\n\n1. Compléter le questionnaire (48 items)\n2. Sélectionner au moins 3 univers\n3. Remplir votre bilan personnel");
     return;
   }
   
@@ -504,10 +487,7 @@ function checkProjectAccess() {
     return;
   }
   
-  // Accès autorisé
   alert("✅ Accès autorisé !\n\nVous allez être redirigé vers la construction de votre projet professionnel.");
-  // TODO: Ajouter la redirection vers la page projet
-  // window.location.href = 'projet.html';
 }
 
 /* ===== MÉTHODE DE COPIE ALTERNATIVE ===== */
