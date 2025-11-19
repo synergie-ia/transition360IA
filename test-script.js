@@ -4,6 +4,7 @@
   ============================================
   VERSION 48 ITEMS - 12 QUESTIONS × 4 DIMENSIONS
   Chaque note (0-4) peut être utilisée 2 fois maximum par question
+  LIMITE: 3 à 5 univers sélectionnables
   Novembre 2025
   ============================================
 */
@@ -389,7 +390,7 @@ function displayProfile(){
   const scores = calcProfile();
   const root = document.getElementById("profileResults");
   
-  const MAX_SCORE = 16; // 4 items max par dimension × 4 points max
+  const MAX_SCORE = 16;
   
   const dimensionsAvecScores = DIMENSIONS.map(dim => ({
     ...dim,
@@ -437,18 +438,30 @@ function displayProfile(){
   }, 100);
 }
 
-/* ===== COMPTEUR UNIVERS ===== */
+/* ===== COMPTEUR UNIVERS - MODIFIÉ POUR LIMITE 5 ===== */
 
 function updateUniversCounter(){
   const counter = document.getElementById("selectedUniversCounter");
   if(!counter) return;
   
   const n = selectedUnivers.size;
+  const maxLabel = n >= 5 ? " (maximum atteint)" : ` / 5 max`;
+  
   counter.textContent = n === 0
-    ? "0 univers sélectionné"
+    ? "0 univers sélectionné (3 à 5 requis)"
     : n === 1
-      ? "1 univers sélectionné"
-      : `${n} univers sélectionnés`;
+      ? `1 univers sélectionné${maxLabel}`
+      : `${n} univers sélectionnés${maxLabel}`;
+  
+  if(n >= 5){
+    counter.style.background = "#fef3c7";
+    counter.style.color = "#92400e";
+    counter.style.borderColor = "#fcd34d";
+  } else {
+    counter.style.background = "#eef2ff";
+    counter.style.color = "#5a4af4";
+    counter.style.borderColor = "transparent";
+  }
 }
 
 /* ===== CARTE UNIVERS ===== */
@@ -500,7 +513,7 @@ function renderUniversCard(u, index){
   `;
 }
 
-/* ===== ÉVÉNEMENTS UNIVERS ===== */
+/* ===== ÉVÉNEMENTS UNIVERS - MODIFIÉ POUR LIMITE 5 ===== */
 
 function attachUniversEvents(){
   document.querySelectorAll(".btn-toggle-sub").forEach(btn=>{
@@ -530,6 +543,12 @@ function attachUniversEvents(){
         btn.classList.remove("selected");
         btn.querySelector(".tick").textContent = "";
       } else {
+        // LIMITE: Vérifier si déjà 5 univers sélectionnés
+        if(selectedUnivers.size >= 5){
+          alert("⚠️ Maximum 5 univers autorisés.\n\nVous devez d'abord désélectionner un univers avant d'en ajouter un nouveau.");
+          return;
+        }
+        
         selectedUnivers.add(id);
         card.classList.add("selected");
         btn.classList.add("selected");
@@ -700,8 +719,14 @@ document.addEventListener('DOMContentLoaded', function() {
   if(btnValidateSelection){
     btnValidateSelection.addEventListener('click', ()=>{
       
+      // LIMITE MODIFIÉE: minimum 3, maximum 5
       if(selectedUnivers.size < 3){
         alert("⚠️ Minimum 3 univers requis.\n\nActuellement : " + selectedUnivers.size);
+        return;
+      }
+      
+      if(selectedUnivers.size > 5){
+        alert("⚠️ Maximum 5 univers autorisés.\n\nActuellement : " + selectedUnivers.size);
         return;
       }
       
