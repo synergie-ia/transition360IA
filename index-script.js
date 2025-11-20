@@ -3,7 +3,7 @@
   RECONVERSION 360 IA - PAGE D'ACCUEIL
   ============================================
   Gestion des badges de complétion et actions
-  VERSION 48 ITEMS
+  VERSION 12 QUESTIONS
   ============================================
 */
 
@@ -69,7 +69,7 @@ function confirmReset() {
     "⚠️ ATTENTION ⚠️\n\n" +
     "Êtes-vous sûr de vouloir SUPPRIMER TOUTES vos données ?\n\n" +
     "Cela inclut :\n" +
-    "• Vos réponses au questionnaire (48 items)\n" +
+    "• Vos réponses au questionnaire (12 questions)\n" +
     "• Votre profil calculé\n" +
     "• Vos univers sélectionnés\n" +
     "• Votre bilan personnel\n\n" +
@@ -138,7 +138,7 @@ function copyResultsToClipboard() {
     const { hasUnivers, hasSituation } = checkRequiredData();
     
     if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire (48 items) et sélectionner des univers\n• Compléter votre bilan personnel");
+      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions) et sélectionner des univers\n• Compléter votre bilan personnel");
       return;
     }
     
@@ -166,13 +166,13 @@ function copyResultsToClipboard() {
         const profile = JSON.parse(profileData);
         textToCopy += "📊 MON PROFIL D'INTÉRÊT PROFESSIONNEL\n";
         textToCopy += "───────────────────────────────────────\n";
-        textToCopy += "(Basé sur 48 items évalués)\n\n";
+        textToCopy += "(Basé sur 12 questions évaluées)\n\n";
         
         const sortedDims = Object.entries(profile)
           .sort((a, b) => b[1].pct - a[1].pct);
         
         sortedDims.forEach(([code, data]) => {
-          textToCopy += `• ${data.name}: ${data.pct}% (${data.score}/16 points)\n`;
+          textToCopy += `• ${data.name}: ${data.pct}% (${data.score}/4 points)\n`;
         });
         
         textToCopy += "\n";
@@ -303,7 +303,7 @@ function downloadPDF() {
     const { hasUnivers, hasSituation } = checkRequiredData();
     
     if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire (48 items) et sélectionner des univers\n• Compléter votre bilan personnel");
+      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions) et sélectionner des univers\n• Compléter votre bilan personnel");
       return;
     }
     
@@ -341,14 +341,14 @@ function downloadPDF() {
         pdfContent += "───────────────────────────────────────────────────────\n";
         pdfContent += "📊 MON PROFIL D'INTÉRÊT PROFESSIONNEL\n";
         pdfContent += "───────────────────────────────────────────────────────\n";
-        pdfContent += "(Basé sur 48 items évalués)\n\n";
+        pdfContent += "(Basé sur 12 questions évaluées)\n\n";
         
         const sortedDims = Object.entries(profile)
           .sort((a, b) => b[1].pct - a[1].pct);
         
         sortedDims.forEach(([code, data]) => {
           pdfContent += `   ${data.name}\n`;
-          pdfContent += `   Score: ${data.pct}% (${data.score}/16 points)\n\n`;
+          pdfContent += `   Score: ${data.pct}% (${data.score}/4 points)\n\n`;
         });
         
         console.log("✅ Profil ajouté au PDF");
@@ -473,7 +473,7 @@ function checkProjectAccess() {
   const { hasUnivers, hasSituation } = checkRequiredData();
   
   if(!hasUnivers && !hasSituation){
-    alert("⚠️ Accès non autorisé\n\nPour construire votre projet, vous devez d'abord :\n\n1. Compléter le questionnaire (48 items)\n2. Sélectionner au moins 3 univers\n3. Remplir votre bilan personnel");
+    alert("⚠️ Accès non autorisé\n\nPour construire votre projet, vous devez d'abord :\n\n1. Compléter le questionnaire (12 questions)\n2. Sélectionner au moins 3 univers\n3. Remplir votre bilan personnel");
     return;
   }
   
@@ -487,7 +487,8 @@ function checkProjectAccess() {
     return;
   }
   
-  alert("✅ Accès autorisé !\n\nVous allez être redirigé vers la construction de votre projet professionnel.");
+  // Redirection vers le GPT Reconversion 360 IA
+  window.open('https://chatgpt.com/g/g-6914f232fb048191b5df9a123ac6af82-reconversion-360-ia', '_blank');
 }
 
 /* ===== MÉTHODE DE COPIE ALTERNATIVE ===== */
