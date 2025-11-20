@@ -120,13 +120,55 @@ function resetAllData() {
 /* ===== VÉRIFICATION DES DONNÉES REQUISES ===== */
 
 function checkRequiredData() {
+  // Vérifier les réponses au questionnaire (12 questions)
+  const answersData = localStorage.getItem('questionnaire_answers');
+  let hasCompleteQuestionnaire = false;
+  
+  if(answersData) {
+    try {
+      const answers = JSON.parse(answersData);
+      const answerCount = Object.keys(answers).length;
+      hasCompleteQuestionnaire = answerCount === 12;
+      console.log(`📋 Questionnaire: ${answerCount}/12 réponses`);
+    } catch(e) {
+      console.error("❌ Erreur lecture réponses:", e);
+    }
+  }
+  
+  // Vérifier la sélection d'univers
   const selectedUniversDetails = localStorage.getItem('selected_univers_details');
+  let hasUnivers = false;
+  
+  if(selectedUniversDetails) {
+    try {
+      const univers = JSON.parse(selectedUniversDetails);
+      const universCount = Object.keys(univers).length;
+      hasUnivers = universCount >= 3;
+      console.log(`🌍 Univers sélectionnés: ${universCount}`);
+    } catch(e) {
+      console.error("❌ Erreur lecture univers:", e);
+    }
+  }
+  
+  // Vérifier le bilan personnel
   const situationData = localStorage.getItem('situation_data');
+  let hasSituation = false;
   
-  const hasUnivers = selectedUniversDetails && JSON.parse(selectedUniversDetails) && Object.keys(JSON.parse(selectedUniversDetails)).length > 0;
-  const hasSituation = situationData && JSON.parse(situationData);
+  if(situationData) {
+    try {
+      const situation = JSON.parse(situationData);
+      hasSituation = situation && Object.keys(situation).length > 2; // Au moins prénom, âge + 1 question
+      console.log(`📋 Bilan: ${hasSituation ? 'Rempli' : 'Incomplet'}`);
+    } catch(e) {
+      console.error("❌ Erreur lecture bilan:", e);
+    }
+  }
   
-  return { hasUnivers, hasSituation };
+  return { 
+    hasCompleteQuestionnaire, 
+    hasUnivers, 
+    hasSituation 
+  };
 }
 
 /* ===== COPIE DES RÉSULTATS ===== */
@@ -135,10 +177,15 @@ function copyResultsToClipboard() {
   try {
     console.log("📋 Début de la copie des résultats...");
     
-    const { hasUnivers, hasSituation } = checkRequiredData();
+    const { hasCompleteQuestionnaire, hasUnivers, hasSituation } = checkRequiredData();
     
-    if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions) et sélectionner des univers\n• Compléter votre bilan personnel");
+    if(!hasCompleteQuestionnaire && !hasUnivers && !hasSituation){
+      alert("⚠️ Aucune donnée à copier.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions)\n• Sélectionner au moins 3 univers\n• Compléter votre bilan personnel");
+      return;
+    }
+    
+    if(!hasCompleteQuestionnaire){
+      alert("⚠️ Questionnaire incomplet.\n\nVeuillez répondre aux 12 questions du questionnaire avant de copier vos résultats.");
       return;
     }
     
@@ -300,10 +347,15 @@ function downloadPDF() {
   try {
     console.log("📄 Début de la génération PDF...");
     
-    const { hasUnivers, hasSituation } = checkRequiredData();
+    const { hasCompleteQuestionnaire, hasUnivers, hasSituation } = checkRequiredData();
     
-    if(!hasUnivers && !hasSituation){
-      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions) et sélectionner des univers\n• Compléter votre bilan personnel");
+    if(!hasCompleteQuestionnaire && !hasUnivers && !hasSituation){
+      alert("⚠️ Aucune donnée à télécharger.\n\nVeuillez d'abord :\n• Compléter le questionnaire (12 questions)\n• Sélectionner au moins 3 univers\n• Compléter votre bilan personnel");
+      return;
+    }
+    
+    if(!hasCompleteQuestionnaire){
+      alert("⚠️ Questionnaire incomplet.\n\nVeuillez répondre aux 12 questions du questionnaire avant de générer le PDF.");
       return;
     }
     
@@ -470,10 +522,15 @@ function downloadPDF() {
 /* ===== VÉRIFICATION ACCÈS PROJET ===== */
 
 function checkProjectAccess() {
-  const { hasUnivers, hasSituation } = checkRequiredData();
+  const { hasCompleteQuestionnaire, hasUnivers, hasSituation } = checkRequiredData();
   
-  if(!hasUnivers && !hasSituation){
+  if(!hasCompleteQuestionnaire && !hasUnivers && !hasSituation){
     alert("⚠️ Accès non autorisé\n\nPour construire votre projet, vous devez d'abord :\n\n1. Compléter le questionnaire (12 questions)\n2. Sélectionner au moins 3 univers\n3. Remplir votre bilan personnel");
+    return;
+  }
+  
+  if(!hasCompleteQuestionnaire){
+    alert("⚠️ Questionnaire incomplet\n\nVeuillez répondre aux 12 questions du questionnaire avant d'accéder à la construction de votre projet.");
     return;
   }
   
