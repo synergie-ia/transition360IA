@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Univers Professionnels</title>
+<title>Univers Professionnels - Reconversion 360 IA</title>
 
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   :root{
     --bg:#f5f6fa;
     --ink:#2c3e50;
@@ -20,18 +26,56 @@
     margin:0;
     text-align:center;
     padding:2rem 1rem;
+    min-height:100vh;
+  }
+
+  h1 {
+    color: var(--ink);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  /* --- Bouton retour --- */
+  .btn-retour{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    color:var(--ink);
+    border:2px solid #e5e7eb;
+    padding:10px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:15px;
+    transition:all .2s ease;
+    margin-bottom:2rem;
+    text-decoration:none;
+  }
+
+  .btn-retour:hover{
+    background:#f3f4f6;
+    border-color:#cbd5e1;
+    transform:translateX(-3px);
+  }
+
+  .arrow{
+    font-size:18px;
+    transition:transform .2s ease;
+  }
+
+  .btn-retour:hover .arrow{
+    transform:translateX(-3px);
   }
 
   /* --- Grille principale --- */
   .grid{
-    position:static;
-    overflow:visible;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:1rem;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:1.2rem;
     padding:1rem;
-    max-width:1200px;
-    margin:auto;
+    max-width:1400px;
+    margin:0 auto;
   }
 
   .card{
@@ -39,75 +83,89 @@
     background:#fff;
     border-radius:12px;
     box-shadow:0 2px 6px rgba(0,0,0,.06);
-    padding:1.2rem 0.8rem 2.5rem;
+    padding:1.5rem 1rem;
     transition:transform .25s ease,box-shadow .25s ease;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:flex-start;
+    cursor:default;
+    min-height:140px;
   }
 
   .card:hover{
-    transform:scale(1.04);
+    transform:scale(1.02);
     box-shadow:0 4px 12px rgba(0,0,0,.12);
   }
 
   .icon{
-    font-size:2.5rem;
-    margin-bottom:.5rem;
+    font-size:3rem;
+    margin-bottom:.8rem;
+    line-height:1;
+    user-select:none;
   }
 
   .label{
-    font-size:0.9rem;
+    font-size:0.95rem;
     color:var(--ink);
     font-weight:600;
-    line-height:1.3;
+    line-height:1.4;
     text-align:center;
+    padding:0 0.5rem;
+    user-select:none;
   }
 
-  /* --- Loupe en haut à droite et plus petite --- */
+  /* --- Loupe en haut à droite --- */
   .magnifier{
     position:absolute;
-    top:8px;
-    right:8px;
-    width:16px;
-    height:16px;
-    opacity:0.5;
+    top:10px;
+    right:10px;
+    width:20px;
+    height:20px;
+    opacity:0.4;
     transition:all .2s ease;
     cursor:pointer;
     stroke:var(--ink);
+    z-index:10;
   }
 
   .magnifier:hover{
     opacity:1;
-    transform:scale(1.15);
+    transform:scale(1.2);
   }
   
   .card.sub-visible .magnifier{
     opacity:1;
+    stroke:var(--primary);
   }
 
   /* --- Sous-univers --- */
-  .sub-univers{
+  .sub-container{
     display:none;
     width:100%;
-    background:#f9fafb;
-    border-radius:8px;
-    padding:0.8rem;
-    margin-top:0.8rem;
-    text-align:left;
-    font-size:0.75rem;
-    line-height:1.4;
-    max-height:300px;
-    overflow-y:auto;
+    margin-top:1rem;
   }
 
-  .sub-univers.visible{
+  .sub-container.visible{
     display:block;
   }
 
+  .sub-list{
+    width:100%;
+    background:#f9fafb;
+    border-radius:8px;
+    padding:1rem;
+    text-align:left;
+    font-size:0.8rem;
+    line-height:1.5;
+    max-height:280px;
+    overflow-y:auto;
+    border:1px solid #e5e7eb;
+  }
+
   .sub-item{
-    padding:0.4rem 0;
+    padding:0.5rem 0;
+    color:var(--ink);
     border-bottom:1px dashed #e5e7eb;
   }
 
@@ -115,500 +173,545 @@
     border-bottom:none;
   }
 
-  .sub-name{
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:0.2rem;
+  .sub-item:before {
+    content: "→ ";
+    color: var(--primary);
+    font-weight: bold;
+    margin-right: 0.3rem;
   }
 
-  .sub-desc{
-    color:#6b7280;
-    font-size:0.7rem;
+  /* Scrollbar personnalisée */
+  .sub-list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sub-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .sub-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  .sub-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  @media(max-width: 768px){
+    .grid{
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:1rem;
+    }
+    
+    .card{
+      padding:1.2rem 0.8rem;
+      min-height:120px;
+    }
+    
+    .icon{
+      font-size:2.5rem;
+    }
+    
+    .label{
+      font-size:0.85rem;
+    }
   }
 
   @media(hover:none) and (pointer:coarse){
-    .card:hover{transform:none;}
+    .card:hover{transform:scale(1.01);}
   }
 </style>
 </head>
 <body>
 
-<!-- 🌍 Grille des univers -->
+<button class="btn-retour" onclick="window.location.href='index.html'">
+  <span class="arrow">←</span>
+  <span>Retour à l'accueil</span>
+</button>
+
+<h1>Les 21 Univers Professionnels</h1>
+
 <div class="grid" id="universGrid"></div>
 
 <script>
-// Données des univers (extrait de universesData)
-const universesData = [
-  {
-    id: 1,
-    name: "Agriculture, nature & animaux",
-    icon: "🌾",
-    subUniverses: [
-      { icon: "🏭", name: "Agroalimentaire industriel" },
-      { icon: "🌱", name: "Production biologique & circuits courts" },
-      { icon: "🔬", name: "Agronomie & recherche appliquée" },
-      { icon: "🌾", name: "Cultures céréalières & grandes exploitations" },
-      { icon: "🍇", name: "Viticulture & œnologie" },
-      { icon: "🥕", name: "Maraîchage & production maraîchère" },
-      { icon: "🌺", name: "Horticulture & pépinière" },
-      { icon: "🌳", name: "Paysagisme & aménagement végétal" },
-      { icon: "🌲", name: "Forêt & sylviculture durable" },
-      { icon: "🐄", name: "Élevage bovin / ovin / porcin / avicole" },
-      { icon: "🐟", name: "Aquaculture & pêche durable" },
-      { icon: "🐝", name: "Apiculture & insectes utiles" },
-      { icon: "💧", name: "Gestion de l'eau, irrigation & bassins versants" },
-      { icon: "🏭", name: "Valorisation & transformation des produits agricoles" },
-      { icon: "🐕", name: "Soins & services aux animaux domestiques" }
-    ]
-  },
-  {
-    id: 2,
-    name: "Arts, design & création",
-    icon: "🎨",
-    subUniverses: [
-      { icon: "🎨", name: "Arts visuels & peinture" },
-      { icon: "🗿", name: "Sculpture & installations" },
-      { icon: "💻", name: "Design graphique & communication visuelle" },
-      { icon: "🛋️", name: "Design produit & industriel" },
-      { icon: "🏠", name: "Architecture intérieure & décoration" },
-      { icon: "📷", name: "Photographie & image numérique" },
-      { icon: "🎬", name: "Cinéma, audiovisuel & animation" },
-      { icon: "👗", name: "Mode, stylisme & textile" },
-      { icon: "✋", name: "Artisanat d'art traditionnel" },
-      { icon: "🎭", name: "Scénographie & design d'espace" },
-      { icon: "✏️", name: "Illustration & bande dessinée" },
-      { icon: "🏛️", name: "Patrimoine, muséographie & restauration d'art" },
-      { icon: "🎭", name: "Spectacle vivant & arts de la scène" },
-      { icon: "💎", name: "Métiers du luxe & savoir-faire d'exception" },
-      { icon: "🎪", name: "Régie & technique du spectacle" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Commerce, marketing & vente",
-    icon: "🛒",
-    subUniverses: [
-      { icon: "🏪", name: "Commerce de détail & retail" },
-      { icon: "💻", name: "E-commerce & marketplaces" },
-      { icon: "🤝", name: "Vente B2B & négociation commerciale" },
-      { icon: "🚪", name: "Représentation & prospection" },
-      { icon: "📦", name: "Merchandising & mise en valeur produits" },
-      { icon: "📊", name: "Marketing stratégique" },
-      { icon: "📱", name: "Marketing digital & réseaux sociaux" },
-      { icon: "🎤", name: "Communication commerciale & influence" },
-      { icon: "🛍️", name: "Achats & approvisionnement" },
-      { icon: "📈", name: "Gestion de rayon & management de point de vente" },
-      { icon: "🏢", name: "Immobilier commercial" },
-      { icon: "🏦", name: "Banque & assurance commerciale" },
-      { icon: "😊", name: "Service client & relation après-vente" },
-      { icon: "💎", name: "Commerce du luxe & clientèle premium" },
-      { icon: "🛒", name: "Vente en ligne & marketplaces spécialisées" }
-    ]
-  },
-  {
-    id: 4,
-    name: "Communication, médias & culture",
-    icon: "📺",
-    subUniverses: [
-      { icon: "📰", name: "Journalisme & presse écrite" },
-      { icon: "📻", name: "Audiovisuel & production radio/TV" },
-      { icon: "🎉", name: "Relations publiques & événementiel" },
-      { icon: "🏢", name: "Communication d'entreprise" },
-      { icon: "🏛️", name: "Communication publique & politique" },
-      { icon: "📖", name: "Édition & correction" },
-      { icon: "🎥", name: "Création de contenus numériques" },
-      { icon: "📢", name: "Publicité & stratégie de marque" },
-      { icon: "📱", name: "Influence, réseaux & storytelling" },
-      { icon: "🌍", name: "Traduction & interprétation" },
-      { icon: "🎭", name: "Médiation culturelle & animation de projets" },
-      { icon: "🎙️", name: "Podcasting & création audio" }
-    ]
-  },
-  {
-    id: 5,
-    name: "Construction, BTP & habitat",
-    icon: "🏗️",
-    subUniverses: [
-      { icon: "📐", name: "Architecture & conception" },
-      { icon: "🧱", name: "Gros œuvre & maçonnerie" },
-      { icon: "🎨", name: "Second œuvre & finitions" },
-      { icon: "🪵", name: "Menuiserie & charpente bois" },
-      { icon: "🔧", name: "Plomberie, chauffage & climatisation" },
-      { icon: "⚡", name: "Électricité & domotique" },
-      { icon: "🛣️", name: "Travaux publics & voirie" },
-      { icon: "🏗️", name: "Génie civil & infrastructures" },
-      { icon: "🌿", name: "Rénovation énergétique & éco-bâtiment" },
-      { icon: "📋", name: "Études techniques & dessin bâtiment" },
-      { icon: "👷", name: "Coordination & conduite de chantier" },
-      { icon: "🏢", name: "Gestion immobilière & copropriétés" },
-      { icon: "🏙️", name: "Aménagement urbain & espaces publics" }
-    ]
-  },
-  {
-    id: 6,
-    name: "Droit, administration & politique publique",
-    icon: "⚖️",
-    subUniverses: [
-      { icon: "⚖️", name: "Droit privé & judiciaire" },
-      { icon: "💼", name: "Droit des affaires & fiscalité" },
-      { icon: "🤝", name: "Droit social & du travail" },
-      { icon: "🏛️", name: "Droit public & institutions" },
-      { icon: "📋", name: "Administration publique" },
-      { icon: "👥", name: "Ressources humaines & médiation" },
-      { icon: "🗺️", name: "Gouvernance territoriale & collectivités locales" },
-      { icon: "🌍", name: "Diplomatie & relations internationales" },
-      { icon: "📝", name: "Gestion des marchés publics" },
-      { icon: "⚖️", name: "Intelligence juridique & conformité" },
-      { icon: "📜", name: "Notariat & professions réglementées" }
-    ]
-  },
-  {
-    id: 7,
-    name: "Éducation, formation & apprentissage",
-    icon: "🎓",
-    subUniverses: [
-      { icon: "📚", name: "Enseignement primaire" },
-      { icon: "🏫", name: "Enseignement secondaire" },
-      { icon: "🎓", name: "Enseignement supérieur" },
-      { icon: "💼", name: "Formation professionnelle & continue" },
-      { icon: "🧭", name: "Orientation & accompagnement" },
-      { icon: "📈", name: "Coaching & développement personnel" },
-      { icon: "📖", name: "Ingénierie pédagogique" },
-      { icon: "♿", name: "Éducation spécialisée & médiation éducative" },
-      { icon: "🔬", name: "Recherche en sciences de l'éducation" },
-      { icon: "🎉", name: "Animation socioculturelle" }
-    ]
-  },
-  {
-    id: 8,
-    name: "Environnement, climat & énergies",
-    icon: "🌍",
-    subUniverses: [
-      { icon: "♻️", name: "Gestion des déchets & recyclage" },
-      { icon: "💧", name: "Traitement de l'eau & dépollution" },
-      { icon: "☀️", name: "Énergies renouvelables" },
-      { icon: "⚡", name: "Hydrogène & stockage d'énergie" },
-      { icon: "☢️", name: "Énergie nucléaire & sûreté" },
-      { icon: "🌡️", name: "Génie climatique & efficacité énergétique" },
-      { icon: "🌦️", name: "Adaptation au changement climatique" },
-      { icon: "📊", name: "Bilan carbone & comptabilité environnementale" },
-      { icon: "♻️", name: "Écoconception & économie circulaire" },
-      { icon: "🏙️", name: "Aménagement durable des territoires" },
-      { icon: "🔧", name: "Ingénierie environnementale" },
-      { icon: "🌿", name: "Protection de la biodiversité & conservation" },
-      { icon: "🌳", name: "Restauration écologique & gestion des milieux naturels" },
-      { icon: "🚗", name: "Mobilité durable & transports propres" },
-      { icon: "🌾", name: "Agriculture régénératrice & sols vivants" },
-      { icon: "⚠️", name: "Gestion des risques naturels & résilience" }
-    ]
-  },
-  {
-    id: 9,
-    name: "Gestion, finance & comptabilité",
-    icon: "💰",
-    subUniverses: [
-      { icon: "📊", name: "Comptabilité & fiscalité" },
-      { icon: "🔍", name: "Audit & contrôle de gestion" },
-      { icon: "💵", name: "Trésorerie & financement" },
-      { icon: "🏦", name: "Banque & assurance" },
-      { icon: "💼", name: "Conseil en gestion de patrimoine" },
-      { icon: "🏢", name: "Gestion d'entreprise & administration" },
-      { icon: "🌱", name: "Finance durable & investissement responsable" },
-      { icon: "📈", name: "Gestion de projets financiers" },
-      { icon: "💳", name: "Fintech & services financiers numériques" },
-      { icon: "🏛️", name: "Gestion budgétaire publique" },
-      { icon: "🔒", name: "Contrôle interne & conformité" }
-    ]
-  },
-  {
-    id: 10,
-    name: "Hôtellerie, restauration & tourisme",
-    icon: "🏨",
-    subUniverses: [
-      { icon: "👨‍🍳", name: "Cuisine gastronomique" },
-      { icon: "🍽️", name: "Restauration collective" },
-      { icon: "🛎️", name: "Service & sommellerie" },
-      { icon: "🏨", name: "Hôtellerie & hébergement" },
-      { icon: "🙋", name: "Accueil & réception" },
-      { icon: "🗺️", name: "Tourisme local & culturel" },
-      { icon: "✈️", name: "Tourisme international" },
-      { icon: "🎪", name: "Événementiel & congrès" },
-      { icon: "🏨", name: "Management hôtelier" },
-      { icon: "🍷", name: "Œnotourisme & terroir" },
-      { icon: "♻️", name: "Gestion durable du tourisme" }
-    ]
-  },
-  {
-    id: 11,
-    name: "Immobilier & patrimoine",
-    icon: "🏠",
-    subUniverses: [
-      { icon: "🏡", name: "Transaction immobilière résidentielle" },
-      { icon: "🏢", name: "Transaction immobilière d'entreprise & commerces" },
-      { icon: "🏗️", name: "Promotion & développement immobilier" },
-      { icon: "🔑", name: "Gestion locative & syndic de copropriété" },
-      { icon: "💰", name: "Expertise & évaluation immobilière" },
-      { icon: "📈", name: "Investissement & conseil patrimonial immobilier" },
-      { icon: "🏙️", name: "Aménagement foncier & urbanisme opérationnel" },
-      { icon: "🏘️", name: "Immobilier social & logement accompagné" },
-      { icon: "🔧", name: "Facility management & gestion technique" },
-      { icon: "💎", name: "Immobilier de luxe & biens d'exception" }
-    ]
-  },
-  {
-    id: 12,
-    name: "Industrie, fabrication & production",
-    icon: "⚙️",
-    subUniverses: [
-      { icon: "🏭", name: "Production industrielle" },
-      { icon: "🔧", name: "Maintenance & SAV" },
-      { icon: "🔩", name: "Mécanique & usinage" },
-      { icon: "⚡", name: "Électrotechnique & automatisme" },
-      { icon: "🤖", name: "Robotique & cobotique" },
-      { icon: "⚗️", name: "Chimie & matériaux" },
-      { icon: "✈️", name: "Aéronautique & spatial" },
-      { icon: "🔥", name: "Métallurgie & sidérurgie" },
-      { icon: "💊", name: "Industrie pharmaceutique" },
-      { icon: "🧪", name: "Plasturgie & composites" },
-      { icon: "✅", name: "Qualité, sécurité & environnement industriel" },
-      { icon: "📦", name: "Supply chain industrielle" },
-      { icon: "🖨️", name: "Fabrication additive & impression 3D" },
-      { icon: "👕", name: "Industrie textile & habillement" },
-      { icon: "💻", name: "Micro-électronique & semi-conducteurs" },
-      { icon: "⛏️", name: "Industries extractives & carrières" },
-      { icon: "🚢", name: "Construction & maintenance navale" }
-    ]
-  },
-  {
-    id: 13,
-    name: "Logistique, transport & mobilité",
-    icon: "🚚",
-    subUniverses: [
-      { icon: "📦", name: "Logistique & entreposage" },
-      { icon: "🔗", name: "Supply chain management" },
-      { icon: "🌍", name: "Douanes & commerce international" },
-      { icon: "🚛", name: "Transport routier & livraison" },
-      { icon: "🚆", name: "Transport ferroviaire" },
-      { icon: "✈️", name: "Transport aérien" },
-      { icon: "🚢", name: "Transport maritime & fluvial" },
-      { icon: "🚌", name: "Mobilité urbaine & transports publics" },
-      { icon: "🚗", name: "Gestion de flotte & maintenance" },
-      { icon: "🚴", name: "Logistique urbaine & dernier kilomètre" },
-      { icon: "⚓", name: "Activités portuaires & maritimes" },
-      { icon: "🚙", name: "Mobilité autonome & véhicules intelligents" }
-    ]
-  },
-  {
-    id: 14,
-    name: "Management, entrepreneuriat & stratégie",
-    icon: "📊",
-    subUniverses: [
-      { icon: "🚀", name: "Création d'entreprise & start-up" },
-      { icon: "📋", name: "Gestion de projets" },
-      { icon: "💡", name: "Innovation & transformation digitale" },
-      { icon: "👥", name: "Management d'équipe" },
-      { icon: "🌱", name: "RSE & développement durable" },
-      { icon: "🎯", name: "Stratégie d'entreprise" },
-      { icon: "🏛️", name: "Pilotage de structures publiques ou privées" },
-      { icon: "🌍", name: "Management interculturel" },
-      { icon: "💼", name: "Conseil & accompagnement stratégique" },
-      { icon: "⚖️", name: "Gouvernance & leadership éthique" }
-    ]
-  },
-  {
-    id: 15,
-    name: "Numérique, informatique & data",
-    icon: "💻",
-    subUniverses: [
-      { icon: "🌐", name: "Développement web & mobile" },
-      { icon: "☁️", name: "DevOps & cloud computing" },
-      { icon: "🔐", name: "Cybersécurité" },
-      { icon: "🖥️", name: "Réseaux & systèmes" },
-      { icon: "🤖", name: "Intelligence artificielle & machine learning" },
-      { icon: "📊", name: "Data science & big data" },
-      { icon: "🥽", name: "Réalité augmentée & métavers" },
-      { icon: "🎨", name: "UX/UI design" },
-      { icon: "🏭", name: "Informatique industrielle & IoT" },
-      { icon: "🧩", name: "Logiciels métiers & ERP" },
-      { icon: "⚙️", name: "No-code & automation" },
-      { icon: "🎨", name: "Design numérique & multimédia" },
-      { icon: "⛓️", name: "Blockchain & web3" },
-      { icon: "♻️", name: "Informatique durable & sobriété numérique" },
-      { icon: "🎮", name: "Gaming, jeux vidéo & développement ludique" },
-      { icon: "🏆", name: "E-sport, streaming & création de contenu gaming" }
-    ]
-  },
-  {
-    id: 16,
-    name: "Santé, bien-être & médical",
-    icon: "⚕️",
-    subUniverses: [
-      { icon: "🩺", name: "Médecine générale" },
-      { icon: "🏥", name: "Chirurgie & spécialités hospitalières" },
-      { icon: "📷", name: "Radiologie & imagerie médicale" },
-      { icon: "🔬", name: "Biologie & analyses médicales" },
-      { icon: "💊", name: "Pharmacie & biotechnologies" },
-      { icon: "🩹", name: "Infirmier & soins paramédicaux" },
-      { icon: "🦵", name: "Rééducation & kinésithérapie" },
-      { icon: "🧠", name: "Santé mentale & psychologie" },
-      { icon: "🥗", name: "Nutrition & diététique" },
-      { icon: "🏥", name: "Santé publique & prévention" },
-      { icon: "👵", name: "Accompagnement des personnes âgées" },
-      { icon: "⚽", name: "Médecine du sport" },
-      { icon: "💻", name: "Médecine connectée & télésanté" }
-    ]
-  },
-  {
-    id: 17,
-    name: "Sciences, recherche & innovation",
-    icon: "🔬",
-    subUniverses: [
-      { icon: "🌌", name: "Physique & astrophysique" },
-      { icon: "📐", name: "Mathématiques & statistiques" },
-      { icon: "⚗️", name: "Chimie & matériaux" },
-      { icon: "🧬", name: "Biotechnologies" },
-      { icon: "🌍", name: "Géosciences & climatologie" },
-      { icon: "🧠", name: "Neurosciences & cognition" },
-      { icon: "👥", name: "Sciences humaines & sociales" },
-      { icon: "📚", name: "Recherche en éducation" },
-      { icon: "🔬", name: "Recherche appliquée & transfert technologique" },
-      { icon: "🏢", name: "R&D en entreprise" },
-      { icon: "📊", name: "Études et consulting scientifique" }
-    ]
-  },
-  {
-    id: 18,
-    name: "Sécurité, défense & urgence",
-    icon: "🚨",
-    subUniverses: [
-      { icon: "👮", name: "Police & gendarmerie" },
-      { icon: "🚒", name: "Pompiers & secours" },
-      { icon: "🛡️", name: "Sécurité privée & surveillance" },
-      { icon: "🌪️", name: "Protection civile" },
-      { icon: "⚔️", name: "Défense & armée" },
-      { icon: "🕵️", name: "Renseignement & sécurité stratégique" }
-    ]
-  },
-  {
-    id: 19,
-    name: "Social, aide & solidarité",
-    icon: "❤️",
-    subUniverses: [
-      { icon: "👨‍👩‍👧", name: "Travail social & action sociale" },
-      { icon: "🏠", name: "Hébergement & logement d'urgence" },
-      { icon: "🍽️", name: "Aide alimentaire & distributions" },
-      { icon: "🤝", name: "Médiation sociale & résolution de conflits" },
-      { icon: "🌍", name: "Action humanitaire & ONG" },
-      { icon: "👶", name: "Petite enfance & crèches" },
-      { icon: "👦", name: "Protection de l'enfance" },
-      { icon: "♿", name: "Accompagnement du handicap" },
-      { icon: "💪", name: "Insertion professionnelle & formation" },
-      { icon: "🗣️", name: "Prévention & éducation populaire" },
-      { icon: "🏡", name: "Services à la personne" },
-      { icon: "🤲", name: "Bénévolat & engagement citoyen" },
-      { icon: "🧑‍⚖️", name: "Accès aux droits & lutte contre les discriminations" }
-    ]
-  },
-  {
-    id: 20,
-    name: "Sport, loisirs & vie active",
-    icon: "⚽",
-    subUniverses: [
-      { icon: "🏃", name: "Éducation sportive & encadrement" },
-      { icon: "🏋️", name: "Entraînement & préparation physique" },
-      { icon: "🏆", name: "Sport de haut niveau & compétition" },
-      { icon: "🏢", name: "Management d'équipements sportifs" },
-      { icon: "📺", name: "Événementiel sportif" },
-      { icon: "🎭", name: "Loisirs & animation socioculturelle" },
-      { icon: "🏕️", name: "Tourisme sportif & plein air" },
-      { icon: "🎮", name: "E-sport & gaming professionnel" },
-      { icon: "🧘", name: "Bien-être & activités douces" },
-      { icon: "🛍️", name: "Industrie & commerce du sport" },
-      { icon: "🎨", name: "Création de contenus sportifs & médias" }
-    ]
-  },
-  {
-    id: 21,
-    name: "Technologies émergentes & futur du travail",
-    icon: "🚀",
-    subUniverses: [
-      { icon: "🤖", name: "Intelligence artificielle générative" },
-      { icon: "🧠", name: "IA éthique & gouvernance algorithmique" },
-      { icon: "🦾", name: "Robotique humanoïde & collaborative" },
-      { icon: "🧬", name: "Biotechnologies avancées & biohacking" },
-      { icon: "🌌", name: "Exploration spatiale & NewSpace" },
-      { icon: "⚛️", name: "Technologies quantiques" },
-      { icon: "🏠", name: "Travail hybride & télétravail" },
-      { icon: "🌐", name: "Économie collaborative & plateformes" }
-    ]
-  }
-];
-
-// Génération du HTML
-const grid = document.getElementById('universGrid');
-
-universesData.forEach(univers => {
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.dataset.id = univers.id;
+(function() {
+  'use strict';
   
-  // Sous-univers HTML
-  let subHTML = '';
-  if(univers.subUniverses && univers.subUniverses.length > 0) {
-    subHTML = '<div class="sub-univers">';
-    univers.subUniverses.forEach(sub => {
-      subHTML += `
-        <div class="sub-item">
-          <div class="sub-name">${sub.icon} ${sub.name}</div>
-        </div>
-      `;
-    });
-    subHTML += '</div>';
-  }
-  
-  card.innerHTML = `
-    <svg class="magnifier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"></circle>
-      <path d="m21 21-4.35-4.35"></path>
-    </svg>
-    <div class="icon">${univers.icon}</div>
-    <div class="label">${univers.name}</div>
-    ${subHTML}
-  `;
-  
-  grid.appendChild(card);
-});
+  // Données complètes et isolées
+  const UNIVERS_DATA = [
+    {
+      id: 1,
+      name: "Agriculture, nature & animaux",
+      icon: "🌾",
+      subUniverses: [
+        "Agroalimentaire industriel",
+        "Production biologique & circuits courts",
+        "Agronomie & recherche appliquée",
+        "Cultures céréalières & grandes exploitations",
+        "Viticulture & œnologie",
+        "Maraîchage & production maraîchère",
+        "Horticulture & pépinière",
+        "Paysagisme & aménagement végétal",
+        "Forêt & sylviculture durable",
+        "Élevage bovin / ovin / porcin / avicole",
+        "Aquaculture & pêche durable",
+        "Apiculture & insectes utiles",
+        "Gestion de l'eau, irrigation & bassins versants",
+        "Valorisation & transformation des produits agricoles",
+        "Soins & services aux animaux domestiques"
+      ]
+    },
+    {
+      id: 2,
+      name: "Arts, design & création",
+      icon: "🎨",
+      subUniverses: [
+        "Arts visuels & peinture",
+        "Sculpture & installations",
+        "Design graphique & communication visuelle",
+        "Design produit & industriel",
+        "Architecture intérieure & décoration",
+        "Photographie & image numérique",
+        "Cinéma, audiovisuel & animation",
+        "Mode, stylisme & textile",
+        "Artisanat d'art traditionnel",
+        "Scénographie & design d'espace",
+        "Illustration & bande dessinée",
+        "Patrimoine, muséographie & restauration d'art",
+        "Spectacle vivant & arts de la scène",
+        "Métiers du luxe & savoir-faire d'exception",
+        "Régie & technique du spectacle"
+      ]
+    },
+    {
+      id: 3,
+      name: "Commerce, marketing & vente",
+      icon: "🛒",
+      subUniverses: [
+        "Commerce de détail & retail",
+        "E-commerce & marketplaces",
+        "Vente B2B & négociation commerciale",
+        "Représentation & prospection",
+        "Merchandising & mise en valeur produits",
+        "Marketing stratégique",
+        "Marketing digital & réseaux sociaux",
+        "Communication commerciale & influence",
+        "Achats & approvisionnement",
+        "Gestion de rayon & management de point de vente",
+        "Immobilier commercial",
+        "Banque & assurance commerciale",
+        "Service client & relation après-vente",
+        "Commerce du luxe & clientèle premium",
+        "Vente en ligne & marketplaces spécialisées"
+      ]
+    },
+    {
+      id: 4,
+      name: "Communication, médias & culture",
+      icon: "📺",
+      subUniverses: [
+        "Journalisme & presse écrite",
+        "Audiovisuel & production radio/TV",
+        "Relations publiques & événementiel",
+        "Communication d'entreprise",
+        "Communication publique & politique",
+        "Édition & correction",
+        "Création de contenus numériques",
+        "Publicité & stratégie de marque",
+        "Influence, réseaux & storytelling",
+        "Traduction & interprétation",
+        "Médiation culturelle & animation de projets",
+        "Podcasting & création audio"
+      ]
+    },
+    {
+      id: 5,
+      name: "Construction, BTP & habitat",
+      icon: "🏗️",
+      subUniverses: [
+        "Architecture & conception",
+        "Gros œuvre & maçonnerie",
+        "Second œuvre & finitions",
+        "Menuiserie & charpente bois",
+        "Plomberie, chauffage & climatisation",
+        "Électricité & domotique",
+        "Énergies renouvelables & efficacité énergétique",
+        "Aménagement paysager & espaces verts",
+        "Génie civil & travaux publics",
+        "Promotion & coordination de chantier",
+        "Rénovation & réhabilitation",
+        "Construction durable & éco-habitat",
+        "Décoration & aménagement intérieur"
+      ]
+    },
+    {
+      id: 6,
+      name: "Droit, administration & politique publique",
+      icon: "⚖️",
+      subUniverses: [
+        "Droit privé & judiciaire",
+        "Droit des affaires & fiscalité",
+        "Droit social & du travail",
+        "Droit public & institutions",
+        "Administration publique",
+        "Ressources humaines",
+        "Politiques publiques & territoriales",
+        "Notariat & professions réglementées",
+        "Conseil juridique & compliance",
+        "Médiation & résolution de conflits",
+        "Droit international & européen"
+      ]
+    },
+    {
+      id: 7,
+      name: "Éducation, formation & apprentissage",
+      icon: "📚",
+      subUniverses: [
+        "Enseignement primaire & maternel",
+        "Enseignement secondaire",
+        "Enseignement supérieur & recherche",
+        "Formation professionnelle & continue",
+        "Formation pour adultes",
+        "Accompagnement éducatif & soutien scolaire",
+        "Pédagogie spécialisée & inclusive",
+        "Conception pédagogique & e-learning",
+        "Orientation & conseil en évolution professionnelle",
+        "Animation socioculturelle & éducation populaire"
+      ]
+    },
+    {
+      id: 8,
+      name: "Environnement, climat & énergies",
+      icon: "🌍",
+      subUniverses: [
+        "Énergies renouvelables",
+        "Efficacité énergétique & sobriété",
+        "Gestion des déchets & économie circulaire",
+        "Eau & assainissement",
+        "Biodiversité & protection des écosystèmes",
+        "Climatologie & adaptation au changement climatique",
+        "Pollution & qualité de l'air",
+        "RSE & transition écologique des entreprises",
+        "Mobilité durable & transports propres",
+        "Agriculture durable & agroécologie",
+        "Économie de la fonctionnalité",
+        "Conseil & expertise environnementale",
+        "Sensibilisation & éducation à l'environnement",
+        "Finance verte & investissements durables",
+        "Génie écologique & restauration des milieux",
+        "Éco-conception & design circulaire"
+      ]
+    },
+    {
+      id: 9,
+      name: "Gestion, finance & comptabilité",
+      icon: "💼",
+      subUniverses: [
+        "Comptabilité générale & audit",
+        "Contrôle de gestion",
+        "Finance d'entreprise",
+        "Banque & assurance",
+        "Gestion de patrimoine & conseil financier",
+        "Analyse financière & investissement",
+        "Fiscalité",
+        "Trésorerie & crédit",
+        "Finance de marché",
+        "Gestion administrative",
+        "Paie & administration du personnel"
+      ]
+    },
+    {
+      id: 10,
+      name: "Hôtellerie, restauration & tourisme",
+      icon: "🏨",
+      subUniverses: [
+        "Hôtellerie & hébergement",
+        "Restauration traditionnelle & gastronomie",
+        "Restauration collective",
+        "Cuisine & arts culinaires",
+        "Service en salle & sommellerie",
+        "Tourisme & voyages",
+        "Événementiel & réception",
+        "Guidage & médiation touristique",
+        "Gestion d'établissements touristiques",
+        "Tourisme durable & écotourisme",
+        "Hébergement de plein air & loisirs"
+      ]
+    },
+    {
+      id: 11,
+      name: "Immobilier & patrimoine",
+      icon: "🏠",
+      subUniverses: [
+        "Transaction immobilière",
+        "Gestion locative & syndic",
+        "Promotion & développement immobilier",
+        "Expertise & évaluation immobilière",
+        "Investissement immobilier",
+        "Administration de biens",
+        "Immobilier d'entreprise",
+        "Urbanisme & aménagement du territoire",
+        "Foncier & acquisitions",
+        "Patrimoine historique & monuments"
+      ]
+    },
+    {
+      id: 12,
+      name: "Industrie, fabrication & production",
+      icon: "🏭",
+      subUniverses: [
+        "Industrie manufacturière",
+        "Métallurgie & travail des métaux",
+        "Plasturgie & composites",
+        "Chimie & pétrochimie",
+        "Industrie pharmaceutique",
+        "Agroalimentaire industriel",
+        "Textile & habillement",
+        "Bois & ameublement",
+        "Aéronautique & spatial",
+        "Automobile & mobilité",
+        "Électronique & micro-électronique",
+        "Maintenance industrielle",
+        "Qualité & amélioration continue",
+        "Robotique & automatisation",
+        "Supply chain industrielle",
+        "Industrie 4.0 & usine du futur",
+        "Fabrication additive & impression 3D"
+      ]
+    },
+    {
+      id: 13,
+      name: "Logistique, transport & mobilité",
+      icon: "🚚",
+      subUniverses: [
+        "Logistique & entreposage",
+        "Supply chain management",
+        "Douanes & commerce international",
+        "Transport routier & livraison",
+        "Transport ferroviaire",
+        "Transport aérien",
+        "Transport maritime & fluvial",
+        "Mobilité urbaine & transports publics",
+        "Gestion de flotte & maintenance",
+        "Logistique urbaine & dernier kilomètre",
+        "Activités portuaires & maritimes",
+        "Mobilité autonome & véhicules intelligents"
+      ]
+    },
+    {
+      id: 14,
+      name: "Management, entrepreneuriat & stratégie",
+      icon: "📊",
+      subUniverses: [
+        "Création d'entreprise & start-up",
+        "Gestion de projets",
+        "Innovation & transformation digitale",
+        "Management d'équipe",
+        "RSE & développement durable",
+        "Stratégie d'entreprise",
+        "Pilotage de structures publiques ou privées",
+        "Management interculturel",
+        "Conseil & accompagnement stratégique",
+        "Gouvernance & leadership éthique"
+      ]
+    },
+    {
+      id: 15,
+      name: "Numérique, informatique & data",
+      icon: "💻",
+      subUniverses: [
+        "Développement web & mobile",
+        "DevOps & cloud computing",
+        "Cybersécurité",
+        "Réseaux & systèmes",
+        "Intelligence artificielle & machine learning",
+        "Data science & big data",
+        "Réalité augmentée & métavers",
+        "UX/UI design",
+        "Informatique industrielle & IoT",
+        "Logiciels métiers & ERP",
+        "No-code & automation",
+        "Design numérique & multimédia",
+        "Blockchain & web3",
+        "Informatique durable & sobriété numérique",
+        "Gaming, jeux vidéo & développement ludique",
+        "E-sport, streaming & création de contenu gaming"
+      ]
+    },
+    {
+      id: 16,
+      name: "Santé, bien-être & médical",
+      icon: "⚕️",
+      subUniverses: [
+        "Médecine générale",
+        "Chirurgie & spécialités hospitalières",
+        "Radiologie & imagerie médicale",
+        "Biologie & analyses médicales",
+        "Pharmacie & biotechnologies",
+        "Infirmier & soins paramédicaux",
+        "Rééducation & kinésithérapie",
+        "Santé mentale & psychologie",
+        "Nutrition & diététique",
+        "Santé publique & prévention",
+        "Accompagnement des personnes âgées",
+        "Médecine du sport",
+        "Médecine connectée & télésanté"
+      ]
+    },
+    {
+      id: 17,
+      name: "Sciences, recherche & innovation",
+      icon: "🔬",
+      subUniverses: [
+        "Physique & astrophysique",
+        "Mathématiques & statistiques",
+        "Chimie & matériaux",
+        "Biotechnologies",
+        "Géosciences & climatologie",
+        "Neurosciences & cognition",
+        "Sciences humaines & sociales",
+        "Recherche en éducation",
+        "Recherche appliquée & transfert technologique",
+        "R&D en entreprise",
+        "Études et consulting scientifique"
+      ]
+    },
+    {
+      id: 18,
+      name: "Sécurité, défense & urgence",
+      icon: "🚨",
+      subUniverses: [
+        "Police & gendarmerie",
+        "Pompiers & secours",
+        "Sécurité privée & surveillance",
+        "Protection civile",
+        "Défense & armée",
+        "Renseignement & sécurité stratégique"
+      ]
+    },
+    {
+      id: 19,
+      name: "Social, aide & solidarité",
+      icon: "❤️",
+      subUniverses: [
+        "Travail social & action sociale",
+        "Hébergement & logement d'urgence",
+        "Aide alimentaire & distributions",
+        "Médiation sociale & résolution de conflits",
+        "Action humanitaire & ONG",
+        "Petite enfance & crèches",
+        "Protection de l'enfance",
+        "Accompagnement du handicap",
+        "Insertion professionnelle & formation",
+        "Prévention & éducation populaire",
+        "Services à la personne",
+        "Bénévolat & engagement citoyen",
+        "Accès aux droits & lutte contre les discriminations"
+      ]
+    },
+    {
+      id: 20,
+      name: "Sport, loisirs & vie active",
+      icon: "⚽",
+      subUniverses: [
+        "Éducation sportive & encadrement",
+        "Entraînement & préparation physique",
+        "Sport de haut niveau & compétition",
+        "Management d'équipements sportifs",
+        "Événementiel sportif",
+        "Loisirs & animation socioculturelle",
+        "Tourisme sportif & plein air",
+        "E-sport & gaming professionnel",
+        "Bien-être & activités douces",
+        "Industrie & commerce du sport",
+        "Création de contenus sportifs & médias"
+      ]
+    },
+    {
+      id: 21,
+      name: "Technologies émergentes & futur du travail",
+      icon: "🚀",
+      subUniverses: [
+        "Intelligence artificielle générative",
+        "IA éthique & gouvernance algorithmique",
+        "Robotique humanoïde & collaborative",
+        "Biotechnologies avancées & biohacking",
+        "Exploration spatiale & NewSpace",
+        "Technologies quantiques",
+        "Travail hybride & télétravail",
+        "Économie collaborative & plateformes"
+      ]
+    }
+  ];
 
-// Gestion du clic sur la loupe
-document.querySelectorAll('.magnifier').forEach(magnifier => {
-  magnifier.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const card = magnifier.closest('.card');
-    const subUnivers = card.querySelector('.sub-univers');
+  // Génération du HTML
+  const grid = document.getElementById('universGrid');
+
+  UNIVERS_DATA.forEach(univers => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.universId = univers.id;
     
-    if(subUnivers) {
-      const isVisible = subUnivers.classList.contains('visible');
+    // Créer le HTML de la carte
+    const cardHTML = `
+      <svg class="magnifier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <div class="icon">${univers.icon}</div>
+      <div class="label">${univers.name}</div>
+      <div class="sub-container">
+        <div class="sub-list">
+          ${univers.subUniverses.map(sub => `<div class="sub-item">${sub}</div>`).join('')}
+        </div>
+      </div>
+    `;
+    
+    card.innerHTML = cardHTML;
+    grid.appendChild(card);
+  });
+
+  // Gestion des événements
+  document.querySelectorAll('.magnifier').forEach(magnifier => {
+    magnifier.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      const card = this.closest('.card');
+      const subContainer = card.querySelector('.sub-container');
+      const isVisible = subContainer.classList.contains('visible');
       
       // Fermer tous les autres
-      document.querySelectorAll('.sub-univers').forEach(s => s.classList.remove('visible'));
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('sub-visible'));
+      document.querySelectorAll('.sub-container').forEach(container => {
+        container.classList.remove('visible');
+      });
+      document.querySelectorAll('.card').forEach(c => {
+        c.classList.remove('sub-visible');
+      });
       
       // Toggler celui-ci
-      if(!isVisible) {
-        subUnivers.classList.add('visible');
+      if (!isVisible) {
+        subContainer.classList.add('visible');
         card.classList.add('sub-visible');
       }
+    });
+  });
+
+  // Fermer au clic extérieur
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.card')) {
+      document.querySelectorAll('.sub-container').forEach(container => {
+        container.classList.remove('visible');
+      });
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('sub-visible');
+      });
     }
   });
-});
 
-// Fermer au clic extérieur
-document.addEventListener('click', (e) => {
-  if(!e.target.closest('.card')) {
-    document.querySelectorAll('.sub-univers').forEach(s => s.classList.remove('visible'));
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('sub-visible'));
-  }
-});
+  console.log('✅ Page univers-métiers chargée - 21 univers disponibles');
+})();
 </script>
 </body>
 </html>
