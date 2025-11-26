@@ -3,6 +3,7 @@
   RECONVERSION 360 IA - BILAN DE SITUATION
   ============================================
   Gestion du formulaire de bilan personnel
+  VERSION 36 - Ajout Q21 Tests psychotechniques
   ============================================
 */
 
@@ -171,11 +172,11 @@ function validateForm() {
 function collectFormData() {
   const formData = {};
   
-  // Liste de tous les champs du formulaire
+  // Liste de tous les champs du formulaire (ajout de q21)
   const fields = [
     'prenom', 'age',
     'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10',
-    'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20'
+    'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21'
   ];
   
   fields.forEach(fieldId => {
