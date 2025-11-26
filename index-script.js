@@ -300,7 +300,11 @@ function copyResultsToClipboard() {
         textToCopy += "─────────────\n";
         if(situation.q19) textToCopy += `Formation envisagée: ${situation.q19}\n\n`;
         
-        textToCopy += "6. OUVERTURE\n";
+        textToCopy += "6. TESTS PSYCHOTECHNIQUES\n";
+        textToCopy += "───────────────────────────\n";
+        if(situation.q21) textToCopy += `Tests passés: ${situation.q21}\n\n`;
+        
+        textToCopy += "7. OUVERTURE\n";
         textToCopy += "─────────────\n";
         if(situation.q20) textToCopy += `Informations complémentaires: ${situation.q20}\n\n`;
         
@@ -486,7 +490,11 @@ function downloadPDF() {
         pdfContent += "─────────────\n\n";
         if(situation.q19) pdfContent += `Formation envisagée:\n${situation.q19}\n\n`;
         
-        pdfContent += "6. OUVERTURE\n";
+        pdfContent += "6. TESTS PSYCHOTECHNIQUES\n";
+        pdfContent += "───────────────────────────\n\n";
+        if(situation.q21) pdfContent += `Tests passés:\n${situation.q21}\n\n`;
+        
+        pdfContent += "7. OUVERTURE\n";
         pdfContent += "─────────────\n\n";
         if(situation.q20) pdfContent += `Informations complémentaires:\n${situation.q20}\n\n`;
         
