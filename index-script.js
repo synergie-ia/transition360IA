@@ -862,7 +862,7 @@ function checkProjectAccess() {
     "📋 AVANT DE CONTINUER - IMPORTANT :\n\n" +
     "🌐 Vous utilisez ATLAS (navigateur ChatGPT) ?\n" +
     "   → Cliquez OK (vos données seront lues automatiquement)\n\n" +
-    "📋 Vous N'utilisez PAS Atlas ? : vous devez d'abord copier vos résultats \n" +
+    "📋 Vous N'utilisez PAS Atlas ?\n" +
     "   → Cliquez ANNULER\n" +
     "   → Copiez d'abord vos résultats avec le bouton ci-dessus\n" +
     "   → Puis revenez cliquer sur \"Construire mon projet\""
@@ -875,23 +875,16 @@ function checkProjectAccess() {
     // ✅ VÉRIFIER SI BLOQUÉ (Windows / ChatGPT non chargé / Bloqueur pop-up)
     setTimeout(() => {
       if(!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined'){
-        // Copier automatiquement le lien
-        if(navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(chatURL).catch(() => {
-            console.log("Impossible de copier automatiquement");
-          });
-        }
-        
-        // Message explicite avec étapes
+        // Message avec le lien à copier manuellement
         alert(
           "⚠️ OUVERTURE BLOQUÉE PAR VOTRE NAVIGATEUR\n\n" +
-          "Pas de problème ! Voici la solution :\n\n" +
-          "1️⃣ Le lien ChatGPT a été copié automatiquement\n\n" +
-          "2️⃣ Ouvrez un nouvel onglet dans votre navigateur\n\n" +
-          "3️⃣ Collez le lien (Ctrl+V sur PC ou Cmd+V sur Mac)\n\n" +
-          "4️⃣ Appuyez sur Entrée\n\n" +
-          "💡 Si ça n'a pas été copié, voici le lien :\n" +
-          chatURL
+          "Pas de problème ! Voici le lien à copier :\n\n" +
+          chatURL + "\n\n" +
+          "📋 ÉTAPES :\n" +
+          "1️⃣ Sélectionnez et copiez le lien ci-dessus\n" +
+          "2️⃣ Ouvrez un nouvel onglet dans votre navigateur\n" +
+          "3️⃣ Collez le lien (Ctrl+V sur PC ou Cmd+V sur Mac)\n" +
+          "4️⃣ Appuyez sur Entrée"
         );
       }
     }, 100);
