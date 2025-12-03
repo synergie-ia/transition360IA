@@ -2,10 +2,11 @@
   ============================================
   Passerelle-Transition - PAGE D'ACCUEIL
   ============================================
-  Gestion des badges de complétion et actions
+  Gestion des actions
   VERSION COMPLÈTE - Copie profil + univers + bilan
   VERSION 39 - Ajout préfixe transition360_ pour localStorage
   VERSION 40 - Atlas désactivé + Copie obligatoire
+  VERSION 41 - Badges de complétion désactivés
   ============================================
 */
 
@@ -13,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log("🏠 PAGE D'ACCUEIL - Initialisation");
   console.log("====================================\n");
-  
-  updateCompletionBadges();
   
   const btnReset = document.getElementById('btnResetData');
   if(btnReset){
@@ -43,33 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
-/* ===== BADGES DE COMPLÉTION ===== */
-
-function updateCompletionBadges() {
-  const hasAnswers = localStorage.getItem('transition360_questionnaire_answers');
-  const hasProfile = localStorage.getItem('transition360_profile_percentages');
-  const hasUnivers = localStorage.getItem('transition360_selected_univers_details');
-  
-  const cards = document.querySelectorAll('.action-card');
-  
-  if(cards[0] && (hasAnswers || hasProfile || hasUnivers)){
-    const badge = document.createElement('div');
-    badge.className = 'completion-badge';
-    badge.textContent = '✓ Complété';
-    cards[0].appendChild(badge);
-    console.log('✅ Badge Questionnaire ajouté');
-  }
-  
-  const hasSituation = localStorage.getItem('transition360_situation_data');
-  if(cards[1] && hasSituation){
-    const badge = document.createElement('div');
-    badge.className = 'completion-badge';
-    badge.textContent = '✓ Complété';
-    cards[1].appendChild(badge);
-    console.log('✅ Badge Bilan ajouté');
-  }
-}
 
 /* ===== RÉINITIALISATION ===== */
 
