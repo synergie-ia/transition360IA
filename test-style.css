@@ -1,16 +1,16 @@
 /* ===== VARIABLES COULEURS ===== */
 :root{
-  --bg:#f5f6fb;
+  --bg:#ffffff;
   --card:#ffffff;
-  --ink:#1f2a37;
-  --muted:#6b7280;
-  --line:#e5e7eb;
+  --ink:#0052A3;
+  --muted:#0052A3;
+  --line:#d1d5db;
   --c0:#e74c3c;
   --c1:#f39c12;
   --c2:#9ca3af;
   --c3:#bbf7d0;
   --c4:#16a34a;
-  --accent:#5a4af4;
+  --accent:#0072C6;
   --green:#22c55e;
   --red:#ef4444;
   
@@ -28,7 +28,7 @@
 html,body{
   margin:0;
   padding:0;
-  background:var(--bg);
+  background:#ffffff;
   color:var(--ink);
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   line-height:1.5;
@@ -49,9 +49,9 @@ html,body{
 }
 
 .btn-retour-top{
-  background:#fff;
-  color:var(--ink);
-  border:1px solid var(--line);
+  background:linear-gradient(135deg, #41B6E6 0%, #0072C6 100%);
+  color:white;
+  border:none;
   padding:10px 18px;
   border-radius:10px;
   cursor:pointer;
@@ -61,12 +61,13 @@ html,body{
   display:inline-flex;
   align-items:center;
   gap:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
 .btn-retour-top:hover{
-  background:#f3f4f6;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-  transform:translateX(-3px);
+  background:linear-gradient(135deg, #5CBDE6 0%, #0082D6 100%);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transform:translateY(-2px);
 }
 
 .btn-retour-top .arrow{
@@ -84,11 +85,11 @@ html,body{
   margin:12px 0;
   line-height:1.3;
   text-align:center;
-  color:#000000;
+  color:#0052A3;
 }
 
 .intro{
-  color:#000000;
+  color:#0052A3;
   margin:12px 0 10px;
   font-size:clamp(14px,2.7vw,15px);
   text-align:center;
@@ -97,14 +98,14 @@ html,body{
 
 /* ===== BOÎTE D'INFORMATION ===== */
 .info-box{
-  background:var(--bg);
-  border:2px solid #9ca3af;
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:10px;
   padding:12px 14px;
   margin:12px 0;
   font-size:13px;
   line-height:1.5;
-  color:#000000;
+  color:#0052A3;
 }
 
 .info-box p{
@@ -121,8 +122,8 @@ html,body{
 }
 
 .legend-box{
-  background:var(--bg);
-  border:2px solid #9ca3af;
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:10px;
   padding:14px 16px;
   margin:16px 0 20px;
@@ -132,7 +133,7 @@ html,body{
 .legend-intro{
   font-size:15px;
   font-weight:700;
-  color:#000000;
+  color:#0052A3;
   text-align:center;
   margin-bottom:12px;
 }
@@ -140,23 +141,23 @@ html,body{
 .legend-warning{
   font-size:14px;
   font-weight:700;
-  color:#92400e;
+  color:#0052A3;
   text-align:center;
   padding-top:10px;
-  border-top:2px solid #c7d2fe;
+  border-top:2px solid #d1d5db;
 }
 
 /* ===== MESSAGE D'INFORMATION UNIVERS ===== */
 .univers-info-message{
-  background:#eef2ff;
-  border:2px solid #c7d2fe;
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:8px;
   padding:12px 16px;
   margin:0 0 20px 0;
   text-align:center;
   font-size:clamp(13px, 2.6vw, 14px);
   line-height:1.6;
-  color:#000000;
+  color:#0052A3;
   font-weight:600;
 }
 
@@ -181,7 +182,7 @@ html,body{
 
 /* ===== CARTES DE QUESTIONS - DESIGN OPTIMISÉ ===== */
 .question-card{
-  background:var(--card);
+  background:#ffffff;
   border:2px solid #d1d5db;
   border-radius:12px;
   padding:18px;
@@ -214,14 +215,14 @@ html,body{
 .question-title{
   font-weight:700;
   font-size:clamp(15px,3vw,17px);
-  color:#000000;
+  color:#0052A3;
   margin-bottom:8px;
 }
 
 .question-text{
   font-size:clamp(15px,2.9vw,17px);
   line-height:1.5;
-  color:#000000;
+  color:#0052A3;
   margin-bottom:16px;
   font-weight:500;
 }
@@ -241,7 +242,7 @@ html,body{
   width:85px;
   height:85px;
   border-radius:12px;
-  border:3px solid #9ca3af;
+  border:3px solid #d1d5db;
   background:#fff;
   cursor:pointer;
   transition:all .15s ease;
@@ -254,7 +255,7 @@ html,body{
 }
 
 .rate-btn:hover:not(.disabled){
-  border-color:#6b7280;
+  border-color:#9ca3af;
   box-shadow:0 3px 10px rgba(0,0,0,.2);
   transform:translateY(-3px);
 }
@@ -273,12 +274,12 @@ html,body{
 .rate-value{
   font-size:28px;
   font-weight:800;
-  color:#374151;
+  color:#0052A3;
 }
 
 .rate-label{
   font-size:10px;
-  color:#6b7280;
+  color:#0052A3;
   text-align:center;
   line-height:1.1;
   font-weight:700;
@@ -389,8 +390,8 @@ html,body{
 /* ===== RÉSULTATS PROFIL / UNIVERS ===== */
 #profileSection,
 #univers-section{
-  background:var(--card);
-  border:1px solid var(--line);
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:16px;
   padding:20px 16px;
   margin:24px 0;
@@ -403,7 +404,7 @@ html,body{
   gap:12px;
   align-items:center;
   padding:8px 0;
-  border-top:1px dashed var(--line);
+  border-top:1px dashed #d1d5db;
 }
 
 .profile-row:first-child{border-top:none}
@@ -411,24 +412,24 @@ html,body{
 .profile-label{
   font-weight:600;
   font-size:clamp(14px,2.8vw,16px);
-  color:#000000;
+  color:#0052A3;
 }
 
 .profile-bar{
   height:12px;
-  background:#eef2f7;
+  background:#f0f0f0;
   border-radius:999px;
   overflow:hidden;
 }
 
 .profile-fill{
   height:100%;
-  background:linear-gradient(90deg,#60a5fa,#22c55e);
+  background:linear-gradient(90deg,#41B6E6,#0072C6);
 }
 
 /* ===== CARTES UNIVERS ===== */
 .univers-card{
-  border:2px solid var(--line);
+  border:2px solid #d1d5db;
   border-radius:10px;
   padding:10px 12px;
   margin:8px 0;
@@ -437,13 +438,13 @@ html,body{
 }
 
 .univers-card:hover{
-  border-color:#cbd5e1;
+  border-color:#9ca3af;
   box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .univers-card.selected{
-  border-color:var(--green);
-  background:#f0fdf4;
+  border-color:#d1d5db;
+  background:#ffffff;
 }
 
 .univers-header{
@@ -471,30 +472,31 @@ html,body{
   font-size:clamp(15px,3vw,17px);
   flex:1;
   line-height:1.3;
-  color:#000000;
+  color:#0052A3;
 }
 
 .univers-right{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:8px;
   flex-shrink:0;
 }
 
 /* ===== BADGE POURCENTAGE DE COMPATIBILITÉ ===== */
 .univers-percentage{
-  font-size:clamp(12px, 2.5vw, 13px);
+  font-size:clamp(11px, 2.3vw, 13px);
   font-weight:600;
-  padding:3px 8px;
-  border-radius:12px;
+  padding:4px 6px;
+  border-radius:10px;
   background:#f9fafb;
   color:#6b7280;
   border:1px solid #e5e7eb;
   flex-shrink:0;
-  min-width:clamp(45px, 9vw, 50px);
+  min-width:clamp(42px, 8.5vw, 50px);
   text-align:center;
   transition:all .2s ease;
   opacity:0.8;
+  white-space:nowrap;
 }
 
 .univers-card.level-5 .univers-percentage{
@@ -561,7 +563,7 @@ html,body{
 /* Couleurs par niveau de compatibilité */
 .univers-card.level-5{
   border-left:5px solid var(--very-compatible);
-  background:linear-gradient(135deg, #d1fae5 0%, #ffffff 100%);
+  background:#ffffff;
 }
 
 .univers-card.level-5:hover{
@@ -570,7 +572,7 @@ html,body{
 
 .univers-card.level-4{
   border-left:5px solid var(--compatible);
-  background:linear-gradient(135deg, #d1fae5 0%, #ffffff 100%);
+  background:#ffffff;
 }
 
 .univers-card.level-4:hover{
@@ -579,7 +581,7 @@ html,body{
 
 .univers-card.level-3{
   border-left:5px solid var(--medium-compatible);
-  background:linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+  background:#ffffff;
 }
 
 .univers-card.level-3:hover{
@@ -588,7 +590,7 @@ html,body{
 
 .univers-card.level-2{
   border-left:5px solid var(--low-compatible);
-  background:linear-gradient(135deg, #ffedd5 0%, #ffffff 100%);
+  background:#ffffff;
 }
 
 .univers-card.level-2:hover{
@@ -597,7 +599,7 @@ html,body{
 
 .univers-card.level-1{
   border-left:5px solid var(--not-compatible);
-  background:linear-gradient(135deg, #fee2e2 0%, #ffffff 100%);
+  background:#ffffff;
   opacity:0.85;
 }
 
@@ -605,29 +607,29 @@ html,body{
   box-shadow:0 8px 24px rgba(220, 38, 38, 0.2);
 }
 
-/* État sélectionné */
+/* État sélectionné - SANS FOND VERT */
 .univers-card.selected.level-5,
 .univers-card.selected.level-4{
   border-left-width:8px;
-  background:linear-gradient(135deg, #a7f3d0 0%, #d1fae5 100%);
+  background:#ffffff;
   box-shadow:0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .univers-card.selected.level-3{
   border-left-width:8px;
-  background:linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+  background:#ffffff;
   box-shadow:0 4px 12px rgba(209, 213, 219, 0.3);
 }
 
 .univers-card.selected.level-2{
   border-left-width:8px;
-  background:linear-gradient(135deg, #fed7aa 0%, #ffedd5 100%);
+  background:#ffffff;
   box-shadow:0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .univers-card.selected.level-1{
   border-left-width:8px;
-  background:linear-gradient(135deg, #fecaca 0%, #fee2e2 100%);
+  background:#ffffff;
   box-shadow:0 4px 12px rgba(220, 38, 38, 0.3);
   opacity:1;
 }
@@ -640,32 +642,34 @@ html,body{
 }
 
 .btn-toggle-sub{
-  background:#f3f4f6;
-  border:2px solid var(--line);
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:8px;
-  padding:8px;
-  font-size:clamp(18px, 4vw, 20px);
+  padding:6px;
+  font-size:clamp(16px, 3.5vw, 20px);
   cursor:pointer;
   transition:all .2s ease;
   line-height:1;
-  min-width:clamp(36px, 8vw, 40px);
-  height:clamp(36px, 8vw, 40px);
+  min-width:clamp(34px, 7.5vw, 40px);
+  height:clamp(34px, 7.5vw, 40px);
   display:flex;
   align-items:center;
   justify-content:center;
+  color:#0052A3;
+  flex-shrink:0;
 }
 
 .btn-toggle-sub:hover{
-  background:#e5e7eb;
-  transform:scale(1.1);
+  background:#f9fafb;
   border-color:#9ca3af;
+  transform:scale(1.1);
 }
 
 .btn-select-univers{
   width:clamp(36px, 8vw, 40px);
   height:clamp(36px, 8vw, 40px);
   border-radius:50%;
-  border:2px solid var(--line);
+  border:2px solid #d1d5db;
   background:#fff;
   display:flex;
   align-items:center;
@@ -676,7 +680,7 @@ html,body{
 }
 
 .btn-select-univers:hover{
-  box-shadow:0 0 0 3px rgba(90,74,244,.12);
+  box-shadow:0 0 0 3px rgba(209,213,219,.3);
   transform:scale(1.05);
 }
 
@@ -695,7 +699,8 @@ html,body{
 /* ===== SOUS-UNIVERS ===== */
 .sub-univers-list{
   display:none;
-  background:#f9fafb;
+  background:#ffffff;
+  border:1px solid #d1d5db;
   padding:14px;
   border-radius:8px;
   margin-top:12px;
@@ -710,7 +715,7 @@ html,body{
   gap:10px;
   padding:10px 0;
   font-size:clamp(13px, 2.5vw, 14px);
-  border-bottom:1px dashed #e5e7eb;
+  border-bottom:1px dashed #d1d5db;
 }
 
 .sub-item:last-child{
@@ -726,25 +731,51 @@ html,body{
   font-weight:600;
   margin-bottom:4px;
   line-height:1.3;
-  color:#000000;
+  color:#0052A3;
 }
 
 .sub-desc{
-  color:#4b5563;
+  color:#0052A3;
   font-size:clamp(12px, 2.3vw, 13px);
   line-height:1.4;
 }
 
-/* ===== COMPTEUR UNIVERS ===== */
+/* ===== BOÎTE SÉLECTION UNIVERS (compteur + instructions) ===== */
+.univers-selection-box{
+  background:#ffffff;
+  border:2px solid #d1d5db;
+  border-radius:10px;
+  padding:16px;
+  margin:0 0 20px 0;
+}
+
+.counter-univers-inline{
+  text-align:center;
+  font-weight:700;
+  font-size:clamp(16px, 3.2vw, 18px);
+  color:#0052A3;
+  margin:0 0 12px 0;
+}
+
+.notice-inline{
+  margin:0;
+  font-size:clamp(14px, 2.8vw, 15px);
+  color:#0052A3;
+  text-align:center;
+  line-height:1.6;
+  font-weight:600;
+}
+
+/* ===== COMPTEUR UNIVERS (ancien - on garde pour compatibilité) ===== */
 .counter-univers{
   text-align:center;
   font-weight:600;
   font-size:clamp(15px, 3vw, 16px);
-  color:#000000;
+  color:#0052A3;
   margin:12px 0;
   padding:10px;
-  background:var(--bg);
-  border:2px solid #9ca3af;
+  background:#ffffff;
+  border:2px solid #d1d5db;
   border-radius:8px;
   transition:all .3s ease;
 }
@@ -753,14 +784,14 @@ html,body{
 .notice{
   margin:16px 0;
   font-size:clamp(14px, 2.8vw, 16px);
-  color:#000000;
+  color:#0052A3;
   text-align:center;
   line-height:1.6;
   font-weight:600;
-  background:#eef2ff;
+  background:#ffffff;
   padding:12px 16px;
   border-radius:8px;
-  border:2px solid #c7d2fe;
+  border:2px solid #d1d5db;
 }
 
 /* ===== BOUTONS PRINCIPAUX ===== */
@@ -774,28 +805,33 @@ html,body{
   font-weight:700;
   font-size:clamp(15px, 3vw, 16px);
   cursor:pointer;
-  margin-top:12px;
+  margin:12px auto;
+  display:block;
   transition:all .2s ease;
 }
 
 .main-btn{
-  background:linear-gradient(90deg,#6d5efc,#9a63ff);
+  background:linear-gradient(135deg, #41B6E6 0%, #0072C6 100%);
   color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
 .main-btn:hover{
-  box-shadow:0 4px 12px rgba(109,94,252,.3);
-  transform:translateY(-1px);
+  background:linear-gradient(135deg, #5CBDE6 0%, #0082D6 100%);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transform:translateY(-2px);
 }
 
 .alt-btn{
-  background:#eef2ff;
-  color:#3730a3;
-  border:1px solid #e0e7ff;
+  background:linear-gradient(135deg, #41B6E6 0%, #0072C6 100%);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
 .alt-btn:hover{
-  background:#e0e7ff;
+  background:linear-gradient(135deg, #5CBDE6 0%, #0082D6 100%);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transform:translateY(-2px);
 }
 
 /* ===== SECTION FOOTER ===== */
@@ -805,42 +841,75 @@ html,body{
 }
 
 .btn-retour{
-  background:#fff;
-  color:var(--ink);
-  border:1px solid var(--line);
+  background:linear-gradient(135deg, #41B6E6 0%, #0072C6 100%);
+  color:white;
+  border:none;
   padding:12px 24px;
   border-radius:10px;
   cursor:pointer;
   font-weight:600;
   font-size:clamp(14px, 2.8vw, 15px);
   transition:all .2s ease;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
 .btn-retour:hover{
-  background:#f3f4f6;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  background:linear-gradient(135deg, #5CBDE6 0%, #0082D6 100%);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
   transform:translateY(-2px);
 }
 
 /* ===== RESPONSIVE MOBILE ===== */
 @media (max-width: 640px) {
+  .container{
+    padding:12px;
+  }
+  
   .univers-header{
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
+  
+  .univers-main{
+    gap:10px;
+  }
+  
+  .univers-icon{
+    font-size:24px;
+  }
+  
+  .univers-name{
+    font-size:14px;
   }
   
   .univers-right{
-    order:2;
-    margin-left:auto;
+    gap:6px;
   }
   
   .univers-percentage{
-    font-size:11px;
-    padding:2px 6px;
-    min-width:40px;
+    font-size:10px;
+    padding:3px 5px;
+    min-width:38px;
   }
   
   .univers-rank{
+    font-size:14px;
+    min-width:24px;
+  }
+  
+  .btn-toggle-sub{
+    min-width:32px;
+    height:32px;
     font-size:15px;
-    min-width:26px;
+    padding:4px;
+  }
+  
+  .btn-select-univers{
+    width:32px;
+    height:32px;
+  }
+  
+  .tick{
+    font-size:14px;
   }
 }
